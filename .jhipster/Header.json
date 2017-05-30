@@ -1,0 +1,30 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 20
+        },
+        {
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image",
+            "fieldValidateRules": [
+                "required",
+                "maxbytes"
+            ],
+            "fieldValidateRulesMaxbytes": "400000"
+        }
+    ],
+    "changelogDate": "20170530193513",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "header",
+    "pagination": "infinite-scroll"
+}

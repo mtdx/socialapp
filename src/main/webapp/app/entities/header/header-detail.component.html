@@ -1,0 +1,34 @@
+
+<div *ngIf="header">
+    <h2><span jhiTranslate="socialappApp.header.detail.title">Header</span> {{header.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="socialappApp.header.name">Name</span></dt>
+        <dd>
+            <span>{{header.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.header.image">Image</span></dt>
+        <dd>
+            <div *ngIf="header.image">
+                <a (click)="openFile(header.imageContentType, header.image)">
+                    <img [src]="'data:' + header.imageContentType + ';base64,' + header.image" style="max-width: 100%;" alt="header image"/>
+                </a>
+                {{header.imageContentType}}, {{byteSize(header.image)}}
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'header/'+ header.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
