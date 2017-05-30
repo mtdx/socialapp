@@ -21,7 +21,7 @@
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
                     <span>
                         <i class="fa fa-twitter" aria-hidden="true"></i>
-                        <span jhiTranslate="global.menu.entities.main">
+                        <span jhiTranslate="global.menu.twitter">
                             Twitter
                         </span>
                         <b class="caret"></b>
@@ -30,7 +30,7 @@
                 <ul class="dropdown-menu" ngbDropdownMenu>
                     <li>
                         <a class="dropdown-item" routerLink="avatar" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <i class="fa fa-fw fa-image" aria-hidden="true"></i>
                             <span jhiTranslate="global.menu.entities.avatar">Avatars</span>
                         </a>
                     </li>
@@ -96,7 +96,7 @@
                     <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
                 </ul>
             </li>
-            <li ngbDropdown class="nav-item dropdown pointer" *ngIf="languages">
+            <li ngbDropdown class="nav-item dropdown pointer" *ngIf="languages" style="display: none">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown" *ngIf="languages.length > 1">
                     <span>
                         <i class="fa fa-flag" aria-hidden="true"></i>
