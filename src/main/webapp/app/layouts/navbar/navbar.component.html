@@ -20,9 +20,9 @@
             <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
                     <span>
-                        <i class="fa fa-th-list" aria-hidden="true"></i>
+                        <i class="fa fa-twitter" aria-hidden="true"></i>
                         <span jhiTranslate="global.menu.entities.main">
-                            Entities
+                            Twitter
                         </span>
                         <b class="caret"></b>
                     </span>
@@ -31,10 +31,9 @@
                     <li>
                         <a class="dropdown-item" routerLink="avatar" routerLinkActive="active" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span jhiTranslate="global.menu.entities.avatar">Avatar</span>
+                            <span jhiTranslate="global.menu.entities.avatar">Avatars</span>
                         </a>
                     </li>
-                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
