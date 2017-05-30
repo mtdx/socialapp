@@ -1,0 +1,23 @@
+{
+    "socialappApp": {
+        "avatar" : {
+            "home": {
+                "title": "Avatars",
+                "createLabel": "Avatar erstellen",
+                "createOrEditLabel": "Avatar erstellen oder bearbeiten",
+                "search": "Suche nach Avatar"
+            },
+            "created": "Avatar erstellt mit ID {{ param }}",
+            "updated": "Avatar aktualisiert mit ID {{ param }}",
+            "deleted": "Avatar gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Avatar {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Avatar"
+            },
+            "name": "Name",
+            "image": "Image"
+        }
+    }
+}
