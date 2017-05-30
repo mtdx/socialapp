@@ -230,4 +230,8 @@ Social Buttons
     border-color: rgba(0, 0, 0, 0.2);
     color: #fff;
 }
+
+.footer {
+    padding-top: 20px;
+}
 /* jhipster-needle-css-add-main JHipster will add new css style */
