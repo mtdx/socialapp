@@ -9,6 +9,7 @@
             "entities": {
                 "avatar": "Avatars",
                 "header": "Headers",
+                "proxy": "Proxies",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
