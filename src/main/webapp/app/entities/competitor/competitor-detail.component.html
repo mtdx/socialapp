@@ -1,0 +1,29 @@
+
+<div *ngIf="competitor">
+    <h2><span jhiTranslate="socialappApp.competitor.detail.title">Competitor</span> {{competitor.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="socialappApp.competitor.userid">Userid</span></dt>
+        <dd>
+            <span>{{competitor.userid}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.competitor.username">Username</span></dt>
+        <dd>
+            <span>{{competitor.username}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'competitor/'+ competitor.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

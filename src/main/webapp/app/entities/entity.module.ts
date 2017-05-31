@@ -3,6 +3,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SocialappAvatarModule } from './avatar/avatar.module';
 import { SocialappHeaderModule } from './header/header.module';
 import { SocialappProxyModule } from './proxy/proxy.module';
+import { SocialappCompetitorModule } from './competitor/competitor.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -10,6 +11,7 @@ import { SocialappProxyModule } from './proxy/proxy.module';
         SocialappAvatarModule,
         SocialappHeaderModule,
         SocialappProxyModule,
+        SocialappCompetitorModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

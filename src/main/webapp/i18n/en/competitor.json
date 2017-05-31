@@ -1,0 +1,23 @@
+{
+    "socialappApp": {
+        "competitor" : {
+            "home": {
+                "title": "Competitors",
+                "createLabel": "Create a new Competitor",
+                "createOrEditLabel": "Create or edit a Competitor",
+                "search": "Search for Competitor"
+            },
+            "created": "A new Competitor is created with identifier {{ param }}",
+            "updated": "A Competitor is updated with identifier {{ param }}",
+            "deleted": "A Competitor is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Competitor {{ id }}?"
+            },
+            "detail": {
+                "title": "Competitor"
+            },
+            "userid": "Userid",
+            "username": "Username"
+        }
+    }
+}

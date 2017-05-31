@@ -10,6 +10,7 @@
                 "avatar": "Avatars",
                 "header": "Headers",
                 "proxy": "Proxies",
+                "competitor": "Competitors",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -1,0 +1,35 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "userid",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMaxlength": "24",
+            "fieldValidateRulesPattern": "^\\d+$"
+        },
+        {
+            "fieldName": "username",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": "3",
+            "fieldValidateRulesMaxlength": "24",
+            "fieldValidateRulesPattern": "^[a-zA-Z0-9_]*$"
+        }
+    ],
+    "changelogDate": "20170531095952",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "competitor",
+    "pagination": "infinite-scroll"
+}
