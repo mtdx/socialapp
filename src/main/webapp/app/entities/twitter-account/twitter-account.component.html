@@ -31,14 +31,8 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="email"><span jhiTranslate="socialappApp.twitterAccount.email">Email</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="consumerKey"><span jhiTranslate="socialappApp.twitterAccount.consumerKey">Consumer Key</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="consumerSecret"><span jhiTranslate="socialappApp.twitterAccount.consumerSecret">Consumer Secret</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="accessToken"><span jhiTranslate="socialappApp.twitterAccount.accessToken">Access Token</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="accessTokenSecret"><span jhiTranslate="socialappApp.twitterAccount.accessTokenSecret">Access Token Secret</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="name"><span jhiTranslate="socialappApp.twitterAccount.name">Name</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="description"><span jhiTranslate="socialappApp.twitterAccount.description">Description</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="url"><span jhiTranslate="socialappApp.twitterAccount.url">Url</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="location"><span jhiTranslate="socialappApp.twitterAccount.location">Location</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="username"><span jhiTranslate="socialappApp.twitterAccount.username">Username</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="avatar.name"><span jhiTranslate="socialappApp.twitterAccount.avatar">Avatar</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="header.name"><span jhiTranslate="socialappApp.twitterAccount.header">Header</span> <span class="fa fa-sort"></span></th>
@@ -49,14 +43,8 @@
             <tr *ngFor="let twitterAccount of twitterAccounts ;trackBy: trackId">
                 <td><a [routerLink]="['../twitter-account', twitterAccount.id ]">{{twitterAccount.id}}</a></td>
                 <td>{{twitterAccount.email}}</td>
-                <td>{{twitterAccount.consumerKey}}</td>
-                <td>{{twitterAccount.consumerSecret}}</td>
-                <td>{{twitterAccount.accessToken}}</td>
-                <td>{{twitterAccount.accessTokenSecret}}</td>
                 <td>{{twitterAccount.name}}</td>
-                <td>{{twitterAccount.description}}</td>
                 <td>{{twitterAccount.url}}</td>
-                <td>{{twitterAccount.location}}</td>
                 <td>{{twitterAccount.username}}</td>
                 <td>
                     <div *ngIf="twitterAccount.avatar">
@@ -74,21 +62,18 @@
                                 [routerLink]="['../twitter-account', twitterAccount.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'twitter-account/'+ twitterAccount.id + '/edit'} }]"
                                 replaceUrl="true"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'twitter-account/'+ twitterAccount.id + '/delete'} }]"
                                 replaceUrl="true"
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
                         </button>
                     </div>
                 </td>
