@@ -11,7 +11,7 @@
                 "maxlength",
                 "pattern"
             ],
-            "fieldValidateRulesMinlength": "4",
+            "fieldValidateRulesMinlength": "2",
             "fieldValidateRulesMaxlength": "20",
             "fieldValidateRulesPattern": "(^\\d+$)"
         },

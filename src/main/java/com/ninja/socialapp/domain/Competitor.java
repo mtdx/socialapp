@@ -26,7 +26,7 @@ public class Competitor implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 4, max = 20)
+    @Size(min = 2, max = 20)
     @Pattern(regexp = "(^\\d+$)")
     @Column(name = "userid", length = 20, nullable = false)
     private String userid;

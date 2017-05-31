@@ -16,15 +16,15 @@
             <label class="form-control-label" jhiTranslate="socialappApp.competitor.userid" for="field_userid">Userid</label>
             <input type="text" class="form-control" name="userid" id="field_userid"
                 [(ngModel)]="competitor.userid"
-            required minlength="4" maxlength="20" pattern="(^\d+$)" />
+            required minlength="2" maxlength="20" pattern="(^\d+$)" />
             <div [hidden]="!(editForm.controls.userid?.dirty && editForm.controls.userid?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.userid?.errors?.required" jhiTranslate="entity.validation.required">
                    This field is required.
                 </small>
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.userid?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 4 }">
-                   This field is required to be at least 4 characters.
+                   [hidden]="!editForm.controls.userid?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 2 }">
+                   This field is required to be at least 2 characters.
                 </small>
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.userid?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
