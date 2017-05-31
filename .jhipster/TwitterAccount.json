@@ -126,7 +126,7 @@
             ],
             "fieldValidateRulesMinlength": "4",
             "fieldValidateRulesMaxlength": "15",
-            "fieldValidateRulesPattern": "(^[a-zA-Z0-9_]*$) "
+            "fieldValidateRulesPattern": "(^[a-zA-Z0-9_]*$)"
         }
     ],
     "changelogDate": "20170531124019",

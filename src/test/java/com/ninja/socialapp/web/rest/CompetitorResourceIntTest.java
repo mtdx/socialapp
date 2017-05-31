@@ -39,8 +39,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SocialappApp.class)
 public class CompetitorResourceIntTest {
 
-    private static final String DEFAULT_USERID = "8";
-    private static final String UPDATED_USERID = "57";
+    private static final String DEFAULT_USERID = "25";
+    private static final String UPDATED_USERID = "15";
 
     private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";

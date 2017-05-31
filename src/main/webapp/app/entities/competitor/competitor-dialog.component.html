@@ -16,40 +16,43 @@
             <label class="form-control-label" jhiTranslate="socialappApp.competitor.userid" for="field_userid">Userid</label>
             <input type="text" class="form-control" name="userid" id="field_userid"
                 [(ngModel)]="competitor.userid"
-            required maxlength="24" pattern="^\d+$" />
+            required minlength="4" maxlength="20" pattern="(^\d+$)" />
             <div [hidden]="!(editForm.controls.userid?.dirty && editForm.controls.userid?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.userid?.errors?.required" jhiTranslate="entity.validation.required">
                    This field is required.
                 </small>
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.userid?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 24 }">
-                   This field cannot be longer than 24 characters.
+                   [hidden]="!editForm.controls.userid?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 4 }">
+                   This field is required to be at least 4 characters.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.userid?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
+                   This field cannot be longer than 20 characters.
                 </small>
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.userid?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Userid' }">
                     This field should follow pattern for "Userid".
                 </small>
             </div>
-            <small>You can use <a href="http://gettwitterid.com/" target="_blank">gettwitterid.com</a> to get a competitor's twitter user ID.</small>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.competitor.username" for="field_username">Username</label>
             <input type="text" class="form-control" name="username" id="field_username"
                 [(ngModel)]="competitor.username"
-            required minlength="3" maxlength="24" pattern="^[a-zA-Z0-9_]*$" />
+            required minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" />
             <div [hidden]="!(editForm.controls.username?.dirty && editForm.controls.username?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.username?.errors?.required" jhiTranslate="entity.validation.required">
                    This field is required.
                 </small>
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.username?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 3 }">
-                   This field is required to be at least 3 characters.
+                   [hidden]="!editForm.controls.username?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 4 }">
+                   This field is required to be at least 4 characters.
                 </small>
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.username?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 24 }">
-                   This field cannot be longer than 24 characters.
+                   [hidden]="!editForm.controls.username?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 15 }">
+                   This field cannot be longer than 15 characters.
                 </small>
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.username?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Username' }">

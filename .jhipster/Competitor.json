@@ -7,11 +7,13 @@
             "fieldType": "String",
             "fieldValidateRules": [
                 "required",
+                "minlength",
                 "maxlength",
                 "pattern"
             ],
-            "fieldValidateRulesMaxlength": "24",
-            "fieldValidateRulesPattern": "^\\d+$"
+            "fieldValidateRulesMinlength": "4",
+            "fieldValidateRulesMaxlength": "20",
+            "fieldValidateRulesPattern": "(^\\d+$)"
         },
         {
             "fieldName": "username",
@@ -22,9 +24,9 @@
                 "maxlength",
                 "pattern"
             ],
-            "fieldValidateRulesMinlength": "3",
-            "fieldValidateRulesMaxlength": "24",
-            "fieldValidateRulesPattern": "^[a-zA-Z0-9_]*$"
+            "fieldValidateRulesMinlength": "4",
+            "fieldValidateRulesMaxlength": "15",
+            "fieldValidateRulesPattern": "(^[a-zA-Z0-9_]*$)"
         }
     ],
     "changelogDate": "20170531095952",

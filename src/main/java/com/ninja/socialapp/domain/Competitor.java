@@ -26,15 +26,15 @@ public class Competitor implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 24)
-    @Pattern(regexp = "^\\d+$")
-    @Column(name = "userid", length = 24, nullable = false)
+    @Size(min = 4, max = 20)
+    @Pattern(regexp = "(^\\d+$)")
+    @Column(name = "userid", length = 20, nullable = false)
     private String userid;
 
     @NotNull
-    @Size(min = 3, max = 24)
-    @Pattern(regexp = "^[a-zA-Z0-9_]*$")
-    @Column(name = "username", length = 24, nullable = false)
+    @Size(min = 4, max = 15)
+    @Pattern(regexp = "(^[a-zA-Z0-9_]*$)")
+    @Column(name = "username", length = 15, nullable = false)
     private String username;
 
     public Long getId() {

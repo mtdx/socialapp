@@ -21,11 +21,11 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="userid" type="varchar(24)">
+            <column name="userid" type="varchar(20)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="username" type="varchar(24)">
+            <column name="username" type="varchar(15)">
                 <constraints nullable="false" />
             </column>
 
