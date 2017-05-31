@@ -1,0 +1,33 @@
+{
+    "socialappApp": {
+        "twitterAccount" : {
+            "home": {
+                "title": "Twitter Accounts",
+                "createLabel": "Create a new Twitter Account",
+                "createOrEditLabel": "Create or edit a Twitter Account",
+                "search": "Search for Twitter Account"
+            },
+            "created": "A new Twitter Account is created with identifier {{ param }}",
+            "updated": "A Twitter Account is updated with identifier {{ param }}",
+            "deleted": "A Twitter Account is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Twitter Account {{ id }}?"
+            },
+            "detail": {
+                "title": "Twitter Account"
+            },
+            "email": "Email",
+            "consumerKey": "Consumer Key",
+            "consumerSecret": "Consumer Secret",
+            "accessToken": "Access Token",
+            "accessTokenSecret": "Access Token Secret",
+            "name": "Name",
+            "description": "Description",
+            "url": "Url",
+            "location": "Location",
+            "username": "Username",
+            "avatar": "Avatar",
+            "header": "Header"
+        }
+    }
+}

@@ -11,6 +11,7 @@
                 "header": "Headers",
                 "proxy": "Proxies",
                 "competitor": "Competitors",
+                "twitterAccount": "Accounts",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

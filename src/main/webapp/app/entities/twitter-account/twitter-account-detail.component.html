@@ -1,0 +1,73 @@
+
+<div *ngIf="twitterAccount">
+    <h2><span jhiTranslate="socialappApp.twitterAccount.detail.title">Twitter Account</span> {{twitterAccount.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="socialappApp.twitterAccount.email">Email</span></dt>
+        <dd>
+            <span>{{twitterAccount.email}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.consumerKey">Consumer Key</span></dt>
+        <dd>
+            <span>{{twitterAccount.consumerKey}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.consumerSecret">Consumer Secret</span></dt>
+        <dd>
+            <span>{{twitterAccount.consumerSecret}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.accessToken">Access Token</span></dt>
+        <dd>
+            <span>{{twitterAccount.accessToken}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.accessTokenSecret">Access Token Secret</span></dt>
+        <dd>
+            <span>{{twitterAccount.accessTokenSecret}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.name">Name</span></dt>
+        <dd>
+            <span>{{twitterAccount.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.description">Description</span></dt>
+        <dd>
+            <span>{{twitterAccount.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.url">Url</span></dt>
+        <dd>
+            <span>{{twitterAccount.url}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.location">Location</span></dt>
+        <dd>
+            <span>{{twitterAccount.location}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.username">Username</span></dt>
+        <dd>
+            <span>{{twitterAccount.username}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.avatar">Avatar</span></dt>
+        <dd>
+            <div *ngIf="twitterAccount.avatar">
+                <a [routerLink]="['/avatar', twitterAccount.avatar?.id]">{{twitterAccount.avatar?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.header">Header</span></dt>
+        <dd>
+            <div *ngIf="twitterAccount.header">
+                <a [routerLink]="['/header', twitterAccount.header?.id]">{{twitterAccount.header?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'twitter-account/'+ twitterAccount.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
