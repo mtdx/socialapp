@@ -15,7 +15,7 @@
 
         <createIndex tableName="twitter_account"
                      indexName="k_twitter_account_status">
-            <column name="status"/>
+            <column name="status" type="varchar(19)"/>
         </createIndex>
 
     </changeSet>
