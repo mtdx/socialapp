@@ -31,7 +31,6 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="status"><span jhiTranslate="socialappApp.twitterAccount.status">Status</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="email"><span jhiTranslate="socialappApp.twitterAccount.email">Email</span></th>
             <th jhiSortBy="name"><span jhiTranslate="socialappApp.twitterAccount.name">Name</span></th>
             <th jhiSortBy="url"><span jhiTranslate="socialappApp.twitterAccount.url">Url</span></th>
             <th jhiSortBy="username"><span jhiTranslate="socialappApp.twitterAccount.username">Username</span></th>
@@ -44,8 +43,11 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let twitterAccount of twitterAccounts ;trackBy: trackId">
                 <td><a [routerLink]="['../twitter-account', twitterAccount.id ]">{{twitterAccount.id}}</a></td>
-                <td jhiTranslate="{{'socialappApp.TwitterStatus.' + twitterAccount.status}}">{{twitterAccount.status}}</td>
-                <td>{{twitterAccount.email}}</td>
+                <td>
+                    <span class="badge {{twitterAccount.status}}" jhiTranslate="{{'socialappApp.TwitterStatus.' + twitterAccount.status}}">
+                        {{twitterAccount.status}}
+                    </span>
+                </td>
                 <td>{{twitterAccount.name}}</td>
                 <td>{{twitterAccount.url}}</td>
                 <td>{{twitterAccount.username}}</td>

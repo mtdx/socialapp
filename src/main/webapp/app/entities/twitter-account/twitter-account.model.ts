@@ -1,5 +1,5 @@
 
-const enum TwitterStatus {
+export const enum TwitterStatus {
     'IDLE',
     'PENDING_UPDATE',
     'LIKES_JOB'

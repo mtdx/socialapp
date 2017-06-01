@@ -1,0 +1,10 @@
+{
+    "socialappApp": {
+        "TwitterStatus" : {
+            "null": "",
+            "IDLE": "Idle",
+            "PENDING_UPDATE": "Pending Update",
+            "LIKES_JOB": "Likes Job"
+        }
+    }
+}
