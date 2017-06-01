@@ -2,6 +2,7 @@ package com.ninja.socialapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import com.ninja.socialapp.service.TwitterAccountService;
 import com.ninja.socialapp.web.rest.util.HeaderUtil;
 import com.ninja.socialapp.web.rest.util.PaginationUtil;
@@ -57,6 +58,7 @@ public class TwitterAccountResource {
         if (twitterAccount.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new twitterAccount cannot already have an ID")).body(null);
         }
+        twitterAccount.setStatus(TwitterStatus.PENDING_UPDATE);
         TwitterAccount result = twitterAccountService.save(twitterAccount);
         return ResponseEntity.created(new URI("/api/twitter-accounts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -79,6 +81,7 @@ public class TwitterAccountResource {
         if (twitterAccount.getId() == null) {
             return createTwitterAccount(twitterAccount);
         }
+        twitterAccount.setStatus(TwitterStatus.PENDING_UPDATE);
         TwitterAccount result = twitterAccountService.save(twitterAccount);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, twitterAccount.getId().toString()))

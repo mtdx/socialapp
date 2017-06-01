@@ -26,6 +26,7 @@
             "url": "Url",
             "location": "Location",
             "username": "Username",
+            "status": "Status",
             "avatar": "Avatar",
             "header": "Header",
             "proxy": "Proxy"

@@ -13,5 +13,10 @@
             <column name="proxy_id"/>
         </createIndex>
 
+        <createIndex tableName="twitter_account"
+                     indexName="k_twitter_account_status">
+            <column name="status"/>
+        </createIndex>
+
     </changeSet>
 </databaseChangeLog>

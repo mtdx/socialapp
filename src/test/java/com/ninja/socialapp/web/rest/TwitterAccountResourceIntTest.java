@@ -31,6 +31,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 /**
  * Test class for the TwitterAccountResource REST controller.
  *
@@ -69,6 +70,9 @@ public class TwitterAccountResourceIntTest {
 
     private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";
+
+    private static final TwitterStatus DEFAULT_STATUS = TwitterStatus.IDLE;
+    private static final TwitterStatus UPDATED_STATUS = TwitterStatus.PENDING_UPDATE;
 
     @Autowired
     private TwitterAccountRepository twitterAccountRepository;
@@ -122,7 +126,8 @@ public class TwitterAccountResourceIntTest {
             .description(DEFAULT_DESCRIPTION)
             .url(DEFAULT_URL)
             .location(DEFAULT_LOCATION)
-            .username(DEFAULT_USERNAME);
+            .username(DEFAULT_USERNAME)
+            .status(DEFAULT_STATUS);
         // Add required entity
         Proxy proxy = ProxyResourceIntTest.createEntity(em);
         em.persist(proxy);
@@ -162,6 +167,7 @@ public class TwitterAccountResourceIntTest {
         assertThat(testTwitterAccount.getUrl()).isEqualTo(DEFAULT_URL);
         assertThat(testTwitterAccount.getLocation()).isEqualTo(DEFAULT_LOCATION);
         assertThat(testTwitterAccount.getUsername()).isEqualTo(DEFAULT_USERNAME);
+        assertThat(testTwitterAccount.getStatus()).isEqualTo(DEFAULT_STATUS);
 
         // Validate the TwitterAccount in Elasticsearch
         TwitterAccount twitterAccountEs = twitterAccountSearchRepository.findOne(testTwitterAccount.getId());
@@ -333,7 +339,8 @@ public class TwitterAccountResourceIntTest {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())))
             .andExpect(jsonPath("$.[*].location").value(hasItem(DEFAULT_LOCATION.toString())))
-            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())));
+            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
 
     @Test
@@ -356,7 +363,8 @@ public class TwitterAccountResourceIntTest {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL.toString()))
             .andExpect(jsonPath("$.location").value(DEFAULT_LOCATION.toString()))
-            .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()));
+            .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -387,7 +395,8 @@ public class TwitterAccountResourceIntTest {
             .description(UPDATED_DESCRIPTION)
             .url(UPDATED_URL)
             .location(UPDATED_LOCATION)
-            .username(UPDATED_USERNAME);
+            .username(UPDATED_USERNAME)
+            .status(UPDATED_STATUS);
 
         restTwitterAccountMockMvc.perform(put("/api/twitter-accounts")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -408,6 +417,7 @@ public class TwitterAccountResourceIntTest {
         assertThat(testTwitterAccount.getUrl()).isEqualTo(UPDATED_URL);
         assertThat(testTwitterAccount.getLocation()).isEqualTo(UPDATED_LOCATION);
         assertThat(testTwitterAccount.getUsername()).isEqualTo(UPDATED_USERNAME);
+        assertThat(testTwitterAccount.getStatus()).isEqualTo(UPDATED_STATUS);
 
         // Validate the TwitterAccount in Elasticsearch
         TwitterAccount twitterAccountEs = twitterAccountSearchRepository.findOne(testTwitterAccount.getId());
@@ -474,7 +484,8 @@ public class TwitterAccountResourceIntTest {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())))
             .andExpect(jsonPath("$.[*].location").value(hasItem(DEFAULT_LOCATION.toString())))
-            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())));
+            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
 
     @Test

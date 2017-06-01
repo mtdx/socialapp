@@ -9,6 +9,8 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.ninja.socialapp.domain.enumeration.TwitterStatus;
+
 /**
  * A TwitterAccount.
  */
@@ -77,6 +79,10 @@ public class TwitterAccount implements Serializable {
     @Pattern(regexp = "(^[a-zA-Z0-9_]*$)")
     @Column(name = "username", length = 15, nullable = false)
     private String username;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private TwitterStatus status;
 
     @ManyToOne
     private Avatar avatar;
@@ -226,6 +232,19 @@ public class TwitterAccount implements Serializable {
         this.username = username;
     }
 
+    public TwitterStatus getStatus() {
+        return status;
+    }
+
+    public TwitterAccount status(TwitterStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(TwitterStatus status) {
+        this.status = status;
+    }
+
     public Avatar getAvatar() {
         return avatar;
     }
@@ -299,6 +318,7 @@ public class TwitterAccount implements Serializable {
             ", url='" + getUrl() + "'" +
             ", location='" + getLocation() + "'" +
             ", username='" + getUsername() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

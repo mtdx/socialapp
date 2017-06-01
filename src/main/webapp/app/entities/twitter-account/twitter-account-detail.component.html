@@ -44,6 +44,10 @@
         <dd>
             <span>{{twitterAccount.username}}</span>
         </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.status">Status</span></dt>
+        <dd>
+            <span jhiTranslate="{{'socialappApp.TwitterStatus.' + twitterAccount.status}}">{{twitterAccount.status}}</span>
+        </dd>
         <dt><span jhiTranslate="socialappApp.twitterAccount.avatar">Avatar</span></dt>
         <dd>
             <div *ngIf="twitterAccount.avatar">

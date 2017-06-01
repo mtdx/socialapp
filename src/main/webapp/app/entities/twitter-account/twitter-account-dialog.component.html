@@ -212,6 +212,14 @@
                 </small>
             </div>
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.status" for="field_status">Status</label>
+            <select class="form-control" name="status" [(ngModel)]="twitterAccount.status" id="field_status" >
+                <option value="IDLE" jhiTranslate="socialappApp.TwitterStatus.IDLE">IDLE</option>
+                <option value="PENDING_UPDATE" jhiTranslate="socialappApp.TwitterStatus.PENDING_UPDATE">PENDING_UPDATE</option>
+                <option value="LIKES_JOB" jhiTranslate="socialappApp.TwitterStatus.LIKES_JOB">LIKES_JOB</option>
+            </select>
+        </div>
 
         <div class="form-group">
             <label jhiTranslate="socialappApp.twitterAccount.avatar" for="field_avatar">Avatar</label>

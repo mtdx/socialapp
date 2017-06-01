@@ -136,6 +136,11 @@
             "fieldValidateRulesMinlength": "4",
             "fieldValidateRulesMaxlength": "15",
             "fieldValidateRulesPattern": "(^[a-zA-Z0-9_]*$)"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "TwitterStatus",
+            "fieldValues": "IDLE,PENDING_UPDATE,LIKES_JOB"
         }
     ],
     "changelogDate": "20170531124019",

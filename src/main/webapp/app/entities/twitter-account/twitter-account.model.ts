@@ -1,3 +1,10 @@
+
+const enum TwitterStatus {
+    'IDLE',
+    'PENDING_UPDATE',
+    'LIKES_JOB'
+
+};
 import { Avatar } from '../avatar';
 import { Header } from '../header';
 import { Proxy } from '../proxy';
@@ -14,6 +21,7 @@ export class TwitterAccount {
         public url?: string,
         public location?: string,
         public username?: string,
+        public status?: TwitterStatus,
         public avatar?: Avatar,
         public header?: Header,
         public proxy?: Proxy,
