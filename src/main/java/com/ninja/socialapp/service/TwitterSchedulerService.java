@@ -17,11 +17,8 @@ public class TwitterSchedulerService {
 
     private final TwitterAccountService twitterAccountService;
 
-    private final TwitterApiService twitterApiService;
-
-    public TwitterSchedulerService(TwitterAccountService twitterAccountService, TwitterApiService twitterApiService) {
+    public TwitterSchedulerService(TwitterAccountService twitterAccountService) {
         this.twitterAccountService = twitterAccountService;
-        this.twitterApiService = twitterApiService;
     }
 
     /**
@@ -36,7 +33,7 @@ public class TwitterSchedulerService {
         log.debug("Run scheduled update accounts {}");
         List<TwitterAccount> accounts = twitterAccountService.findByStatus(TwitterStatus.PENDING_UPDATE);
         for (TwitterAccount account : accounts){
-            twitterApiService.updateAccount(account);
+            new TwitterApiService().updateAccount(account);
         }
     }
 }
