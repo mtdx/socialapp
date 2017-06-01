@@ -1,6 +1,7 @@
 package com.ninja.socialapp.service;
 
 import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import com.ninja.socialapp.repository.TwitterAccountRepository;
 import com.ninja.socialapp.repository.search.TwitterAccountSearchRepository;
 import org.slf4j.Logger;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -91,5 +94,17 @@ public class TwitterAccountService {
         log.debug("Request to search for a page of TwitterAccounts for query {}", query);
         Page<TwitterAccount> result = twitterAccountSearchRepository.search(queryStringQuery(query), pageable);
         return result;
+    }
+
+    /**
+     *  Get twitterAccounts by status.
+     *
+     *  @param status the of the entities
+     *  @return the entities
+     */
+    @Transactional(readOnly = true)
+    public List<TwitterAccount> findByStatus(TwitterStatus status) {
+        log.debug("Request to get TwitterAccounts by status : {}", status);
+        return twitterAccountRepository.findByStatus(status);
     }
 }

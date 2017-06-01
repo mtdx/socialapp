@@ -18,14 +18,11 @@ import java.util.Date;
  * Service Implementation for managing Twitter API.
  */
 @Service
-@Transactional
 public class TwitterApiService {
 
   //  private final Twitter twitterClient;
 
    // private final TwitterAccount twitterAccount;
-
-    private final TwitterAccountRepository twitterAccountRepository;
 
   //  private final Proxy proxy;
 
@@ -35,14 +32,17 @@ public class TwitterApiService {
 
     private final Logger log = LoggerFactory.getLogger(TwitterApiService.class);
 
-    public TwitterApiService(TwitterAccountRepository twitterAccountRepository){
+    public TwitterApiService(){
         LocalDate localDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         currentMonth = localDate.getMonthValue();
         currentYear = localDate.getYear();
 
-      //  this.proxy = proxy;
-        this.twitterAccountRepository = twitterAccountRepository;
+        //  this.proxy = proxy;
        // this.twitterClient = getTwitterInstance();
+    }
+
+    public void setup(TwitterAccount twitterAccount, Proxy proxy){
+
     }
 
 //    private Twitter getTwitterInstance() {
