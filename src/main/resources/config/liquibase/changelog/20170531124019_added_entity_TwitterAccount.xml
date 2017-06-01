@@ -61,7 +61,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="status" type="varchar(19)">
+            <column name="status" type="varchar(20)">
                 <constraints nullable="true" />
             </column>
 
