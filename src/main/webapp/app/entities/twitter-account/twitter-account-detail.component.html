@@ -56,6 +56,12 @@
                 <a [routerLink]="['/header', twitterAccount.header?.id]">{{twitterAccount.header?.name}}</a>
             </div>
         </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.proxy">Proxy</span></dt>
+        <dd>
+            <div *ngIf="twitterAccount.proxy">
+                <a [routerLink]="['/proxy', twitterAccount.proxy?.id]">{{twitterAccount.proxy?.host}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"

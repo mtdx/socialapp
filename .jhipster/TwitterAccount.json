@@ -12,6 +12,15 @@
             "otherEntityName": "header",
             "relationshipType": "many-to-one",
             "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "proxy",
+            "otherEntityName": "proxy",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "host"
         }
     ],
     "fields": [

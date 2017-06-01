@@ -227,6 +227,18 @@
                 <option [ngValue]="headerOption.id === twitterAccount.header?.id ? twitterAccount.header : headerOption" *ngFor="let headerOption of headers; trackBy: trackHeaderById">{{headerOption.name}}</option>
             </select>
         </div>
+        <div class="form-group">
+            <label jhiTranslate="socialappApp.twitterAccount.proxy" for="field_proxy">Proxy</label>
+            <select class="form-control" id="field_proxy" name="proxy" [(ngModel)]="twitterAccount.proxy"  required>
+                <option [ngValue]="proxyOption.id === twitterAccount.proxy?.id ? twitterAccount.proxy : proxyOption" *ngFor="let proxyOption of proxies; trackBy: trackProxyById">{{proxyOption.host}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.proxy?.dirty && editForm.controls.proxy?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.proxy?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">

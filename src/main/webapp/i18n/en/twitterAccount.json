@@ -27,7 +27,8 @@
             "location": "Location",
             "username": "Username",
             "avatar": "Avatar",
-            "header": "Header"
+            "header": "Header",
+            "proxy": "Proxy"
         }
     }
 }

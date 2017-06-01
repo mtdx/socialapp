@@ -20,5 +20,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="header"/>
 
+        <addForeignKeyConstraint baseColumnNames="proxy_id"
+                                 baseTableName="twitter_account"
+                                 constraintName="fk_twitter_account_proxy_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="proxy"/>
+
     </changeSet>
 </databaseChangeLog>

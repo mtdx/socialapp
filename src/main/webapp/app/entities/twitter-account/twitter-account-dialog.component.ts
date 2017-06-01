@@ -11,6 +11,7 @@ import { TwitterAccountPopupService } from './twitter-account-popup.service';
 import { TwitterAccountService } from './twitter-account.service';
 import { Avatar, AvatarService } from '../avatar';
 import { Header, HeaderService } from '../header';
+import { Proxy, ProxyService } from '../proxy';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -27,12 +28,15 @@ export class TwitterAccountDialogComponent implements OnInit {
 
     headers: Header[];
 
+    proxies: Proxy[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: AlertService,
         private twitterAccountService: TwitterAccountService,
         private avatarService: AvatarService,
         private headerService: HeaderService,
+        private proxyService: ProxyService,
         private eventManager: EventManager
     ) {
     }
@@ -44,6 +48,8 @@ export class TwitterAccountDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => { this.avatars = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.headerService.query()
             .subscribe((res: ResponseWrapper) => { this.headers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.proxyService.query()
+            .subscribe((res: ResponseWrapper) => { this.proxies = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
     clear() {
         this.activeModal.dismiss('cancel');
@@ -95,6 +101,10 @@ export class TwitterAccountDialogComponent implements OnInit {
     }
 
     trackHeaderById(index: number, item: Header) {
+        return item.id;
+    }
+
+    trackProxyById(index: number, item: Proxy) {
         return item.id;
     }
 }

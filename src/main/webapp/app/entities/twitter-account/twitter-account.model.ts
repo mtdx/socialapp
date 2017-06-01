@@ -1,5 +1,6 @@
 import { Avatar } from '../avatar';
 import { Header } from '../header';
+import { Proxy } from '../proxy';
 export class TwitterAccount {
     constructor(
         public id?: number,
@@ -15,6 +16,7 @@ export class TwitterAccount {
         public username?: string,
         public avatar?: Avatar,
         public header?: Header,
+        public proxy?: Proxy,
     ) {
     }
 }

@@ -84,6 +84,10 @@ public class TwitterAccount implements Serializable {
     @ManyToOne
     private Header header;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    private Proxy proxy;
+
     public Long getId() {
         return id;
     }
@@ -246,6 +250,19 @@ public class TwitterAccount implements Serializable {
 
     public void setHeader(Header header) {
         this.header = header;
+    }
+
+    public Proxy getProxy() {
+        return proxy;
+    }
+
+    public TwitterAccount proxy(Proxy proxy) {
+        this.proxy = proxy;
+        return this;
+    }
+
+    public void setProxy(Proxy proxy) {
+        this.proxy = proxy;
     }
 
     @Override

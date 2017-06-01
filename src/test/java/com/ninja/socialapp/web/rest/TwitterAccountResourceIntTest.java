@@ -3,6 +3,7 @@ package com.ninja.socialapp.web.rest;
 import com.ninja.socialapp.SocialappApp;
 
 import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.Proxy;
 import com.ninja.socialapp.repository.TwitterAccountRepository;
 import com.ninja.socialapp.service.TwitterAccountService;
 import com.ninja.socialapp.repository.search.TwitterAccountSearchRepository;
@@ -122,6 +123,11 @@ public class TwitterAccountResourceIntTest {
             .url(DEFAULT_URL)
             .location(DEFAULT_LOCATION)
             .username(DEFAULT_USERNAME);
+        // Add required entity
+        Proxy proxy = ProxyResourceIntTest.createEntity(em);
+        em.persist(proxy);
+        em.flush();
+        twitterAccount.setProxy(proxy);
         return twitterAccount;
     }
 

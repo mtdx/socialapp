@@ -36,6 +36,7 @@
             <th jhiSortBy="username"><span jhiTranslate="socialappApp.twitterAccount.username">Username</span></th>
             <th jhiSortBy="avatar.name"><span jhiTranslate="socialappApp.twitterAccount.avatar">Avatar</span></th>
             <th jhiSortBy="header.name"><span jhiTranslate="socialappApp.twitterAccount.header">Header</span></th>
+            <th jhiSortBy="proxy.host"><span jhiTranslate="socialappApp.twitterAccount.proxy">Proxy</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -54,6 +55,11 @@
                 <td>
                     <div *ngIf="twitterAccount.header">
                         <a [routerLink]="['../header', twitterAccount.header?.id ]" >{{twitterAccount.header?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="twitterAccount.proxy">
+                        <a [routerLink]="['../proxy', twitterAccount.proxy?.id ]" >{{twitterAccount.proxy?.host}}</a>
                     </div>
                 </td>
                 <td class="text-right">
