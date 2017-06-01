@@ -36,7 +36,7 @@ public class TwitterSchedulerService {
         log.debug("Run scheduled update accounts {}");
         List<TwitterAccount> accounts = twitterAccountService.findByStatus(TwitterStatus.PENDING_UPDATE);
         for (TwitterAccount account : accounts){
-            log.debug(account.getEmail());
+            twitterApiService.updateAccount(account);
         }
     }
 }

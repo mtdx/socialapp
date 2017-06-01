@@ -5,6 +5,7 @@ import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.repository.TwitterAccountRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import twitter4j.*;
@@ -20,12 +21,6 @@ import java.util.Date;
 @Service
 public class TwitterApiService {
 
-  //  private final Twitter twitterClient;
-
-   // private final TwitterAccount twitterAccount;
-
-  //  private final Proxy proxy;
-
     private final int currentMonth;
 
     private final int currentYear;
@@ -36,14 +31,14 @@ public class TwitterApiService {
         LocalDate localDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         currentMonth = localDate.getMonthValue();
         currentYear = localDate.getYear();
+    }
 
-        //  this.proxy = proxy;
+    @Async
+    public void updateAccount(final TwitterAccount twitterAccount){
+        // final Twitter twitterClient;
        // this.twitterClient = getTwitterInstance();
     }
 
-    public void setup(TwitterAccount twitterAccount, Proxy proxy){
-
-    }
 
 //    private Twitter getTwitterInstance() {
 //        ConfigurationBuilder cb = new ConfigurationBuilder();
