@@ -1,0 +1,28 @@
+{
+    "socialappApp": {
+        "twitterError" : {
+            "home": {
+                "title": "Twitter Errors",
+                "createLabel": "Twitter Error erstellen",
+                "createOrEditLabel": "Twitter Error erstellen oder bearbeiten",
+                "search": "Suche nach Twitter Error"
+            },
+            "created": "Twitter Error erstellt mit ID {{ param }}",
+            "updated": "Twitter Error aktualisiert mit ID {{ param }}",
+            "deleted": "Twitter Error gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Twitter Error {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Twitter Error"
+            },
+            "type": "Type",
+            "errorCode": "Error Code",
+            "errorMessage": "Error Message",
+            "exceptionCode": "Exception Code",
+            "message": "Message",
+            "rateLimitStatus": "Rate Limit Status",
+            "statusCode": "Status Code"
+        }
+    }
+}

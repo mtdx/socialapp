@@ -5,6 +5,7 @@ import { SocialappHeaderModule } from './header/header.module';
 import { SocialappProxyModule } from './proxy/proxy.module';
 import { SocialappCompetitorModule } from './competitor/competitor.module';
 import { SocialappTwitterAccountModule } from './twitter-account/twitter-account.module';
+import { SocialappTwitterErrorModule } from './twitter-error/twitter-error.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -14,6 +15,7 @@ import { SocialappTwitterAccountModule } from './twitter-account/twitter-account
         SocialappProxyModule,
         SocialappCompetitorModule,
         SocialappTwitterAccountModule,
+        SocialappTwitterErrorModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

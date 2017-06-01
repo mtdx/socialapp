@@ -1,0 +1,49 @@
+
+<div *ngIf="twitterError">
+    <h2><span jhiTranslate="socialappApp.twitterError.detail.title">Twitter Error</span> {{twitterError.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="socialappApp.twitterError.type">Type</span></dt>
+        <dd>
+            <span>{{twitterError.type}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterError.errorCode">Error Code</span></dt>
+        <dd>
+            <span>{{twitterError.errorCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterError.errorMessage">Error Message</span></dt>
+        <dd>
+            <span>{{twitterError.errorMessage}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterError.exceptionCode">Exception Code</span></dt>
+        <dd>
+            <span>{{twitterError.exceptionCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterError.message">Message</span></dt>
+        <dd>
+            <span>{{twitterError.message}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterError.rateLimitStatus">Rate Limit Status</span></dt>
+        <dd>
+            <span>{{twitterError.rateLimitStatus}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterError.statusCode">Status Code</span></dt>
+        <dd>
+            <span>{{twitterError.statusCode}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'twitter-error/'+ twitterError.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

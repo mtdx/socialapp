@@ -48,6 +48,7 @@ public class CacheConfiguration {
             cm.createCache(com.ninja.socialapp.domain.Proxy.class.getName(), jcacheConfiguration);
             cm.createCache(com.ninja.socialapp.domain.Competitor.class.getName(), jcacheConfiguration);
             cm.createCache(com.ninja.socialapp.domain.TwitterAccount.class.getName(), jcacheConfiguration);
+            cm.createCache(com.ninja.socialapp.domain.TwitterError.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

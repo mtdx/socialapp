@@ -1,0 +1,28 @@
+{
+    "socialappApp": {
+        "twitterError" : {
+            "home": {
+                "title": "Twitter Errors",
+                "createLabel": "Create a new Twitter Error",
+                "createOrEditLabel": "Create or edit a Twitter Error",
+                "search": "Search for Twitter Error"
+            },
+            "created": "A new Twitter Error is created with identifier {{ param }}",
+            "updated": "A Twitter Error is updated with identifier {{ param }}",
+            "deleted": "A Twitter Error is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Twitter Error {{ id }}?"
+            },
+            "detail": {
+                "title": "Twitter Error"
+            },
+            "type": "Type",
+            "errorCode": "Error Code",
+            "errorMessage": "Error Message",
+            "exceptionCode": "Exception Code",
+            "message": "Message",
+            "rateLimitStatus": "Rate Limit Status",
+            "statusCode": "Status Code"
+        }
+    }
+}
