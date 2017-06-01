@@ -247,3 +247,7 @@ Social Buttons
 .badge.LIKES_JOB {
     background-color: #f0ad4e;
 }
+
+.table-responsive .table.table-striped .text-right .flex-btn-group-container span.hidden-md-down{
+    display: none;
+}

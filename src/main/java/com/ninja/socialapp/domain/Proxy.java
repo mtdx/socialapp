@@ -27,6 +27,7 @@ public class Proxy implements Serializable {
 
     @NotNull
     @Size(min = 7, max = 40)
+    @Pattern(regexp = "(^(?:(?:2[0-4]\\d|25[0-5]|1\\d{2}|[1-9]?\\d)\\.){3}(?:2[0-4]\\d|25[0-5]|1\\d{2}|[1-9]?\\d)$)")
     @Column(name = "host", length = 40, nullable = false)
     private String host;
 

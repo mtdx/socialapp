@@ -8,10 +8,12 @@
             "fieldValidateRules": [
                 "required",
                 "minlength",
-                "maxlength"
+                "maxlength",
+                "pattern"
             ],
             "fieldValidateRulesMinlength": "7",
-            "fieldValidateRulesMaxlength": "40"
+            "fieldValidateRulesMaxlength": "40",
+            "fieldValidateRulesPattern": "(^(?:(?:2[0-4]\\d|25[0-5]|1\\d{2}|[1-9]?\\d)\\.){3}(?:2[0-4]\\d|25[0-5]|1\\d{2}|[1-9]?\\d)$)"
         },
         {
             "fieldName": "port",

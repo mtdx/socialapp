@@ -16,7 +16,7 @@
             <label class="form-control-label" jhiTranslate="socialappApp.proxy.host" for="field_host">Host</label>
             <input type="text" class="form-control" name="host" id="field_host"
                 [(ngModel)]="proxy.host"
-            required minlength="7" maxlength="40" />
+            required minlength="7" maxlength="40" pattern="(^(?:(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)\.){3}(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)$)" />
             <div [hidden]="!(editForm.controls.host?.dirty && editForm.controls.host?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.host?.errors?.required" jhiTranslate="entity.validation.required">
@@ -29,6 +29,10 @@
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.host?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
                    This field cannot be longer than 40 characters.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.host?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Host' }">
+                    This field should follow pattern for "Host".
                 </small>
             </div>
         </div>
