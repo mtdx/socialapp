@@ -27,11 +27,11 @@ public class TwitterSchedulerService {
     /**
      * We check for newly added/updated twitter accounts and we modify them via the twitter API
      * <p>
-     * This is scheduled to get fired every 30 seconds.
+     * This is scheduled to get fired every 59 seconds.
      * </p>
      */
     @Async
-    @Scheduled(cron = "*/30 * * * * *" )
+    @Scheduled(cron = "*/59 * * * * *" )
     public void updateAccounts() {
         log.debug("Run scheduled update accounts {}");
         List<TwitterAccount> accounts = twitterAccountService.findByStatus(TwitterStatus.PENDING_UPDATE);

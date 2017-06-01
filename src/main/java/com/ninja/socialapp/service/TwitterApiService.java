@@ -1,13 +1,10 @@
 package com.ninja.socialapp.service;
 
-import com.ninja.socialapp.domain.Proxy;
 import com.ninja.socialapp.domain.TwitterAccount;
-import com.ninja.socialapp.repository.TwitterAccountRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -35,33 +32,30 @@ public class TwitterApiService {
 
     @Async
     public void updateAccount(final TwitterAccount twitterAccount){
-        // final Twitter twitterClient;
-       // this.twitterClient = getTwitterInstance();
+        log.debug("Request to update a twitter accounts via API: {}", twitterAccount.getEmail());
+        final Twitter twitterClient = getTwitterInstance(twitterAccount);
+        try {
+             twitterClient.updateProfile(twitterAccount.getName(), twitterAccount.getUrl(),
+                twitterAccount.getLocation(), twitterAccount.getDescription());
+        } catch (TwitterException ex) {
+            log.error("Request to update a twitter account (" + twitterAccount.getId() +  "): {} ", ex);
+        }
+    }
+
+    private Twitter getTwitterInstance(TwitterAccount twitterAccount) {
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(false)
+            .setOAuthConsumerKey(twitterAccount.getConsumerKey())
+            .setOAuthConsumerSecret(twitterAccount.getConsumerSecret())
+            .setOAuthAccessToken(twitterAccount.getAccessToken())
+            .setOAuthAccessTokenSecret(twitterAccount.getAccessTokenSecret());
+        cb.setHttpProxyHost(twitterAccount.getProxy().getHost())
+            .setHttpProxyPort(twitterAccount.getProxy().getPort())
+            .setHttpProxyUser(twitterAccount.getProxy().getUsername())
+            .setHttpProxyPassword(twitterAccount.getProxy().getPassword());
+
+        return new TwitterFactory(cb.build()).getInstance();
     }
 
 
-//    private Twitter getTwitterInstance() {
-//        ConfigurationBuilder cb = new ConfigurationBuilder();
-//        cb.setDebugEnabled(false)
-//            .setOAuthConsumerKey(twitterAccount.getConsumerKey())
-//            .setOAuthConsumerSecret(twitterAccount.getConsumerSecret())
-//            .setOAuthAccessToken(twitterAccount.getAccessToken())
-//            .setOAuthAccessTokenSecret(twitterAccount.getAccessTokenSecret());
-//        cb.setHttpProxyHost(proxy.getHost())
-//            .setHttpProxyPort(proxy.getPort())
-//            .setHttpProxyUser(proxy.getUsername())
-//            .setHttpProxyPassword(proxy.getPassword());
-//
-//        TwitterFactory twitter = new TwitterFactory(cb.build());
-//        return twitter.getInstance();
-//    }
-//
-//    public User updateProfile() {
-//        try {
-//            return twitterClient.updateProfile(twitterAccount.getName(), twitterAccount.getUrl(),
-//                twitterAccount.getLocation(), twitterAccount.getDescription());
-//        } catch (TwitterException ex) {
-//        }
-//        return null;
-//    }
 }
