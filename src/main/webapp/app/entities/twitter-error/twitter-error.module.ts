@@ -7,17 +7,11 @@ import {
     TwitterErrorPopupService,
     TwitterErrorComponent,
     TwitterErrorDetailComponent,
-    TwitterErrorDialogComponent,
-    TwitterErrorPopupComponent,
-    TwitterErrorDeletePopupComponent,
-    TwitterErrorDeleteDialogComponent,
     twitterErrorRoute,
-    twitterErrorPopupRoute,
 } from './';
 
 const ENTITY_STATES = [
-    ...twitterErrorRoute,
-    ...twitterErrorPopupRoute,
+    ...twitterErrorRoute
 ];
 
 @NgModule({
@@ -28,17 +22,9 @@ const ENTITY_STATES = [
     declarations: [
         TwitterErrorComponent,
         TwitterErrorDetailComponent,
-        TwitterErrorDialogComponent,
-        TwitterErrorDeleteDialogComponent,
-        TwitterErrorPopupComponent,
-        TwitterErrorDeletePopupComponent,
     ],
     entryComponents: [
         TwitterErrorComponent,
-        TwitterErrorDialogComponent,
-        TwitterErrorPopupComponent,
-        TwitterErrorDeleteDialogComponent,
-        TwitterErrorDeletePopupComponent,
     ],
     providers: [
         TwitterErrorService,

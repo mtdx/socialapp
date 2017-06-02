@@ -13,20 +13,6 @@ export class TwitterErrorService {
 
     constructor(private http: Http) { }
 
-    create(twitterError: TwitterError): Observable<TwitterError> {
-        const copy = this.convert(twitterError);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            return res.json();
-        });
-    }
-
-    update(twitterError: TwitterError): Observable<TwitterError> {
-        const copy = this.convert(twitterError);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            return res.json();
-        });
-    }
-
     find(id: number): Observable<TwitterError> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             return res.json();
@@ -37,10 +23,6 @@ export class TwitterErrorService {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
             .map((res: Response) => this.convertResponse(res));
-    }
-
-    delete(id: number): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
     search(req?: any): Observable<ResponseWrapper> {
