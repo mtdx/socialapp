@@ -36,7 +36,11 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let twitterError of twitterErrors ;trackBy: trackId">
                 <td><a [routerLink]="['../twitter-error', twitterError.id ]">{{twitterError.id}}</a></td>
-                <td jhiTranslate="{{'socialappApp.TwitterErrorType.' + twitterError.type}}">{{twitterError.type}}</td>
+                <td>
+                    <span class="badge {{twitterError.type}}" jhiTranslate="{{'socialappApp.TwitterErrorType.' + twitterError.type}}">
+                        {{twitterError.type}}
+                    </span>
+                </td>
                 <td>{{twitterError.errorCode}}</td>
                 <td>{{twitterError.errorMessage}}</td>
                 <td>{{twitterError.message}}</td>

@@ -236,16 +236,24 @@ Social Buttons
 }
 /* jhipster-needle-css-add-main JHipster will add new css style */
 
-.badge.PENDING_UPDATE {
+.badge.PENDING_UPDATE, .badge.UPDATE {
     background-color: #636c72;
 }
 
-.badge.IDLE {
+.badge.IDLE, .badge.LIKE {
     background-color: #5cb85c;
 }
 
-.badge.LIKES_JOB {
+.badge.LIKES_JOB, .badge.LIKE {
     background-color: #f0ad4e;
+}
+
+.badge.RETWEET {
+    background-color: #0275d8;
+}
+
+.badge.TWEET {
+    background-color: #5bc0de;
 }
 
 .table-responsive .table.table-striped .text-right .flex-btn-group-container span.hidden-md-down{
