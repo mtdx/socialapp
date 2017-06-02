@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
             last: 0
         };
         this.predicate = 'id';
-        this.reverse = true;
+        this.reverse = false;
         this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
     }
 
