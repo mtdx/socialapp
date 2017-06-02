@@ -19,7 +19,6 @@
             "type": "Type",
             "errorCode": "Error Code",
             "errorMessage": "Error Message",
-            "exceptionCode": "Exception Code",
             "message": "Message",
             "rateLimitStatus": "Rate Limit Status",
             "statusCode": "Status Code"

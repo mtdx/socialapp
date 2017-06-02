@@ -30,6 +30,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
 /**
  * Test class for the TwitterErrorResource REST controller.
  *
@@ -39,17 +40,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SocialappApp.class)
 public class TwitterErrorResourceIntTest {
 
-    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
-    private static final String UPDATED_TYPE = "BBBBBBBBBB";
+    private static final TwitterErrorType DEFAULT_TYPE = TwitterErrorType.UPDATE;
+    private static final TwitterErrorType UPDATED_TYPE = TwitterErrorType.LIKE;
 
     private static final Integer DEFAULT_ERROR_CODE = 1;
     private static final Integer UPDATED_ERROR_CODE = 2;
 
     private static final String DEFAULT_ERROR_MESSAGE = "AAAAAAAAAA";
     private static final String UPDATED_ERROR_MESSAGE = "BBBBBBBBBB";
-
-    private static final String DEFAULT_EXCEPTION_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_EXCEPTION_CODE = "BBBBBBBBBB";
 
     private static final String DEFAULT_MESSAGE = "AAAAAAAAAA";
     private static final String UPDATED_MESSAGE = "BBBBBBBBBB";
@@ -106,7 +104,6 @@ public class TwitterErrorResourceIntTest {
             .type(DEFAULT_TYPE)
             .errorCode(DEFAULT_ERROR_CODE)
             .errorMessage(DEFAULT_ERROR_MESSAGE)
-            .exceptionCode(DEFAULT_EXCEPTION_CODE)
             .message(DEFAULT_MESSAGE)
             .rateLimitStatus(DEFAULT_RATE_LIMIT_STATUS)
             .statusCode(DEFAULT_STATUS_CODE);
@@ -117,53 +114,6 @@ public class TwitterErrorResourceIntTest {
     public void initTest() {
         twitterErrorSearchRepository.deleteAll();
         twitterError = createEntity(em);
-    }
-
-    @Test
-    @Transactional
-    public void createTwitterError() throws Exception {
-        int databaseSizeBeforeCreate = twitterErrorRepository.findAll().size();
-
-        // Create the TwitterError
-        restTwitterErrorMockMvc.perform(post("/api/twitter-errors")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(twitterError)))
-            .andExpect(status().isCreated());
-
-        // Validate the TwitterError in the database
-        List<TwitterError> twitterErrorList = twitterErrorRepository.findAll();
-        assertThat(twitterErrorList).hasSize(databaseSizeBeforeCreate + 1);
-        TwitterError testTwitterError = twitterErrorList.get(twitterErrorList.size() - 1);
-        assertThat(testTwitterError.getType()).isEqualTo(DEFAULT_TYPE);
-        assertThat(testTwitterError.getErrorCode()).isEqualTo(DEFAULT_ERROR_CODE);
-        assertThat(testTwitterError.getErrorMessage()).isEqualTo(DEFAULT_ERROR_MESSAGE);
-        assertThat(testTwitterError.getExceptionCode()).isEqualTo(DEFAULT_EXCEPTION_CODE);
-        assertThat(testTwitterError.getMessage()).isEqualTo(DEFAULT_MESSAGE);
-        assertThat(testTwitterError.getRateLimitStatus()).isEqualTo(DEFAULT_RATE_LIMIT_STATUS);
-        assertThat(testTwitterError.getStatusCode()).isEqualTo(DEFAULT_STATUS_CODE);
-
-        // Validate the TwitterError in Elasticsearch
-        TwitterError twitterErrorEs = twitterErrorSearchRepository.findOne(testTwitterError.getId());
-        assertThat(twitterErrorEs).isEqualToComparingFieldByField(testTwitterError);
-    }
-
-    @Test
-    @Transactional
-    public void createTwitterErrorWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = twitterErrorRepository.findAll().size();
-
-        // Create the TwitterError with an existing ID
-        twitterError.setId(1L);
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restTwitterErrorMockMvc.perform(post("/api/twitter-errors")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(twitterError)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the Alice in the database
-        List<TwitterError> twitterErrorList = twitterErrorRepository.findAll();
-        assertThat(twitterErrorList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
@@ -180,7 +130,6 @@ public class TwitterErrorResourceIntTest {
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].errorCode").value(hasItem(DEFAULT_ERROR_CODE)))
             .andExpect(jsonPath("$.[*].errorMessage").value(hasItem(DEFAULT_ERROR_MESSAGE.toString())))
-            .andExpect(jsonPath("$.[*].exceptionCode").value(hasItem(DEFAULT_EXCEPTION_CODE.toString())))
             .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE.toString())))
             .andExpect(jsonPath("$.[*].rateLimitStatus").value(hasItem(DEFAULT_RATE_LIMIT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].statusCode").value(hasItem(DEFAULT_STATUS_CODE)));
@@ -200,7 +149,6 @@ public class TwitterErrorResourceIntTest {
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.errorCode").value(DEFAULT_ERROR_CODE))
             .andExpect(jsonPath("$.errorMessage").value(DEFAULT_ERROR_MESSAGE.toString()))
-            .andExpect(jsonPath("$.exceptionCode").value(DEFAULT_EXCEPTION_CODE.toString()))
             .andExpect(jsonPath("$.message").value(DEFAULT_MESSAGE.toString()))
             .andExpect(jsonPath("$.rateLimitStatus").value(DEFAULT_RATE_LIMIT_STATUS.toString()))
             .andExpect(jsonPath("$.statusCode").value(DEFAULT_STATUS_CODE));
@@ -212,87 +160,6 @@ public class TwitterErrorResourceIntTest {
         // Get the twitterError
         restTwitterErrorMockMvc.perform(get("/api/twitter-errors/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
-    }
-
-    @Test
-    @Transactional
-    public void updateTwitterError() throws Exception {
-        // Initialize the database
-        twitterErrorService.save(twitterError);
-
-        int databaseSizeBeforeUpdate = twitterErrorRepository.findAll().size();
-
-        // Update the twitterError
-        TwitterError updatedTwitterError = twitterErrorRepository.findOne(twitterError.getId());
-        updatedTwitterError
-            .type(UPDATED_TYPE)
-            .errorCode(UPDATED_ERROR_CODE)
-            .errorMessage(UPDATED_ERROR_MESSAGE)
-            .exceptionCode(UPDATED_EXCEPTION_CODE)
-            .message(UPDATED_MESSAGE)
-            .rateLimitStatus(UPDATED_RATE_LIMIT_STATUS)
-            .statusCode(UPDATED_STATUS_CODE);
-
-        restTwitterErrorMockMvc.perform(put("/api/twitter-errors")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedTwitterError)))
-            .andExpect(status().isOk());
-
-        // Validate the TwitterError in the database
-        List<TwitterError> twitterErrorList = twitterErrorRepository.findAll();
-        assertThat(twitterErrorList).hasSize(databaseSizeBeforeUpdate);
-        TwitterError testTwitterError = twitterErrorList.get(twitterErrorList.size() - 1);
-        assertThat(testTwitterError.getType()).isEqualTo(UPDATED_TYPE);
-        assertThat(testTwitterError.getErrorCode()).isEqualTo(UPDATED_ERROR_CODE);
-        assertThat(testTwitterError.getErrorMessage()).isEqualTo(UPDATED_ERROR_MESSAGE);
-        assertThat(testTwitterError.getExceptionCode()).isEqualTo(UPDATED_EXCEPTION_CODE);
-        assertThat(testTwitterError.getMessage()).isEqualTo(UPDATED_MESSAGE);
-        assertThat(testTwitterError.getRateLimitStatus()).isEqualTo(UPDATED_RATE_LIMIT_STATUS);
-        assertThat(testTwitterError.getStatusCode()).isEqualTo(UPDATED_STATUS_CODE);
-
-        // Validate the TwitterError in Elasticsearch
-        TwitterError twitterErrorEs = twitterErrorSearchRepository.findOne(testTwitterError.getId());
-        assertThat(twitterErrorEs).isEqualToComparingFieldByField(testTwitterError);
-    }
-
-    @Test
-    @Transactional
-    public void updateNonExistingTwitterError() throws Exception {
-        int databaseSizeBeforeUpdate = twitterErrorRepository.findAll().size();
-
-        // Create the TwitterError
-
-        // If the entity doesn't have an ID, it will be created instead of just being updated
-        restTwitterErrorMockMvc.perform(put("/api/twitter-errors")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(twitterError)))
-            .andExpect(status().isCreated());
-
-        // Validate the TwitterError in the database
-        List<TwitterError> twitterErrorList = twitterErrorRepository.findAll();
-        assertThat(twitterErrorList).hasSize(databaseSizeBeforeUpdate + 1);
-    }
-
-    @Test
-    @Transactional
-    public void deleteTwitterError() throws Exception {
-        // Initialize the database
-        twitterErrorService.save(twitterError);
-
-        int databaseSizeBeforeDelete = twitterErrorRepository.findAll().size();
-
-        // Get the twitterError
-        restTwitterErrorMockMvc.perform(delete("/api/twitter-errors/{id}", twitterError.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
-            .andExpect(status().isOk());
-
-        // Validate Elasticsearch is empty
-        boolean twitterErrorExistsInEs = twitterErrorSearchRepository.exists(twitterError.getId());
-        assertThat(twitterErrorExistsInEs).isFalse();
-
-        // Validate the database is empty
-        List<TwitterError> twitterErrorList = twitterErrorRepository.findAll();
-        assertThat(twitterErrorList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
     @Test
@@ -309,7 +176,6 @@ public class TwitterErrorResourceIntTest {
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].errorCode").value(hasItem(DEFAULT_ERROR_CODE)))
             .andExpect(jsonPath("$.[*].errorMessage").value(hasItem(DEFAULT_ERROR_MESSAGE.toString())))
-            .andExpect(jsonPath("$.[*].exceptionCode").value(hasItem(DEFAULT_EXCEPTION_CODE.toString())))
             .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE.toString())))
             .andExpect(jsonPath("$.[*].rateLimitStatus").value(hasItem(DEFAULT_RATE_LIMIT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].statusCode").value(hasItem(DEFAULT_STATUS_CODE)));

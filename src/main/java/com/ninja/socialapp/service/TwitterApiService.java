@@ -2,6 +2,7 @@ package com.ninja.socialapp.service;
 
 import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.domain.TwitterError;
+import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,10 +68,9 @@ public class TwitterApiService {
                 twitterAccountService.save(twitterAccount);
             } catch (TwitterException ex) {
                 TwitterError twitterError = new TwitterError();
-                twitterError.setType("Update");
+                twitterError.setType(TwitterErrorType.UPDATE);
                 twitterError.setErrorCode(ex.getErrorCode());
                 twitterError.setErrorMessage(ex.getErrorMessage());
-                twitterError.setExceptionCode(ex.getExceptionCode());
                 twitterError.setMessage(ex.getMessage());
                 if(ex.getRateLimitStatus() != null) {
                     twitterError.setRateLimitStatus(String.format("%d / %d",

@@ -33,10 +33,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="exception_code" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
             <column name="message" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -51,6 +47,6 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

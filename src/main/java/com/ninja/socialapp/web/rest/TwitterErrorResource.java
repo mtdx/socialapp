@@ -3,7 +3,6 @@ package com.ninja.socialapp.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.ninja.socialapp.domain.TwitterError;
 import com.ninja.socialapp.service.TwitterErrorService;
-import com.ninja.socialapp.web.rest.util.HeaderUtil;
 import com.ninja.socialapp.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -16,15 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing TwitterError.

@@ -9,6 +9,8 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
+
 /**
  * A TwitterError.
  */
@@ -25,18 +27,15 @@ public class TwitterError implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Size(max = 20)
-    @Column(name = "jhi_type", length = 20)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "jhi_type")
+    private TwitterErrorType type;
 
     @Column(name = "error_code")
     private Integer errorCode;
 
     @Column(name = "error_message")
     private String errorMessage;
-
-    @Column(name = "exception_code")
-    private String exceptionCode;
 
     @Column(name = "message")
     private String message;
@@ -56,16 +55,16 @@ public class TwitterError implements Serializable {
         this.id = id;
     }
 
-    public String getType() {
+    public TwitterErrorType getType() {
         return type;
     }
 
-    public TwitterError type(String type) {
+    public TwitterError type(TwitterErrorType type) {
         this.type = type;
         return this;
     }
 
-    public void setType(String type) {
+    public void setType(TwitterErrorType type) {
         this.type = type;
     }
 
@@ -93,19 +92,6 @@ public class TwitterError implements Serializable {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
-    }
-
-    public String getExceptionCode() {
-        return exceptionCode;
-    }
-
-    public TwitterError exceptionCode(String exceptionCode) {
-        this.exceptionCode = exceptionCode;
-        return this;
-    }
-
-    public void setExceptionCode(String exceptionCode) {
-        this.exceptionCode = exceptionCode;
     }
 
     public String getMessage() {
@@ -174,7 +160,6 @@ public class TwitterError implements Serializable {
             ", type='" + getType() + "'" +
             ", errorCode='" + getErrorCode() + "'" +
             ", errorMessage='" + getErrorMessage() + "'" +
-            ", exceptionCode='" + getExceptionCode() + "'" +
             ", message='" + getMessage() + "'" +
             ", rateLimitStatus='" + getRateLimitStatus() + "'" +
             ", statusCode='" + getStatusCode() + "'" +

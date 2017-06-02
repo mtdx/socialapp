@@ -4,11 +4,8 @@
     "fields": [
         {
             "fieldName": "type",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 20
+            "fieldType": "TwitterErrorType",
+            "fieldValues": "UPDATE,LIKE,RETWEET,TWEET"
         },
         {
             "fieldName": "errorCode",
@@ -16,10 +13,6 @@
         },
         {
             "fieldName": "errorMessage",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "exceptionCode",
             "fieldType": "String"
         },
         {

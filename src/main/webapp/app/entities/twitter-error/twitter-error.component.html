@@ -27,7 +27,6 @@
             <th jhiSortBy="type"><span jhiTranslate="socialappApp.twitterError.type">Type</span></th>
             <th jhiSortBy="errorCode"><span jhiTranslate="socialappApp.twitterError.errorCode">Error Code</span></th>
             <th jhiSortBy="errorMessage"><span jhiTranslate="socialappApp.twitterError.errorMessage">Error Message</span></th>
-            <th jhiSortBy="exceptionCode"><span jhiTranslate="socialappApp.twitterError.exceptionCode">Exception Code</span></th>
             <th jhiSortBy="message"><span jhiTranslate="socialappApp.twitterError.message">Message</span></th>
             <th jhiSortBy="rateLimitStatus"><span jhiTranslate="socialappApp.twitterError.rateLimitStatus">Rate Limit Status</span></th>
             <th jhiSortBy="statusCode"><span jhiTranslate="socialappApp.twitterError.statusCode">Status Code</span></th>
@@ -37,10 +36,9 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let twitterError of twitterErrors ;trackBy: trackId">
                 <td><a [routerLink]="['../twitter-error', twitterError.id ]">{{twitterError.id}}</a></td>
-                <td>{{twitterError.type}}</td>
+                <td jhiTranslate="{{'socialappApp.TwitterErrorType.' + twitterError.type}}">{{twitterError.type}}</td>
                 <td>{{twitterError.errorCode}}</td>
                 <td>{{twitterError.errorMessage}}</td>
-                <td>{{twitterError.exceptionCode}}</td>
                 <td>{{twitterError.message}}</td>
                 <td>{{twitterError.rateLimitStatus}}</td>
                 <td>{{twitterError.statusCode}}</td>

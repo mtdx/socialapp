@@ -6,7 +6,7 @@
     <dl class="row-md jh-entity-details">
         <dt><span jhiTranslate="socialappApp.twitterError.type">Type</span></dt>
         <dd>
-            <span>{{twitterError.type}}</span>
+            <span jhiTranslate="{{'socialappApp.TwitterErrorType.' + twitterError.type}}">{{twitterError.type}}</span>
         </dd>
         <dt><span jhiTranslate="socialappApp.twitterError.errorCode">Error Code</span></dt>
         <dd>
@@ -15,10 +15,6 @@
         <dt><span jhiTranslate="socialappApp.twitterError.errorMessage">Error Message</span></dt>
         <dd>
             <span>{{twitterError.errorMessage}}</span>
-        </dd>
-        <dt><span jhiTranslate="socialappApp.twitterError.exceptionCode">Exception Code</span></dt>
-        <dd>
-            <span>{{twitterError.exceptionCode}}</span>
         </dd>
         <dt><span jhiTranslate="socialappApp.twitterError.message">Message</span></dt>
         <dd>
