@@ -62,8 +62,9 @@ public class TwitterApiService {
             log.debug("Request to update a twitter accounts via TwitterAPI: {}", twitterAccount.getEmail());
             final Twitter twitterClient = getTwitterInstance();
             try {
-                twitterClient.updateProfile(twitterAccount.getName(), twitterAccount.getUrl(),
+               User user = twitterClient.updateProfile(twitterAccount.getName(), twitterAccount.getUrl(),
                     twitterAccount.getLocation(), twitterAccount.getDescription());
+                twitterAccount.setUsername(user.getScreenName());
                 twitterAccount.setStatus(TwitterStatus.IDLE);
                 twitterAccountService.save(twitterAccount);
             } catch (TwitterException ex) {
