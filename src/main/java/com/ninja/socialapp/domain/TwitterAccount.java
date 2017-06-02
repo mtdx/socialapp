@@ -66,7 +66,7 @@ public class TwitterAccount implements Serializable {
     @Column(name = "description", length = 160)
     private String description;
 
-    @Pattern(regexp = "(http(s)?:\\/\\/.)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)")
+    @Pattern(regexp = "(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)")
     @Column(name = "url")
     private String url;
 

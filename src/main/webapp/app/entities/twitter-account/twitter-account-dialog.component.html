@@ -168,7 +168,7 @@
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.url" for="field_url">Url</label>
             <input type="text" class="form-control" name="url" id="field_url"
                 [(ngModel)]="twitterAccount.url"
-            pattern="(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)" />
+            pattern="(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)" />
             <div [hidden]="!(editForm.controls.url?.dirty && editForm.controls.url?.invalid)">
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.url?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Url' }">

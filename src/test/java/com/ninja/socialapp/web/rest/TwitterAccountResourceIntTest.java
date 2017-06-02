@@ -62,8 +62,8 @@ public class TwitterAccountResourceIntTest {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
-    private static final String DEFAULT_URL = "https://www.aaa.com";
-    private static final String UPDATED_URL = "https://www.aaabbbb.com";
+    private static final String DEFAULT_URL = "www.aaa.com";
+    private static final String UPDATED_URL = "www.aaabbbb.com";
 
     private static final String DEFAULT_LOCATION = "AAAAAAAAAA";
     private static final String UPDATED_LOCATION = "BBBBBBBBBB";
