@@ -49,8 +49,12 @@
                     </span>
                 </td>
                 <td>{{twitterAccount.name}}</td>
-                <td>{{twitterAccount.url}}</td>
-                <td>{{twitterAccount.username}}</td>
+                <td>
+                    <a target="_blank" href="http://{{twitterAccount.url}}">{{twitterAccount.url}}</a>
+                </td>
+                <td>
+                    <a target="_blank" href="https://twitter.com/{{twitterAccount.username}}">{{twitterAccount.username}}</a>
+                </td>
                 <td>
                     <div *ngIf="twitterAccount.avatar">
                         <a [routerLink]="['../avatar', twitterAccount.avatar?.id ]" >{{twitterAccount.avatar?.name}}</a>

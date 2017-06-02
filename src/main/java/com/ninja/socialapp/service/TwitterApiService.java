@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -64,6 +65,8 @@ public class TwitterApiService {
             try {
                User user = twitterClient.updateProfile(twitterAccount.getName(), twitterAccount.getUrl(),
                     twitterAccount.getLocation(), twitterAccount.getDescription());
+                twitterClient.updateProfileImage(new ByteArrayInputStream(twitterAccount.getAvatar().getImage()));
+                twitterClient.updateProfileBanner(new ByteArrayInputStream(twitterAccount.getHeader().getImage()));
                 twitterAccount.setUsername(user.getScreenName());
                 twitterAccount.setStatus(TwitterStatus.IDLE);
                 twitterAccountService.save(twitterAccount);
