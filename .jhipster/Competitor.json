@@ -3,6 +3,11 @@
     "relationships": [],
     "fields": [
         {
+            "fieldName": "status",
+            "fieldType": "CompetitorStatus",
+            "fieldValues": "IDLE,IN_PROGRESS,DONE"
+        },
+        {
             "fieldName": "userid",
             "fieldType": "String",
             "fieldValidateRules": [

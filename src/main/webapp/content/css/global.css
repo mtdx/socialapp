@@ -240,15 +240,15 @@ Social Buttons
     background-color: #636c72;
 }
 
-.badge.IDLE, .badge.LIKE {
+.badge.IDLE{
     background-color: #5cb85c;
 }
 
-.badge.LIKES_JOB, .badge.LIKE {
+.badge.LIKES_JOB, .badge.LIKE, .badge.DONE {
     background-color: #f0ad4e;
 }
 
-.badge.RETWEET {
+.badge.RETWEET, .badge.IN_PROGRESS {
     background-color: #0275d8;
 }
 

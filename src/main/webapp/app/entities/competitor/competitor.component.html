@@ -30,6 +30,7 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="status"><span jhiTranslate="socialappApp.competitor.status">Status</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="userid"><span jhiTranslate="socialappApp.competitor.userid">Userid</span></th>
             <th jhiSortBy="username"><span jhiTranslate="socialappApp.competitor.username">Username</span></th>
             <th jhiSortBy="cursor"><span jhiTranslate="socialappApp.competitor.cursor">Cursor</span> <span class="fa fa-sort"></span></th>
@@ -39,6 +40,11 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let competitor of competitors ;trackBy: trackId">
                 <td><a [routerLink]="['../competitor', competitor.id ]">{{competitor.id}}</a></td>
+                <td>
+                    <span class="badge {{competitor.status}}" jhiTranslate="{{'socialappApp.CompetitorStatus.' + competitor.status}}">
+                        {{competitor.status}}
+                    </span>
+                </td>
                 <td>{{competitor.userid}}</td>
                 <td>{{competitor.username}}</td>
                 <td>{{competitor.cursor}}</td>

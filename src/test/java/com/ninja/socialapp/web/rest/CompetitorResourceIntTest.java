@@ -30,6 +30,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 /**
  * Test class for the CompetitorResource REST controller.
  *
@@ -38,6 +39,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SocialappApp.class)
 public class CompetitorResourceIntTest {
+
+    private static final CompetitorStatus DEFAULT_STATUS = CompetitorStatus.IDLE;
+    private static final CompetitorStatus UPDATED_STATUS = CompetitorStatus.IN_PROGRESS;
 
     private static final String DEFAULT_USERID = "25";
     private static final String UPDATED_USERID = "15";
@@ -91,6 +95,7 @@ public class CompetitorResourceIntTest {
      */
     public static Competitor createEntity(EntityManager em) {
         Competitor competitor = new Competitor()
+            .status(DEFAULT_STATUS)
             .userid(DEFAULT_USERID)
             .username(DEFAULT_USERNAME)
             .cursor(DEFAULT_CURSOR);
@@ -118,6 +123,7 @@ public class CompetitorResourceIntTest {
         List<Competitor> competitorList = competitorRepository.findAll();
         assertThat(competitorList).hasSize(databaseSizeBeforeCreate + 1);
         Competitor testCompetitor = competitorList.get(competitorList.size() - 1);
+        assertThat(testCompetitor.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testCompetitor.getUserid()).isEqualTo(DEFAULT_USERID);
         assertThat(testCompetitor.getUsername()).isEqualTo(DEFAULT_USERNAME);
         assertThat(testCompetitor.getCursor()).isEqualTo(DEFAULT_CURSOR);
@@ -193,6 +199,7 @@ public class CompetitorResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(competitor.getId().intValue())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())));
@@ -209,6 +216,7 @@ public class CompetitorResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(competitor.getId().intValue()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.userid").value(DEFAULT_USERID.toString()))
             .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()))
             .andExpect(jsonPath("$.cursor").value(DEFAULT_CURSOR.intValue()));
@@ -233,6 +241,7 @@ public class CompetitorResourceIntTest {
         // Update the competitor
         Competitor updatedCompetitor = competitorRepository.findOne(competitor.getId());
         updatedCompetitor
+            .status(UPDATED_STATUS)
             .userid(UPDATED_USERID)
             .username(UPDATED_USERNAME)
             .cursor(UPDATED_CURSOR);
@@ -246,6 +255,7 @@ public class CompetitorResourceIntTest {
         List<Competitor> competitorList = competitorRepository.findAll();
         assertThat(competitorList).hasSize(databaseSizeBeforeUpdate);
         Competitor testCompetitor = competitorList.get(competitorList.size() - 1);
+        assertThat(testCompetitor.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testCompetitor.getUserid()).isEqualTo(UPDATED_USERID);
         assertThat(testCompetitor.getUsername()).isEqualTo(UPDATED_USERNAME);
         assertThat(testCompetitor.getCursor()).isEqualTo(UPDATED_CURSOR);
@@ -306,6 +316,7 @@ public class CompetitorResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(competitor.getId().intValue())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())));

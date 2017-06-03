@@ -16,6 +16,7 @@
             "detail": {
                 "title": "Competitor"
             },
+            "status": "Status",
             "userid": "Userid",
             "username": "Username",
             "cursor": "Cursor"

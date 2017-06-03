@@ -9,8 +9,8 @@
     <changeSet id="20170531095952-2" author="jhipster">
 
         <createIndex tableName="competitor"
-                     indexName="k_competitor_jhi_cursor">
-            <column name="jhi_cursor"/>
+                     indexName="k_competitor_status">
+            <column name="status"/>
         </createIndex>
 
     </changeSet>

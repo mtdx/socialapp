@@ -9,6 +9,8 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
+
 /**
  * A Competitor.
  */
@@ -24,6 +26,10 @@ public class Competitor implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private CompetitorStatus status;
 
     @NotNull
     @Size(min = 2, max = 20)
@@ -46,6 +52,19 @@ public class Competitor implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public CompetitorStatus getStatus() {
+        return status;
+    }
+
+    public Competitor status(CompetitorStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(CompetitorStatus status) {
+        this.status = status;
     }
 
     public String getUserid() {
@@ -111,6 +130,7 @@ public class Competitor implements Serializable {
     public String toString() {
         return "Competitor{" +
             "id=" + getId() +
+            ", status='" + getStatus() + "'" +
             ", userid='" + getUserid() + "'" +
             ", username='" + getUsername() + "'" +
             ", cursor='" + getCursor() + "'" +
