@@ -37,6 +37,9 @@ public class Competitor implements Serializable {
     @Column(name = "username", length = 15, nullable = false)
     private String username;
 
+    @Column(name = "jhi_cursor")
+    private Long cursor;
+
     public Long getId() {
         return id;
     }
@@ -71,6 +74,19 @@ public class Competitor implements Serializable {
         this.username = username;
     }
 
+    public Long getCursor() {
+        return cursor;
+    }
+
+    public Competitor cursor(Long cursor) {
+        this.cursor = cursor;
+        return this;
+    }
+
+    public void setCursor(Long cursor) {
+        this.cursor = cursor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -97,6 +113,7 @@ public class Competitor implements Serializable {
             "id=" + getId() +
             ", userid='" + getUserid() + "'" +
             ", username='" + getUsername() + "'" +
+            ", cursor='" + getCursor() + "'" +
             "}";
     }
 }

@@ -60,6 +60,12 @@
                 </small>
             </div>
         </div>
+        <div class="form-group" [hidden]="!competitor.cursor">
+            <label class="form-control-label" jhiTranslate="socialappApp.competitor.cursor" for="field_cursor">Cursor</label>
+            <input type="number" class="form-control" name="cursor" id="field_cursor"
+                [(ngModel)]="competitor.cursor" readonly
+             />
+        </div>
 
     </div>
     <div class="modal-footer">

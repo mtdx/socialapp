@@ -27,6 +27,10 @@
             "fieldValidateRulesMinlength": "4",
             "fieldValidateRulesMaxlength": "15",
             "fieldValidateRulesPattern": "(^[a-zA-Z0-9_]*$)"
+        },
+        {
+            "fieldName": "cursor",
+            "fieldType": "Long"
         }
     ],
     "changelogDate": "20170531095952",

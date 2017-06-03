@@ -45,6 +45,9 @@ public class CompetitorResourceIntTest {
     private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_CURSOR = 1L;
+    private static final Long UPDATED_CURSOR = 2L;
+
     @Autowired
     private CompetitorRepository competitorRepository;
 
@@ -89,7 +92,8 @@ public class CompetitorResourceIntTest {
     public static Competitor createEntity(EntityManager em) {
         Competitor competitor = new Competitor()
             .userid(DEFAULT_USERID)
-            .username(DEFAULT_USERNAME);
+            .username(DEFAULT_USERNAME)
+            .cursor(DEFAULT_CURSOR);
         return competitor;
     }
 
@@ -116,6 +120,7 @@ public class CompetitorResourceIntTest {
         Competitor testCompetitor = competitorList.get(competitorList.size() - 1);
         assertThat(testCompetitor.getUserid()).isEqualTo(DEFAULT_USERID);
         assertThat(testCompetitor.getUsername()).isEqualTo(DEFAULT_USERNAME);
+        assertThat(testCompetitor.getCursor()).isEqualTo(DEFAULT_CURSOR);
 
         // Validate the Competitor in Elasticsearch
         Competitor competitorEs = competitorSearchRepository.findOne(testCompetitor.getId());
@@ -189,7 +194,8 @@ public class CompetitorResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(competitor.getId().intValue())))
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
-            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())));
+            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
+            .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())));
     }
 
     @Test
@@ -204,7 +210,8 @@ public class CompetitorResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(competitor.getId().intValue()))
             .andExpect(jsonPath("$.userid").value(DEFAULT_USERID.toString()))
-            .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()));
+            .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()))
+            .andExpect(jsonPath("$.cursor").value(DEFAULT_CURSOR.intValue()));
     }
 
     @Test
@@ -227,7 +234,8 @@ public class CompetitorResourceIntTest {
         Competitor updatedCompetitor = competitorRepository.findOne(competitor.getId());
         updatedCompetitor
             .userid(UPDATED_USERID)
-            .username(UPDATED_USERNAME);
+            .username(UPDATED_USERNAME)
+            .cursor(UPDATED_CURSOR);
 
         restCompetitorMockMvc.perform(put("/api/competitors")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -240,6 +248,7 @@ public class CompetitorResourceIntTest {
         Competitor testCompetitor = competitorList.get(competitorList.size() - 1);
         assertThat(testCompetitor.getUserid()).isEqualTo(UPDATED_USERID);
         assertThat(testCompetitor.getUsername()).isEqualTo(UPDATED_USERNAME);
+        assertThat(testCompetitor.getCursor()).isEqualTo(UPDATED_CURSOR);
 
         // Validate the Competitor in Elasticsearch
         Competitor competitorEs = competitorSearchRepository.findOne(testCompetitor.getId());
@@ -298,7 +307,8 @@ public class CompetitorResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(competitor.getId().intValue())))
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
-            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())));
+            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
+            .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())));
     }
 
     @Test

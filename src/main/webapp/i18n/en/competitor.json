@@ -17,7 +17,8 @@
                 "title": "Competitor"
             },
             "userid": "Userid",
-            "username": "Username"
+            "username": "Username",
+            "cursor": "Cursor"
         }
     }
 }
