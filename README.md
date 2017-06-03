@@ -3,3 +3,4 @@
         - cron to delete old data
         - adjust max threads pool size
         - full automated tests
+        - clean followers entity
