@@ -18,6 +18,7 @@
             },
             "type": "Type",
             "errorCode": "Error Code",
+            "account": "Account",
             "errorMessage": "Error Message",
             "message": "Message",
             "rateLimitStatus": "Rate Limit Status",

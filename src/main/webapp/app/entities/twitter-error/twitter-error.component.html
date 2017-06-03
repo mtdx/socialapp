@@ -26,6 +26,7 @@
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="type"><span jhiTranslate="socialappApp.twitterError.type">Type</span></th>
             <th jhiSortBy="errorCode"><span jhiTranslate="socialappApp.twitterError.errorCode">Error Code</span></th>
+            <th jhiSortBy="account"><span jhiTranslate="socialappApp.twitterError.account">Account</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="errorMessage"><span jhiTranslate="socialappApp.twitterError.errorMessage">Error Message</span></th>
             <th jhiSortBy="message"><span jhiTranslate="socialappApp.twitterError.message">Message</span></th>
             <th jhiSortBy="rateLimitStatus"><span jhiTranslate="socialappApp.twitterError.rateLimitStatus">Rate Limit Status</span></th>
@@ -42,6 +43,7 @@
                     </span>
                 </td>
                 <td>{{twitterError.errorCode}}</td>
+                <td>{{twitterError.account}}</td>
                 <td>{{twitterError.errorMessage}}</td>
                 <td>{{twitterError.message}}</td>
                 <td>{{twitterError.rateLimitStatus}}</td>

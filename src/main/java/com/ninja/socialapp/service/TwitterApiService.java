@@ -59,6 +59,7 @@ public class TwitterApiService {
             TwitterError twitterError = new TwitterError();
             twitterError.setType(TwitterErrorType.UPDATE);
             twitterError.setErrorCode(ex.getErrorCode());
+            twitterError.setAccount(twitterAccount.getUsername());
             twitterError.setErrorMessage(ex.getErrorMessage());
             twitterError.setMessage(ex.getMessage());
             if(ex.getRateLimitStatus() != null) {

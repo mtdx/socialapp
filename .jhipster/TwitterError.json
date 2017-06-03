@@ -12,6 +12,18 @@
             "fieldType": "Integer"
         },
         {
+            "fieldName": "account",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": "4",
+            "fieldValidateRulesMaxlength": "15",
+            "fieldValidateRulesPattern": "(^[a-zA-Z0-9_]*$)"
+        },
+        {
             "fieldName": "errorMessage",
             "fieldType": "String"
         },

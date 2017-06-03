@@ -11,6 +11,7 @@ export class TwitterError {
         public id?: number,
         public type?: TwitterErrorType,
         public errorCode?: number,
+        public account?: string,
         public errorMessage?: string,
         public message?: string,
         public rateLimitStatus?: string,

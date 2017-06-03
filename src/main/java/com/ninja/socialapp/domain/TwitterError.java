@@ -34,6 +34,11 @@ public class TwitterError implements Serializable {
     @Column(name = "error_code")
     private Integer errorCode;
 
+    @Size(min = 4, max = 15)
+    @Pattern(regexp = "(^[a-zA-Z0-9_]*$)")
+    @Column(name = "jhi_account", length = 15)
+    private String account;
+
     @Column(name = "error_message")
     private String errorMessage;
 
@@ -79,6 +84,19 @@ public class TwitterError implements Serializable {
 
     public void setErrorCode(Integer errorCode) {
         this.errorCode = errorCode;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public TwitterError account(String account) {
+        this.account = account;
+        return this;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getErrorMessage() {
@@ -159,6 +177,7 @@ public class TwitterError implements Serializable {
             "id=" + getId() +
             ", type='" + getType() + "'" +
             ", errorCode='" + getErrorCode() + "'" +
+            ", account='" + getAccount() + "'" +
             ", errorMessage='" + getErrorMessage() + "'" +
             ", message='" + getMessage() + "'" +
             ", rateLimitStatus='" + getRateLimitStatus() + "'" +
