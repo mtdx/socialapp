@@ -1,9 +1,12 @@
 package com.ninja.socialapp.repository;
 
 import com.ninja.socialapp.domain.Competitor;
+import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
+
+import java.util.List;
 
 
 /**
@@ -13,4 +16,5 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface CompetitorRepository extends JpaRepository<Competitor,Long> {
 
+    List<Competitor> findByStatus(CompetitorStatus status);
 }

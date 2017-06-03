@@ -1,6 +1,7 @@
 package com.ninja.socialapp.service;
 
 import com.ninja.socialapp.domain.Competitor;
+import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.repository.CompetitorRepository;
 import com.ninja.socialapp.repository.search.CompetitorSearchRepository;
 import org.slf4j.Logger;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -91,5 +94,17 @@ public class CompetitorService {
         log.debug("Request to search for a page of Competitors for query {}", query);
         Page<Competitor> result = competitorSearchRepository.search(queryStringQuery(query), pageable);
         return result;
+    }
+
+    /**
+     *  Get Competitor by status.
+     *
+     *  @param status the of the entities
+     *  @return the entities
+     */
+    @Transactional(readOnly = true)
+    public List<Competitor> findByStatus(CompetitorStatus status) {
+        log.debug("Request to get Competitors by status : {}", status);
+        return competitorRepository.findByStatus(status);
     }
 }
