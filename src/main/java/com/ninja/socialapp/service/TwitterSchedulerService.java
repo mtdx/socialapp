@@ -27,7 +27,7 @@ public class TwitterSchedulerService {
     /**
      * We check for newly added/updated twitter accounts and we modify them via the twitter API
      * <p>
-     * This is scheduled to get fired every 59 seconds.
+     * This is scheduled to get fired every 2 minutes.
      * </p>
      */
     @Async
