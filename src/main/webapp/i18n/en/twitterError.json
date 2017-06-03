@@ -21,7 +21,7 @@
             "account": "Account",
             "errorMessage": "Error Message",
             "message": "Message",
-            "rateLimitStatus": "Rate Limit Status",
+            "rateLimitStatus": "Rate Limit",
             "statusCode": "Status Code"
         }
     }
