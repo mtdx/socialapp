@@ -40,7 +40,7 @@ import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 @SpringBootTest(classes = SocialappApp.class)
 public class CompetitorResourceIntTest {
 
-    private static final CompetitorStatus DEFAULT_STATUS = CompetitorStatus.IDLE;
+    private static final CompetitorStatus DEFAULT_STATUS = CompetitorStatus.IN_PROGRESS;
     private static final CompetitorStatus UPDATED_STATUS = CompetitorStatus.IN_PROGRESS;
 
     private static final String DEFAULT_USERID = "25";

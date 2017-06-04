@@ -103,8 +103,8 @@ public class CompetitorService {
      *  @return the entities
      */
     @Transactional(readOnly = true)
-    public List<Competitor> findByStatus(CompetitorStatus status) {
+    public Competitor findOneByStatus(CompetitorStatus status) {
         log.debug("Request to get Competitors by status : {}", status);
-        return competitorRepository.findByStatus(status);
+        return competitorRepository.findOneByStatus(status);
     }
 }

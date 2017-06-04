@@ -16,5 +16,5 @@ import java.util.List;
 @Repository
 public interface CompetitorRepository extends JpaRepository<Competitor,Long> {
 
-    List<Competitor> findByStatus(CompetitorStatus status);
+    Competitor findOneByStatus(CompetitorStatus status);
 }

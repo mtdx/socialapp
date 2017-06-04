@@ -1,6 +1,8 @@
 package com.ninja.socialapp.service;
 
+import com.ninja.socialapp.domain.Competitor;
 import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +21,12 @@ public class TwitterSchedulerService {
 
     private final TwitterApiService twitterApiService;
 
-    public TwitterSchedulerService(TwitterAccountService twitterAccountService, TwitterApiService twitterApiService) {
+    private final CompetitorService competitorService;
+
+    public TwitterSchedulerService(TwitterAccountService twitterAccountService, TwitterApiService twitterApiService, CompetitorService competitorService) {
         this.twitterAccountService = twitterAccountService;
         this.twitterApiService = twitterApiService;
+        this.competitorService = competitorService;
     }
 
     /**
@@ -38,5 +43,19 @@ public class TwitterSchedulerService {
         for (TwitterAccount account : accounts){
             twitterApiService.updateAccount(account);
         }
+    }
+
+    /**
+     * We check for competitors add their followers keeping a cursor
+     * <p>
+     * This is scheduled to get fired every 1 minute.
+     * </p>
+     */
+    @Async
+    @Scheduled(cron = "0 */2 * * * *" )
+    public void addFollowers() {
+        log.debug("Run scheduled add followers {}");
+        Competitor competitor = competitorService.findOneByStatus(CompetitorStatus.IN_PROGRESS);
+
     }
 }

@@ -2,6 +2,7 @@ package com.ninja.socialapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.ninja.socialapp.domain.Competitor;
+import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.service.CompetitorService;
 import com.ninja.socialapp.web.rest.util.HeaderUtil;
 import com.ninja.socialapp.web.rest.util.PaginationUtil;
@@ -58,6 +59,7 @@ public class CompetitorResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new competitor cannot already have an ID")).body(null);
         }
         competitor.setCursor(-1L); // default cursor
+        competitor.setStatus(CompetitorStatus.IN_PROGRESS); // default status
         Competitor result = competitorService.save(competitor);
         return ResponseEntity.created(new URI("/api/competitors/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
