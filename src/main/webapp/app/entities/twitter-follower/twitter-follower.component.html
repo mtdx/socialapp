@@ -1,12 +1,6 @@
 <div>
     <h2>
         <span jhiTranslate="socialappApp.twitterFollower.home.title">Twitter Followers</span>
-        <button class="btn btn-primary float-right create-twitter-follower" [routerLink]="['/', { outlets: { popup: ['twitter-follower-new'] } }]">
-            <span class="fa fa-plus"></span>
-            <span class="hidden-sm-down"  jhiTranslate="socialappApp.twitterFollower.home.createLabel">
-            Create new Twitter Follower
-            </span>
-        </button>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
@@ -30,15 +24,15 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="userid"><span jhiTranslate="socialappApp.twitterFollower.userid">Userid</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="accountAge"><span jhiTranslate="socialappApp.twitterFollower.accountAge">Account Age</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="userid"><span jhiTranslate="socialappApp.twitterFollower.userid">UserId</span></th>
+            <th jhiSortBy="accountAge"><span jhiTranslate="socialappApp.twitterFollower.accountAge">Age</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="likes"><span jhiTranslate="socialappApp.twitterFollower.likes">Likes</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="followers"><span jhiTranslate="socialappApp.twitterFollower.followers">Followers</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="tweets"><span jhiTranslate="socialappApp.twitterFollower.tweets">Tweets</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="username"><span jhiTranslate="socialappApp.twitterFollower.username">Username</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="username"><span jhiTranslate="socialappApp.twitterFollower.username">Username</span></th>
             <th jhiSortBy="like"><span jhiTranslate="socialappApp.twitterFollower.like">Like</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="follow"><span jhiTranslate="socialappApp.twitterFollower.follow">Follow</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="updated"><span jhiTranslate="socialappApp.twitterFollower.updated">Updated</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="updated"><span jhiTranslate="socialappApp.twitterFollower.updated2">Updated</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="competitor.username"><span jhiTranslate="socialappApp.twitterFollower.competitor">Competitor</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
@@ -51,10 +45,12 @@
                 <td>{{twitterFollower.likes}}</td>
                 <td>{{twitterFollower.followers}}</td>
                 <td>{{twitterFollower.tweets}}</td>
-                <td>{{twitterFollower.username}}</td>
-                <td>{{twitterFollower.like}}</td>
-                <td>{{twitterFollower.follow}}</td>
-                <td>{{twitterFollower.updated | date:'medium'}}</td>
+                <td>
+                    <a target="_blank" href="https://twitter.com/{{twitterFollower.username}}">{{twitterFollower.username}}</a>
+                </td>
+                <td>{{twitterFollower.like == true ? 'Yes' : 'No'}}</td>
+                <td>{{twitterFollower.follow == true ? 'Yes' : 'No'}}</td>
+                <td>{{twitterFollower.updated | date:'short'}}</td>
                 <td>
                     <div *ngIf="twitterFollower.competitor">
                         <a [routerLink]="['../competitor', twitterFollower.competitor?.id ]" >{{twitterFollower.competitor?.username}}</a>
@@ -67,13 +63,6 @@
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'twitter-follower/'+ twitterFollower.id + '/edit'} }]"
-                                replaceUrl="true"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'twitter-follower/'+ twitterFollower.id + '/delete'} }]"

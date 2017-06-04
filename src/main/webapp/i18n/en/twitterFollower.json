@@ -16,15 +16,15 @@
             "detail": {
                 "title": "Twitter Follower"
             },
-            "userid": "Userid",
-            "accountAge": "Account Age",
+            "userid": "UserId",
+            "accountAge": "Age",
             "likes": "Likes",
             "followers": "Followers",
             "tweets": "Tweets",
             "username": "Username",
             "like": "Like",
             "follow": "Follow",
-            "updated": "Updated",
+            "updated2": "Updated",
             "competitor": "Competitor"
         }
     }

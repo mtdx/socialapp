@@ -14,24 +14,6 @@ export class TwitterFollowerService {
 
     constructor(private http: Http, private dateUtils: DateUtils) { }
 
-    create(twitterFollower: TwitterFollower): Observable<TwitterFollower> {
-        const copy = this.convert(twitterFollower);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            this.convertItemFromServer(jsonResponse);
-            return jsonResponse;
-        });
-    }
-
-    update(twitterFollower: TwitterFollower): Observable<TwitterFollower> {
-        const copy = this.convert(twitterFollower);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            this.convertItemFromServer(jsonResponse);
-            return jsonResponse;
-        });
-    }
-
     find(id: number): Observable<TwitterFollower> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();

@@ -16,15 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing TwitterFollower.
@@ -41,48 +34,6 @@ public class TwitterFollowerResource {
 
     public TwitterFollowerResource(TwitterFollowerService twitterFollowerService) {
         this.twitterFollowerService = twitterFollowerService;
-    }
-
-    /**
-     * POST  /twitter-followers : Create a new twitterFollower.
-     *
-     * @param twitterFollower the twitterFollower to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new twitterFollower, or with status 400 (Bad Request) if the twitterFollower has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PostMapping("/twitter-followers")
-    @Timed
-    public ResponseEntity<TwitterFollower> createTwitterFollower(@Valid @RequestBody TwitterFollower twitterFollower) throws URISyntaxException {
-        log.debug("REST request to save TwitterFollower : {}", twitterFollower);
-        if (twitterFollower.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new twitterFollower cannot already have an ID")).body(null);
-        }
-        TwitterFollower result = twitterFollowerService.save(twitterFollower);
-        return ResponseEntity.created(new URI("/api/twitter-followers/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * PUT  /twitter-followers : Updates an existing twitterFollower.
-     *
-     * @param twitterFollower the twitterFollower to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated twitterFollower,
-     * or with status 400 (Bad Request) if the twitterFollower is not valid,
-     * or with status 500 (Internal Server Error) if the twitterFollower couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/twitter-followers")
-    @Timed
-    public ResponseEntity<TwitterFollower> updateTwitterFollower(@Valid @RequestBody TwitterFollower twitterFollower) throws URISyntaxException {
-        log.debug("REST request to update TwitterFollower : {}", twitterFollower);
-        if (twitterFollower.getId() == null) {
-            return createTwitterFollower(twitterFollower);
-        }
-        TwitterFollower result = twitterFollowerService.save(twitterFollower);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, twitterFollower.getId().toString()))
-            .body(result);
     }
 
     /**

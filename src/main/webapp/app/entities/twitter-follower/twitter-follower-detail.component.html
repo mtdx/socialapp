@@ -30,13 +30,13 @@
         </dd>
         <dt><span jhiTranslate="socialappApp.twitterFollower.like">Like</span></dt>
         <dd>
-            <span>{{twitterFollower.like}}</span>
+            <span>{{twitterFollower.like == true ? 'Yes' : 'No'}}</span>
         </dd>
         <dt><span jhiTranslate="socialappApp.twitterFollower.follow">Follow</span></dt>
         <dd>
-            <span>{{twitterFollower.follow}}</span>
+            <span>{{twitterFollower.follow == true ? 'Yes' : 'No'}}</span>
         </dd>
-        <dt><span jhiTranslate="socialappApp.twitterFollower.updated">Updated</span></dt>
+        <dt><span jhiTranslate="socialappApp.twitterFollower.updated2">Updated</span></dt>
         <dd>
             <span>{{twitterFollower.updated | date:'medium'}}</span>
         </dd>
@@ -52,12 +52,5 @@
             (click)="previousState()"
             class="btn btn-info">
         <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
-    </button>
-
-    <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'twitter-follower/'+ twitterFollower.id + '/edit'} }]"
-            replaceUrl="true"
-            class="btn btn-primary">
-        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
     </button>
 </div>

@@ -6,7 +6,6 @@ import { PaginationUtil } from 'ng-jhipster';
 
 import { TwitterFollowerComponent } from './twitter-follower.component';
 import { TwitterFollowerDetailComponent } from './twitter-follower-detail.component';
-import { TwitterFollowerPopupComponent } from './twitter-follower-dialog.component';
 import { TwitterFollowerDeletePopupComponent } from './twitter-follower-delete-dialog.component';
 
 import { Principal } from '../../shared';
@@ -32,26 +31,6 @@ export const twitterFollowerRoute: Routes = [
 ];
 
 export const twitterFollowerPopupRoute: Routes = [
-    {
-        path: 'twitter-follower-new',
-        component: TwitterFollowerPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'socialappApp.twitterFollower.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'twitter-follower/:id/edit',
-        component: TwitterFollowerPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'socialappApp.twitterFollower.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
     {
         path: 'twitter-follower/:id/delete',
         component: TwitterFollowerDeletePopupComponent,
