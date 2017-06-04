@@ -1,0 +1,31 @@
+{
+    "socialappApp": {
+        "twitterFollower" : {
+            "home": {
+                "title": "Twitter Followers",
+                "createLabel": "Create a new Twitter Follower",
+                "createOrEditLabel": "Create or edit a Twitter Follower",
+                "search": "Search for Twitter Follower"
+            },
+            "created": "A new Twitter Follower is created with identifier {{ param }}",
+            "updated": "A Twitter Follower is updated with identifier {{ param }}",
+            "deleted": "A Twitter Follower is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Twitter Follower {{ id }}?"
+            },
+            "detail": {
+                "title": "Twitter Follower"
+            },
+            "userid": "Userid",
+            "accountAge": "Account Age",
+            "likes": "Likes",
+            "followers": "Followers",
+            "tweets": "Tweets",
+            "username": "Username",
+            "like": "Like",
+            "follow": "Follow",
+            "updated": "Updated",
+            "competitor": "Competitor"
+        }
+    }
+}

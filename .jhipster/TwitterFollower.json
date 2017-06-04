@@ -1,0 +1,87 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "competitor",
+            "otherEntityName": "competitor",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "username"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "userid",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": "2",
+            "fieldValidateRulesMaxlength": 20,
+            "fieldValidateRulesPattern": "(^\\d+$)"
+        },
+        {
+            "fieldName": "accountAge",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "likes",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "followers",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "tweets",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "username",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": "4",
+            "fieldValidateRulesMaxlength": "15",
+            "fieldValidateRulesPattern": "(^[a-zA-Z0-9_]*$)"
+        },
+        {
+            "fieldName": "like",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "follow",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "updated",
+            "fieldType": "Instant"
+        }
+    ],
+    "changelogDate": "20170603210451",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "twitter_follower",
+    "pagination": "infinite-scroll"
+}

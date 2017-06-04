@@ -1,0 +1,159 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myTwitterFollowerLabel" jhiTranslate="socialappApp.twitterFollower.home.createOrEditLabel">Create or edit a Twitter Follower</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!twitterFollower.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="twitterFollower.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterFollower.userid" for="field_userid">Userid</label>
+            <input type="text" class="form-control" name="userid" id="field_userid"
+                [(ngModel)]="twitterFollower.userid"
+            required minlength="2" maxlength="20" pattern="(^\d+$)" />
+            <div [hidden]="!(editForm.controls.userid?.dirty && editForm.controls.userid?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.userid?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.userid?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 2 }">
+                   This field is required to be at least 2 characters.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.userid?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
+                   This field cannot be longer than 20 characters.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.userid?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Userid' }">
+                    This field should follow pattern for "Userid".
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterFollower.accountAge" for="field_accountAge">Account Age</label>
+            <input type="number" class="form-control" name="accountAge" id="field_accountAge"
+                [(ngModel)]="twitterFollower.accountAge"
+            min="0" />
+            <div [hidden]="!(editForm.controls.accountAge?.dirty && editForm.controls.accountAge?.invalid)">
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.accountAge?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.accountAge?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterFollower.likes" for="field_likes">Likes</label>
+            <input type="number" class="form-control" name="likes" id="field_likes"
+                [(ngModel)]="twitterFollower.likes"
+            min="0" />
+            <div [hidden]="!(editForm.controls.likes?.dirty && editForm.controls.likes?.invalid)">
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.likes?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.likes?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterFollower.followers" for="field_followers">Followers</label>
+            <input type="number" class="form-control" name="followers" id="field_followers"
+                [(ngModel)]="twitterFollower.followers"
+            min="0" />
+            <div [hidden]="!(editForm.controls.followers?.dirty && editForm.controls.followers?.invalid)">
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.followers?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.followers?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterFollower.tweets" for="field_tweets">Tweets</label>
+            <input type="number" class="form-control" name="tweets" id="field_tweets"
+                [(ngModel)]="twitterFollower.tweets"
+            min="0" />
+            <div [hidden]="!(editForm.controls.tweets?.dirty && editForm.controls.tweets?.invalid)">
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.tweets?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.tweets?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterFollower.username" for="field_username">Username</label>
+            <input type="text" class="form-control" name="username" id="field_username"
+                [(ngModel)]="twitterFollower.username"
+            minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" />
+            <div [hidden]="!(editForm.controls.username?.dirty && editForm.controls.username?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.username?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 4 }">
+                   This field is required to be at least 4 characters.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.username?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 15 }">
+                   This field cannot be longer than 15 characters.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.username?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Username' }">
+                    This field should follow pattern for "Username".
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterFollower.like" for="field_like">Like</label>
+            <input type="checkbox" class="form-control" name="like" id="field_like"
+                [(ngModel)]="twitterFollower.like"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterFollower.follow" for="field_follow">Follow</label>
+            <input type="checkbox" class="form-control" name="follow" id="field_follow"
+                [(ngModel)]="twitterFollower.follow"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterFollower.updated" for="field_updated">Updated</label>
+            <div class="d-flex">
+                <input id="field_updated" type="datetime-local" class="form-control" name="updated" [(ngModel)]="twitterFollower.updated"
+                  />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="socialappApp.twitterFollower.competitor" for="field_competitor">Competitor</label>
+            <select class="form-control" id="field_competitor" name="competitor" [(ngModel)]="twitterFollower.competitor" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="competitorOption.id === twitterFollower.competitor?.id ? twitterFollower.competitor : competitorOption" *ngFor="let competitorOption of competitors; trackBy: trackCompetitorById">{{competitorOption.username}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

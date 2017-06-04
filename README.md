@@ -4,3 +4,4 @@
         - adjust max threads pool size
         - full automated tests
         - clean followers entity
+        - add a twitter filters entity 
