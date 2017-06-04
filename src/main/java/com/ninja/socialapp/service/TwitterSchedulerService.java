@@ -52,7 +52,7 @@ public class TwitterSchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "0 */2 * * * *" )
+    @Scheduled(cron = "15 * * * * *" )
     public void addFollowers() {
         log.debug("Run scheduled add followers {}");
         Competitor competitor = competitorService.findOneByStatus(CompetitorStatus.IN_PROGRESS);
