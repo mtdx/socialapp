@@ -41,7 +41,7 @@ import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 public class CompetitorResourceIntTest {
 
     private static final CompetitorStatus DEFAULT_STATUS = CompetitorStatus.IN_PROGRESS;
-    private static final CompetitorStatus UPDATED_STATUS = CompetitorStatus.IN_PROGRESS;
+    private static final CompetitorStatus UPDATED_STATUS = CompetitorStatus.DONE;
 
     private static final String DEFAULT_USERID = "25";
     private static final String UPDATED_USERID = "15";
@@ -49,7 +49,7 @@ public class CompetitorResourceIntTest {
     private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_CURSOR = -1L;
+    private static final Long DEFAULT_CURSOR = 1L;
     private static final Long UPDATED_CURSOR = 2L;
 
     @Autowired

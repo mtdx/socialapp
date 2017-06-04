@@ -1,6 +1,5 @@
 
 const enum CompetitorStatus {
-    'IDLE',
     'IN_PROGRESS',
     'DONE'
 
