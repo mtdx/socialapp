@@ -67,7 +67,7 @@
                 </small>
             </div>
         </div>
-        <div class="form-group" [hidden]="!competitor.cursor">
+        <div class="form-group" [hidden]="!competitor.likes">
             <label class="form-control-label" jhiTranslate="socialappApp.competitor.likes" for="field_likes">Likes</label>
             <input type="number" class="form-control" name="likes" id="field_likes"
                    [(ngModel)]="competitor.likes" readonly

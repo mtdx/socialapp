@@ -3,3 +3,4 @@
         - adjust max threads pool size
         - full automated tests
         - add a way to stop current competitor and reset
+        - add_default_value liquidbase
