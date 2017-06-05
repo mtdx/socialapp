@@ -13,7 +13,6 @@
                 "competitor": "Competitors",
                 "twitterAccount": "Accounts",
                 "twitterError": "Errors",
-                "twitterFollower": "Followers",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
