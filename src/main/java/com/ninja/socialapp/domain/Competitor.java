@@ -43,6 +43,9 @@ public class Competitor implements Serializable {
     @Column(name = "username", length = 15, nullable = false)
     private String username;
 
+    @Column(name = "likes")
+    private Long likes;
+
     @Column(name = "jhi_cursor")
     private Long cursor;
 
@@ -93,6 +96,19 @@ public class Competitor implements Serializable {
         this.username = username;
     }
 
+    public Long getLikes() {
+        return likes;
+    }
+
+    public Competitor likes(Long likes) {
+        this.likes = likes;
+        return this;
+    }
+
+    public void setLikes(Long likes) {
+        this.likes = likes;
+    }
+
     public Long getCursor() {
         return cursor;
     }
@@ -133,6 +149,7 @@ public class Competitor implements Serializable {
             ", status='" + getStatus() + "'" +
             ", userid='" + getUserid() + "'" +
             ", username='" + getUsername() + "'" +
+            ", likes='" + getLikes() + "'" +
             ", cursor='" + getCursor() + "'" +
             "}";
     }

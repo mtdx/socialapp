@@ -11,6 +11,7 @@ export class Competitor {
         public status?: CompetitorStatus,
         public userid?: string,
         public username?: string,
+        public likes?: number,
         public cursor?: number,
     ) {
     }

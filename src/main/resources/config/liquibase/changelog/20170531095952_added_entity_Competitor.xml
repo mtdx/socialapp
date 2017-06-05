@@ -33,6 +33,10 @@
                 <constraints nullable="false" />
             </column>
 
+            <column name="likes" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <column name="jhi_cursor" type="bigint">
                 <constraints nullable="true" />
             </column>

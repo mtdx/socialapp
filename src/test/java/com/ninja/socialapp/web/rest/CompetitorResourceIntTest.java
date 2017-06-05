@@ -49,6 +49,9 @@ public class CompetitorResourceIntTest {
     private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_LIKES = 1L;
+    private static final Long UPDATED_LIKES = 2L;
+
     private static final Long DEFAULT_CURSOR = -1L;
     private static final Long UPDATED_CURSOR = 2L;
 
@@ -98,6 +101,7 @@ public class CompetitorResourceIntTest {
             .status(DEFAULT_STATUS)
             .userid(DEFAULT_USERID)
             .username(DEFAULT_USERNAME)
+            .likes(DEFAULT_LIKES)
             .cursor(DEFAULT_CURSOR);
         return competitor;
     }
@@ -126,6 +130,7 @@ public class CompetitorResourceIntTest {
         assertThat(testCompetitor.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testCompetitor.getUserid()).isEqualTo(DEFAULT_USERID);
         assertThat(testCompetitor.getUsername()).isEqualTo(DEFAULT_USERNAME);
+        assertThat(testCompetitor.getLikes()).isEqualTo(DEFAULT_LIKES);
         assertThat(testCompetitor.getCursor()).isEqualTo(DEFAULT_CURSOR);
 
         // Validate the Competitor in Elasticsearch
@@ -202,6 +207,7 @@ public class CompetitorResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
+            .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES.intValue())))
             .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())));
     }
 
@@ -219,6 +225,7 @@ public class CompetitorResourceIntTest {
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.userid").value(DEFAULT_USERID.toString()))
             .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()))
+            .andExpect(jsonPath("$.likes").value(DEFAULT_LIKES.intValue()))
             .andExpect(jsonPath("$.cursor").value(DEFAULT_CURSOR.intValue()));
     }
 
@@ -244,6 +251,7 @@ public class CompetitorResourceIntTest {
             .status(UPDATED_STATUS)
             .userid(UPDATED_USERID)
             .username(UPDATED_USERNAME)
+            .likes(UPDATED_LIKES)
             .cursor(UPDATED_CURSOR);
 
         restCompetitorMockMvc.perform(put("/api/competitors")
@@ -258,6 +266,7 @@ public class CompetitorResourceIntTest {
         assertThat(testCompetitor.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testCompetitor.getUserid()).isEqualTo(UPDATED_USERID);
         assertThat(testCompetitor.getUsername()).isEqualTo(UPDATED_USERNAME);
+        assertThat(testCompetitor.getLikes()).isEqualTo(UPDATED_LIKES);
         assertThat(testCompetitor.getCursor()).isEqualTo(UPDATED_CURSOR);
 
         // Validate the Competitor in Elasticsearch
@@ -319,6 +328,7 @@ public class CompetitorResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
+            .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES.intValue())))
             .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())));
     }
 
