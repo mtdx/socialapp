@@ -5,7 +5,7 @@
         {
             "fieldName": "status",
             "fieldType": "CompetitorStatus",
-            "fieldValues": "IN_PROGRESS,DONE"
+            "fieldValues": "IDLE,IN_PROGRESS,DONE"
         },
         {
             "fieldName": "userid",
