@@ -2,7 +2,7 @@
 export const enum TwitterStatus {
     'IDLE',
     'PENDING_UPDATE',
-    'LIKES_JOB'
+    'WORKING'
 
 };
 import { Avatar } from '../avatar';
