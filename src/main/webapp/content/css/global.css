@@ -236,7 +236,7 @@ Social Buttons
 }
 /* jhipster-needle-css-add-main JHipster will add new css style */
 
-.badge.PENDING_UPDATE, .badge.UPDATE {
+.badge.PENDING_UPDATE, .badge.UPDATE, .badge.LOCK {
     background-color: #636c72;
 }
 

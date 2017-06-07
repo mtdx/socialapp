@@ -3,7 +3,8 @@
         "CompetitorStatus" : {
             "null": "",
             "IN_PROGRESS": "In Progress",
-            "DONE": "Done"
+            "DONE": "Done",
+            "LOCK": "Lock"
         }
     }
 }

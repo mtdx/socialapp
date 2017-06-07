@@ -30,14 +30,11 @@ public class TwitterApiService {
 
     private final TwitterAccountService twitterAccountService;
 
-    private final int currentMonth;
+    private int currentMonth;
 
-    private final int currentYear;
+    private int currentYear;
 
     public TwitterApiService(TwitterErrorService twitterErrorService, TwitterAccountService twitterAccountService){
-        LocalDate localDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        currentMonth = localDate.getMonthValue();
-        currentYear = localDate.getYear();
         this.twitterErrorService = twitterErrorService;
         this.twitterAccountService = twitterAccountService;
     }
@@ -63,14 +60,14 @@ public class TwitterApiService {
     }
 
     /**
-     * Just likes the followers it receives
+     * Just get and pass the  followers from the competitor it receives
      */
     public long setupFollowers(final TwitterAccount twitterAccount, Long cursor, String competitorId){
         log.debug("Request to update a twitter accounts via TwitterAPI: {}", twitterAccount.getEmail());
          Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             IDs ids = twitterClient.getFollowersIDs(competitorId, cursor);
-            // invoke async method that will also update twitter account status
+            likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount);
             return ids.getNextCursor();
         } catch (TwitterException ex) {
             saveEx(ex, twitterAccount.getUsername());
@@ -79,7 +76,17 @@ public class TwitterApiService {
     }
 
     /**
-     * Just likes the followers it receives
+     * Here we do most of the work, we like the followers we get
+     */
+    @Async
+    private void likeFollowersTweetsOf(long[] followers, Twitter twitterClient, final TwitterAccount twitterAccount){
+        threadWait(10);
+        // test Async
+        // update account status
+    }
+
+    /**
+     * Destroy previous likes older than x days
      */
     @Async
     public void destroyLikes(final TwitterAccount twitterAccount){
@@ -174,5 +181,9 @@ public class TwitterApiService {
         return false;
     }
 
-
+    public void updateDate(){
+        LocalDate localDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        currentMonth = localDate.getMonthValue();
+        currentYear = localDate.getYear();
+    }
 }

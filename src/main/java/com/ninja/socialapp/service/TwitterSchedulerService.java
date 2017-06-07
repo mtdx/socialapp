@@ -35,11 +35,11 @@ public class TwitterSchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "0 */2 * * * *" )
+    @Scheduled(cron = "0 */2 * * * *")
     public void updateAccounts() {
         log.debug("Run scheduled update accounts {}");
         List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.PENDING_UPDATE);
-        for (TwitterAccount account : accounts){
+        for (TwitterAccount account : accounts) {
             twitterApiService.updateAccount(account);
         }
     }
@@ -56,8 +56,10 @@ public class TwitterSchedulerService {
         log.debug("Run scheduled add followers {}");
         competitorService.findOneByStatusOrderByIdDesc(CompetitorStatus.IN_PROGRESS).ifPresent(competitor -> {
             List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
+            twitterApiService.updateDate();
+
             // we update our statuses
-//            competitor.setStatus(CompetitorStatus.IN_PROGRESS);
+//            competitor.setStatus(CompetitorStatus.LOCK);
 //            competitorService.save(competitor);
 //            for (TwitterAccount account : accounts) {
 //                account.setStatus(TwitterStatus.WORKING);
@@ -67,19 +69,21 @@ public class TwitterSchedulerService {
             // if cursor -1 update to done
             long cursor = competitor.getCursor();
             for (TwitterAccount account : accounts) {
-                if (cursor == 0){
-                    // we don't want to save multiple times
-                    if(competitor.getStatus() != CompetitorStatus.DONE){
+                if (cursor == 0) {
+                    if (competitor.getStatus() != CompetitorStatus.DONE) {  // we don't want to save multiple times
                         competitor.setStatus(CompetitorStatus.DONE);
                         competitorService.save(competitor);
                     }
                     account.setStatus(TwitterStatus.IDLE);
                     twitterAccountService.save(account);
-                    // no point moving on as competitor followers are done
-                    continue;
+                    continue;   // no point moving on as competitor followers are done
                 }
                 cursor = twitterApiService.setupFollowers(account, cursor, competitor.getUserid());
             }
+
+            competitor.setCursor(cursor);  // we save our cursor to keep track and update back our status
+            competitor.setStatus(CompetitorStatus.IN_PROGRESS);
+            competitorService.save(competitor);
 
         });
 
