@@ -1,6 +1,5 @@
 package com.ninja.socialapp.service;
 
-import com.ninja.socialapp.domain.Competitor;
 import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
@@ -11,7 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TwitterSchedulerService {
@@ -56,7 +54,7 @@ public class TwitterSchedulerService {
     @Scheduled(cron = "30 * * * * *")
     public void processCompetitors() {
         log.debug("Run scheduled add followers {}");
-        competitorService.findOneByStatusOrderByIdDesc(CompetitorStatus.IDLE).ifPresent(competitor -> {
+        competitorService.findOneByStatusOrderByIdDesc(CompetitorStatus.IN_PROGRESS).ifPresent(competitor -> {
             List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
             // we update our statuses
 //            competitor.setStatus(CompetitorStatus.IN_PROGRESS);
@@ -67,6 +65,22 @@ public class TwitterSchedulerService {
 //            }
 
             // if cursor -1 update to done
+            long cursor = competitor.getCursor();
+            for (TwitterAccount account : accounts) {
+                if (cursor == 0){
+                    // we don't want to save multiple times
+                    if(competitor.getStatus() != CompetitorStatus.DONE){
+                        competitor.setStatus(CompetitorStatus.DONE);
+                        competitorService.save(competitor);
+                    }
+                    account.setStatus(TwitterStatus.IDLE);
+                    twitterAccountService.save(account);
+                    // no point moving on as competitor followers are done
+                    continue;
+                }
+                cursor = twitterApiService.setupFollowers(account, cursor, competitor.getUserid());
+            }
+
         });
 
     }

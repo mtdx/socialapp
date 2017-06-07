@@ -65,11 +65,17 @@ public class TwitterApiService {
     /**
      * Just likes the followers it receives
      */
-    @Async
-    public void likeFollowers(final TwitterAccount twitterAccount){
+    public long setupFollowers(final TwitterAccount twitterAccount, Long cursor, String competitorId){
         log.debug("Request to update a twitter accounts via TwitterAPI: {}", twitterAccount.getEmail());
-
-        // update status account
+         Twitter twitterClient = getTwitterInstance(twitterAccount);
+        try {
+            IDs ids = twitterClient.getFollowersIDs(competitorId, cursor);
+            // invoke async method that will also update twitter account status
+            return ids.getNextCursor();
+        } catch (TwitterException ex) {
+            saveEx(ex, twitterAccount.getUsername());
+        }
+        return cursor;
     }
 
     /**
@@ -167,4 +173,6 @@ public class TwitterApiService {
 
         return false;
     }
+
+
 }

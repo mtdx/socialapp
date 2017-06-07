@@ -5,3 +5,4 @@
         - add a way to stop current competitor and reset
         - add jobs with the twitter filter options
         - add destroy likes orlder than..
+        - add delete old ex;
