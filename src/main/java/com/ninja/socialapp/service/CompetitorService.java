@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Optional;
+
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
@@ -101,8 +103,8 @@ public class CompetitorService {
      *  @return the entities
      */
     @Transactional(readOnly = true)
-    public Competitor findOneByStatus(CompetitorStatus status) {
+    public Optional<Competitor> findOneByStatusOrderByIdDesc(CompetitorStatus status) {
         log.debug("Request to get Competitors by status : {}", status);
-        return competitorRepository.findOneByStatus(status);
+        return competitorRepository.findOneByStatusOrderByIdDesc(status);
     }
 }

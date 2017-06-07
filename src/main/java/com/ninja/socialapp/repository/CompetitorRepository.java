@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
+import java.util.Optional;
+
 
 /**
  * Spring Data JPA repository for the Competitor entity.
@@ -14,5 +16,5 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface CompetitorRepository extends JpaRepository<Competitor,Long> {
 
-    Competitor findOneByStatus(CompetitorStatus status);
+    Optional<Competitor> findOneByStatusOrderByIdDesc(CompetitorStatus status);
 }

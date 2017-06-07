@@ -103,8 +103,8 @@ public class TwitterAccountService {
      *  @return the entities
      */
     @Transactional(readOnly = true)
-    public List<TwitterAccount> findByStatus(TwitterStatus status) {
+    public List<TwitterAccount> findAllByStatus(TwitterStatus status) {
         log.debug("Request to get TwitterAccounts by status : {}", status);
-        return twitterAccountRepository.findByStatus(status);
+        return twitterAccountRepository.findAllByStatus(status);
     }
 }

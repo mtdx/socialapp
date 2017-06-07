@@ -16,5 +16,5 @@ import java.util.List;
 @Repository
 public interface TwitterAccountRepository extends JpaRepository<TwitterAccount,Long> {
 
-    List<TwitterAccount> findByStatus(TwitterStatus status);
+    List<TwitterAccount> findAllByStatus(TwitterStatus status);
 }

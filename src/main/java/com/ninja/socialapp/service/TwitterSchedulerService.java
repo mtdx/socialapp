@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TwitterSchedulerService {
@@ -39,23 +40,34 @@ public class TwitterSchedulerService {
     @Scheduled(cron = "0 */2 * * * *" )
     public void updateAccounts() {
         log.debug("Run scheduled update accounts {}");
-        List<TwitterAccount> accounts = twitterAccountService.findByStatus(TwitterStatus.PENDING_UPDATE);
+        List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.PENDING_UPDATE);
         for (TwitterAccount account : accounts){
             twitterApiService.updateAccount(account);
         }
     }
 
     /**
-     * We check for competitors add their followers keeping a cursor
+     * We check for competitors and like their followers keeping a cursor
      * <p>
      * This is scheduled to get fired every 1 minute.
      * </p>
      */
     @Async
-    @Scheduled(cron = "15 * * * * *" )
-    public void addFollowers() {
+    @Scheduled(cron = "30 * * * * *")
+    public void processCompetitors() {
         log.debug("Run scheduled add followers {}");
-        Competitor competitor = competitorService.findOneByStatus(CompetitorStatus.IN_PROGRESS);
+        competitorService.findOneByStatusOrderByIdDesc(CompetitorStatus.IDLE).ifPresent(competitor -> {
+            List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
+            // we update our statuses
+//            competitor.setStatus(CompetitorStatus.IN_PROGRESS);
+//            competitorService.save(competitor);
+//            for (TwitterAccount account : accounts) {
+//                account.setStatus(TwitterStatus.WORKING);
+//                twitterAccountService.save(account);
+//            }
+
+            // if cursor -1 update to done
+        });
 
     }
 }
