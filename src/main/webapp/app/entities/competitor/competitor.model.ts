@@ -1,5 +1,5 @@
 
-const enum CompetitorStatus {
+export const enum CompetitorStatus {
     'IN_PROGRESS',
     'DONE',
     'LOCK'

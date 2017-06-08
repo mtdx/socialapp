@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { TwitterAccount } from './twitter-account.model';
-import { TwitterStatus } from './twitter-account.model';
+import { TwitterAccount, TwitterStatus } from './twitter-account.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
 
 @Injectable()

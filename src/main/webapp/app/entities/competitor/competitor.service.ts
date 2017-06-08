@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { Competitor } from './competitor.model';
+import {Competitor, CompetitorStatus} from './competitor.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
 
 @Injectable()
@@ -14,6 +14,7 @@ export class CompetitorService {
     constructor(private http: Http) { }
 
     create(competitor: Competitor): Observable<Competitor> {
+        competitor.status = CompetitorStatus.IN_PROGRESS; // default status
         const copy = this.convert(competitor);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             return res.json();
