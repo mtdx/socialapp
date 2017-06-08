@@ -57,7 +57,7 @@ public class TwitterSchedulerService {
         log.debug("Run scheduled add followers {}");
         competitorService.findFirstByStatusOrderByIdAsc(CompetitorStatus.IN_PROGRESS).ifPresent((Competitor competitor) -> {
             List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
-            twitterApiService.updateDate();
+            twitterApiService.refreshDate();
 
             // we update our statuses
 //            competitor.setStatus(CompetitorStatus.LOCK);

@@ -82,7 +82,7 @@ public class TwitterApiService {
     /**
      * Here we do most of the work, we like the followers we get
      */
-    @Async
+   // @Async
     private void likeFollowersTweetsOf(long[] followers, Twitter twitterClient, final TwitterAccount twitterAccount){
         threadWait(10);
         // test Async
@@ -185,7 +185,7 @@ public class TwitterApiService {
         return false;
     }
 
-    public void updateDate(){
+    public void refreshDate(){
         LocalDate localDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         currentMonth = localDate.getMonthValue();
         currentYear = localDate.getYear();
