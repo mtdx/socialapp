@@ -67,10 +67,9 @@ public class TwitterApiService {
      * Just get and pass the  followers from the competitor it receives
      */
     public long setupFollowers(final TwitterAccount twitterAccount, Long cursor, String competitorId){
-        log.debug("Request to update a twitter accounts via TwitterAPI: {}", twitterAccount.getEmail());
          Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
-            IDs ids = twitterClient.getFollowersIDs(competitorId, cursor);
+            IDs ids = twitterClient.getFollowersIDs(Long.parseLong(competitorId), cursor);
             likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount);
             return ids.getNextCursor();
         } catch (TwitterException ex) {
@@ -84,9 +83,13 @@ public class TwitterApiService {
      */
    // @Async
     private void likeFollowersTweetsOf(long[] followers, Twitter twitterClient, final TwitterAccount twitterAccount){
+        log.debug("Start likeFollowersTweetsOf: {}", twitterAccount.getEmail());
         threadWait(10);
         // test Async
         // update account status
+        twitterAccount.setStatus(TwitterStatus.IDLE);
+        twitterAccountService.save(twitterAccount);
+        log.debug("EXIT likeFollowersTweetsOf: {}", twitterAccount.getEmail());
     }
 
     /**

@@ -54,21 +54,19 @@ public class TwitterSchedulerService {
     @Async
     @Scheduled(cron = "30 * * * * *")
     public void processCompetitors() {
-        log.debug("Run scheduled add followers {}");
+        log.debug("Run scheduled process competitors {}");
         competitorService.findFirstByStatusOrderByIdAsc(CompetitorStatus.IN_PROGRESS).ifPresent((Competitor competitor) -> {
             List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
             twitterApiService.refreshDate();
 
-            // we update our statuses
-//            competitor.setStatus(CompetitorStatus.LOCK);
-//            competitorService.save(competitor);
-//            for (TwitterAccount account : accounts) {
-//                account.setStatus(TwitterStatus.WORKING);
-//                twitterAccountService.save(account);
-//            }
+            competitor.setStatus(CompetitorStatus.LOCK); // next we update our statuses
+            competitorService.save(competitor);
+            for (TwitterAccount account : accounts) {
+                account.setStatus(TwitterStatus.WORKING);
+                twitterAccountService.save(account);
+            }
 
-            // if cursor -1 update to done
-            long cursor = competitor.getCursor() == null ? -1 : competitor.getCursor();
+            long cursor = competitor.getCursor() == null ? -1L : competitor.getCursor(); // if cursor -1 update to done
             for (TwitterAccount account : accounts) {
                 if (cursor == 0) {
                     if (competitor.getStatus() != CompetitorStatus.DONE) {  // we don't want to save multiple times
@@ -83,9 +81,8 @@ public class TwitterSchedulerService {
             }
 
             competitor.setCursor(cursor);  // we save our cursor to keep track and update back our status
-            competitor.setStatus(CompetitorStatus.IN_PROGRESS);
+            competitor.setStatus(cursor == 0 ? CompetitorStatus.DONE : CompetitorStatus.IN_PROGRESS);
             competitorService.save(competitor);
-
         });
 
     }
