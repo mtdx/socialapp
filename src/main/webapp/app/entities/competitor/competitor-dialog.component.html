@@ -15,7 +15,7 @@
         <div class="form-group" hidden>
             <label class="form-control-label" jhiTranslate="socialappApp.competitor.status" for="field_status">Status</label>
             <select class="form-control" name="status" [(ngModel)]="competitor.status" id="field_status" readonly>
-                <option value="IN_PROGRESS" jhiTranslate="socialappApp.CompetitorStatus.IN_PROGRESS">In Progress</option>
+                <option selected value="IN_PROGRESS" jhiTranslate="socialappApp.CompetitorStatus.IN_PROGRESS">In Progress</option>
                 <option value="DONE" jhiTranslate="socialappApp.CompetitorStatus.DONE">Done</option>
                 <option value="LOCK" jhiTranslate="socialappApp.CompetitorStatus.LOCK">Lock</option>
             </select>
@@ -43,9 +43,10 @@
                     This field should follow pattern for "Userid".
                 </small>
             </div>
+            <small>eg. <a target="_blank" href="http://gettwitterid.com/?user_name=buyfifacoinscom&submit=GET+USER+ID">gettwitterid.com</a></small>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="socialappApp.competitor.username" for="field_username">Username</label>
+            <label class="form-control-label" jhiTranslate="socialappApp.competitor.username" for="field_username">Username (Screen Name)</label>
             <input type="text" class="form-control" name="username" id="field_username"
                 [(ngModel)]="competitor.username"
             required minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" />

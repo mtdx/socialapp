@@ -1,5 +1,6 @@
 package com.ninja.socialapp.service;
 
+import com.ninja.socialapp.domain.Competitor;
 import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
@@ -54,7 +55,7 @@ public class TwitterSchedulerService {
     @Scheduled(cron = "30 * * * * *")
     public void processCompetitors() {
         log.debug("Run scheduled add followers {}");
-        competitorService.findOneByStatusOrderByIdDesc(CompetitorStatus.IN_PROGRESS).ifPresent(competitor -> {
+        competitorService.findOneByStatusOrderByIdDesc(CompetitorStatus.IN_PROGRESS).ifPresent((Competitor competitor) -> {
             List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
             twitterApiService.updateDate();
 
@@ -67,7 +68,7 @@ public class TwitterSchedulerService {
 //            }
 
             // if cursor -1 update to done
-            long cursor = competitor.getCursor();
+            long cursor = competitor.getCursor() == null ? -1 : competitor.getCursor();
             for (TwitterAccount account : accounts) {
                 if (cursor == 0) {
                     if (competitor.getStatus() != CompetitorStatus.DONE) {  // we don't want to save multiple times
