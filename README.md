@@ -6,3 +6,4 @@
         - add jobs with the twitter filter options
         - add destroy likes orlder than..
         - add delete old ex;
+        - add check if already exists

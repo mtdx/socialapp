@@ -18,5 +18,7 @@
             <column name="status" type="varchar(19)"/>
         </createIndex>
 
+        <addUniqueConstraint tableName="twitter_account" columnNames="email"/>
+
     </changeSet>
 </databaseChangeLog>

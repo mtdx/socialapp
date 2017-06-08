@@ -4,16 +4,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
     <!--
-        Added the indexes for entity Competitor.
+        Added the indexes for entity Proxy.
     -->
-    <changeSet id="20170531095952-2" author="jhipster">
+    <changeSet id="20170530203318-2" author="jhipster">
 
-        <createIndex tableName="competitor"
-                     indexName="k_competitor_status">
-            <column name="status"/>
-        </createIndex>
-
-        <addUniqueConstraint tableName="competitor" columnNames="userid"/>
+        <addUniqueConstraint tableName="proxy" columnNames="host"/>
 
     </changeSet>
 </databaseChangeLog>
