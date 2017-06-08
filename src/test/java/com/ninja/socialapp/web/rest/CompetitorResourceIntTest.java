@@ -55,6 +55,12 @@ public class CompetitorResourceIntTest {
     private static final Long DEFAULT_CURSOR = -1L;
     private static final Long UPDATED_CURSOR = 2L;
 
+    private static final Boolean DEFAULT_STOP = false;
+    private static final Boolean UPDATED_STOP = true;
+
+    private static final Boolean DEFAULT_RESET = false;
+    private static final Boolean UPDATED_RESET = true;
+
     @Autowired
     private CompetitorRepository competitorRepository;
 
@@ -102,7 +108,9 @@ public class CompetitorResourceIntTest {
             .userid(DEFAULT_USERID)
             .username(DEFAULT_USERNAME)
             .likes(DEFAULT_LIKES)
-            .cursor(DEFAULT_CURSOR);
+            .cursor(DEFAULT_CURSOR)
+            .stop(DEFAULT_STOP)
+            .reset(DEFAULT_RESET);
         return competitor;
     }
 
@@ -132,6 +140,8 @@ public class CompetitorResourceIntTest {
         assertThat(testCompetitor.getUsername()).isEqualTo(DEFAULT_USERNAME);
         assertThat(testCompetitor.getLikes()).isEqualTo(DEFAULT_LIKES);
         assertThat(testCompetitor.getCursor()).isEqualTo(DEFAULT_CURSOR);
+        assertThat(testCompetitor.isStop()).isEqualTo(DEFAULT_STOP);
+        assertThat(testCompetitor.isReset()).isEqualTo(DEFAULT_RESET);
 
         // Validate the Competitor in Elasticsearch
         Competitor competitorEs = competitorSearchRepository.findOne(testCompetitor.getId());
@@ -208,7 +218,9 @@ public class CompetitorResourceIntTest {
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES.intValue())))
-            .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())));
+            .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())))
+            .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())))
+            .andExpect(jsonPath("$.[*].reset").value(hasItem(DEFAULT_RESET.booleanValue())));
     }
 
     @Test
@@ -226,7 +238,9 @@ public class CompetitorResourceIntTest {
             .andExpect(jsonPath("$.userid").value(DEFAULT_USERID.toString()))
             .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()))
             .andExpect(jsonPath("$.likes").value(DEFAULT_LIKES.intValue()))
-            .andExpect(jsonPath("$.cursor").value(DEFAULT_CURSOR.intValue()));
+            .andExpect(jsonPath("$.cursor").value(DEFAULT_CURSOR.intValue()))
+            .andExpect(jsonPath("$.stop").value(DEFAULT_STOP.booleanValue()))
+            .andExpect(jsonPath("$.reset").value(DEFAULT_RESET.booleanValue()));
     }
 
     @Test
@@ -252,7 +266,9 @@ public class CompetitorResourceIntTest {
             .userid(UPDATED_USERID)
             .username(UPDATED_USERNAME)
             .likes(UPDATED_LIKES)
-            .cursor(UPDATED_CURSOR);
+            .cursor(UPDATED_CURSOR)
+            .stop(UPDATED_STOP)
+            .reset(UPDATED_RESET);
 
         restCompetitorMockMvc.perform(put("/api/competitors")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -268,6 +284,8 @@ public class CompetitorResourceIntTest {
         assertThat(testCompetitor.getUsername()).isEqualTo(UPDATED_USERNAME);
         assertThat(testCompetitor.getLikes()).isEqualTo(UPDATED_LIKES);
         assertThat(testCompetitor.getCursor()).isEqualTo(UPDATED_CURSOR);
+        assertThat(testCompetitor.isStop()).isEqualTo(UPDATED_STOP);
+        assertThat(testCompetitor.isReset()).isEqualTo(UPDATED_RESET);
 
         // Validate the Competitor in Elasticsearch
         Competitor competitorEs = competitorSearchRepository.findOne(testCompetitor.getId());
@@ -329,7 +347,9 @@ public class CompetitorResourceIntTest {
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES.intValue())))
-            .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())));
+            .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())))
+            .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())))
+            .andExpect(jsonPath("$.[*].reset").value(hasItem(DEFAULT_RESET.booleanValue())));
     }
 
     @Test

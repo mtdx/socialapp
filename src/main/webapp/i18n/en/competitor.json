@@ -20,7 +20,9 @@
             "userid": "Userid",
             "username": "Username",
             "likes": "Likes",
-            "cursor": "Cursor"
+            "cursor": "Cursor",
+            "stop": "Stop",
+            "reset": "Reset"
         }
     }
 }

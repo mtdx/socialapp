@@ -49,6 +49,12 @@ public class Competitor implements Serializable {
     @Column(name = "jhi_cursor")
     private Long cursor;
 
+    @Column(name = "jhi_stop")
+    private Boolean stop;
+
+    @Column(name = "jhi_reset")
+    private Boolean reset;
+
     public Long getId() {
         return id;
     }
@@ -122,6 +128,32 @@ public class Competitor implements Serializable {
         this.cursor = cursor;
     }
 
+    public Boolean isStop() {
+        return stop;
+    }
+
+    public Competitor stop(Boolean stop) {
+        this.stop = stop;
+        return this;
+    }
+
+    public void setStop(Boolean stop) {
+        this.stop = stop;
+    }
+
+    public Boolean isReset() {
+        return reset;
+    }
+
+    public Competitor reset(Boolean reset) {
+        this.reset = reset;
+        return this;
+    }
+
+    public void setReset(Boolean reset) {
+        this.reset = reset;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -151,6 +183,8 @@ public class Competitor implements Serializable {
             ", username='" + getUsername() + "'" +
             ", likes='" + getLikes() + "'" +
             ", cursor='" + getCursor() + "'" +
+            ", stop='" + isStop() + "'" +
+            ", reset='" + isReset() + "'" +
             "}";
     }
 }

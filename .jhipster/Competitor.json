@@ -40,6 +40,14 @@
         {
             "fieldName": "cursor",
             "fieldType": "Long"
+        },
+        {
+            "fieldName": "stop",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "reset",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20170531095952",
