@@ -16,5 +16,5 @@ import java.util.Optional;
 @Repository
 public interface CompetitorRepository extends JpaRepository<Competitor,Long> {
 
-    Optional<Competitor> findOneByStatusOrderByIdDesc(CompetitorStatus status);
+    Optional<Competitor> findFirstByStatusOrderByIdAsc(CompetitorStatus status);
 }

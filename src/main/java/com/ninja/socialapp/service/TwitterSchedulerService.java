@@ -55,7 +55,7 @@ public class TwitterSchedulerService {
     @Scheduled(cron = "30 * * * * *")
     public void processCompetitors() {
         log.debug("Run scheduled add followers {}");
-        competitorService.findOneByStatusOrderByIdDesc(CompetitorStatus.IN_PROGRESS).ifPresent((Competitor competitor) -> {
+        competitorService.findFirstByStatusOrderByIdAsc(CompetitorStatus.IN_PROGRESS).ifPresent((Competitor competitor) -> {
             List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
             twitterApiService.updateDate();
 
