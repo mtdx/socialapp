@@ -49,8 +49,12 @@ public class TwitterApiService {
         try {
             User user = twitterClient.updateProfile(twitterAccount.getName(), twitterAccount.getUrl(),
                 twitterAccount.getLocation(), twitterAccount.getDescription());
-            twitterClient.updateProfileImage(new ByteArrayInputStream(twitterAccount.getAvatar().getImage()));
-            twitterClient.updateProfileBanner(new ByteArrayInputStream(twitterAccount.getHeader().getImage()));
+
+            if(twitterAccount.getAvatar() != null)
+                twitterClient.updateProfileImage(new ByteArrayInputStream(twitterAccount.getAvatar().getImage()));
+            if(twitterAccount.getHeader() != null)
+                twitterClient.updateProfileBanner(new ByteArrayInputStream(twitterAccount.getHeader().getImage()));
+
             twitterAccount.setUsername(user.getScreenName());
             twitterAccount.setStatus(TwitterStatus.IDLE);
             twitterAccountService.save(twitterAccount);
