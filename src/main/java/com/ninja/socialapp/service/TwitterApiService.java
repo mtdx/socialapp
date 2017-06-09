@@ -1,5 +1,6 @@
 package com.ninja.socialapp.service;
 
+import com.ninja.socialapp.domain.Competitor;
 import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.domain.TwitterError;
 import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
@@ -42,9 +43,8 @@ public class TwitterApiService {
     /**
      * Updates a twitter account via API
      */
-    @Async
     public void updateAccount(final TwitterAccount twitterAccount){
-        log.debug("Request to update a twitter accounts via TwitterAPI: {}", twitterAccount.getEmail());
+        log.debug("Call to update a twitter accounts via TwitterAPI: {}", twitterAccount.getEmail());
         final Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             User user = twitterClient.updateProfile(twitterAccount.getName(), twitterAccount.getUrl(),
@@ -66,11 +66,11 @@ public class TwitterApiService {
     /**
      * Just get and pass the  followers from the competitor it receives
      */
-    public long setupFollowers(final TwitterAccount twitterAccount, Long cursor, String competitorId){
+    public long setupFollowers(final TwitterAccount twitterAccount, Long cursor, final Competitor competitor){
          Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
-            IDs ids = twitterClient.getFollowersIDs(Long.parseLong(competitorId), cursor);
-            likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount);
+            IDs ids = twitterClient.getFollowersIDs(Long.parseLong(competitor.getUserid()), cursor);
+            new Thread(() -> likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount, competitor)).start();
             return ids.getNextCursor();
         } catch (TwitterException ex) {
             saveEx(ex, twitterAccount.getUsername());
@@ -81,23 +81,21 @@ public class TwitterApiService {
     /**
      * Here we do most of the work, we like the followers we get
      */
-   // @Async
-    private void likeFollowersTweetsOf(long[] followers, Twitter twitterClient, final TwitterAccount twitterAccount){
-        log.debug("Start likeFollowersTweetsOf: {}", twitterAccount.getEmail());
-        threadWait(10);
+    private void likeFollowersTweetsOf(long[] followers, final Twitter twitterClient, final TwitterAccount twitterAccount, final Competitor competitor){
+        log.debug("Call to create twitter likes via TwitterAPI: {}", twitterAccount.getEmail());
+        threadWait(31);
         // test Async
         // update account status
         twitterAccount.setStatus(TwitterStatus.IDLE);
         twitterAccountService.save(twitterAccount);
-        log.debug("EXIT likeFollowersTweetsOf: {}", twitterAccount.getEmail());
+        log.debug("EXIT LIKEFOLLOWERSTWEETSOF: {}", twitterAccount.getEmail());
     }
 
     /**
      * Destroy previous likes older than x days
      */
-    @Async
     public void destroyLikes(final TwitterAccount twitterAccount){
-        log.debug("Request to update a twitter accounts via TwitterAPI: {}", twitterAccount.getEmail());
+        log.debug("Call to destroy twitter likes via TwitterAPI: {}", twitterAccount.getEmail());
         Twitter twitterClient = getTwitterInstance(twitterAccount);
         Paging paging = new Paging(1);
         List<Status> list = new ArrayList<>();

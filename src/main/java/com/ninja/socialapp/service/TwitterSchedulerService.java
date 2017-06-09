@@ -41,7 +41,7 @@ public class TwitterSchedulerService {
         log.debug("Run scheduled update accounts {}");
         List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.PENDING_UPDATE);
         for (TwitterAccount account : accounts) {
-            twitterApiService.updateAccount(account);
+            new Thread(() -> twitterApiService.updateAccount(account)).start();
         }
     }
 
@@ -77,7 +77,7 @@ public class TwitterSchedulerService {
                     twitterAccountService.save(account);
                     continue;   // no point moving on as competitor followers are done
                 }
-                cursor = twitterApiService.setupFollowers(account, cursor, competitor.getUserid());
+                cursor = twitterApiService.setupFollowers(account, cursor, competitor);
             }
 
             competitor.setCursor(cursor);  // we save our cursor to keep track and update back our status
