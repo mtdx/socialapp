@@ -18,6 +18,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Service Implementation for managing Twitter API.
@@ -31,15 +32,18 @@ public class TwitterApiService {
 
     private final TwitterAccountService twitterAccountService;
 
+    private final CompetitorService competitorService;
+
     private int currentMonth;
 
     private int currentYear;
 
-    private final int MAX_LIKES = 100;
+    private final int MAX_LIKES = 10000;
 
-    public TwitterApiService(TwitterErrorService twitterErrorService, TwitterAccountService twitterAccountService){
+    public TwitterApiService(TwitterErrorService twitterErrorService, TwitterAccountService twitterAccountService, CompetitorService competitorService){
         this.twitterErrorService = twitterErrorService;
         this.twitterAccountService = twitterAccountService;
+        this.competitorService = competitorService;
     }
 
     /**
@@ -72,7 +76,7 @@ public class TwitterApiService {
         Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             IDs ids = twitterClient.getFollowersIDs(Long.parseLong(competitor.getUserid()), cursor);
-            new Thread(() -> likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount, competitor)).start();
+            new Thread(() -> likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount, competitor.getId())).start();
             return ids.getNextCursor();
         } catch (TwitterException ex) {
             saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
@@ -83,21 +87,48 @@ public class TwitterApiService {
     /**
      * Here we do most of the work, we like the followers we get
      */
-    private void likeFollowersTweetsOf(long[] followers, Twitter twitterClient, final TwitterAccount twitterAccount, final Competitor competitor){
+    private void likeFollowersTweetsOf(long[] followers, Twitter twitterClient, final TwitterAccount twitterAccount, final long competitorId){
         log.debug("Call to create twitter likes via TwitterAPI: {}", twitterAccount.getEmail());
-
+        int likes = 0;
         try {
-            if(twitterClient.showUser(twitterAccount.getUsername()).getFavouritesCount() >= MAX_LIKES){
+            if (twitterClient.showUser(twitterAccount.getUsername()).getFavouritesCount() >= MAX_LIKES) {
                 destroyLikes(twitterAccount, twitterClient); // here we try to do some cleanup
             }
 
+            for (Long ID : followers) {
+                threadWait(getRandInt(2, 7));  // 180 per 15 min request limit
+                if (isSpamAccount(ID, twitterClient, twitterAccount.getUsername()))
+                    continue;  // we try to target real accounts only
+
+                ResponseList<Status> statuses = twitterClient.getUserTimeline(ID);
+                Status tweet = statuses.get(0);
+                // if we already did the tweet
+                if (tweet.isFavorited() || tweet.isRetweeted()) continue;
+
+                LocalDate tweetDate = tweet.getCreatedAt().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                int tweetMonth = tweetDate.getMonthValue();
+                int tweetYear = tweetDate.getYear();
+                // we only favorite tweets younger than 1 month
+                if (currentYear == tweetYear && (currentMonth - tweetMonth) <= 2) {
+                    Long tweetId = tweet.getId();
+                    String tweetText = tweet.getText();
+                    threadWait(getRandInt(15, 105));
+
+                    if (tweetText.length() >= 70 && getRandInt(0, 100) < 1) {  // also we retweet, 1% & only long tweets
+                        twitterClient.retweetStatus(tweetId);
+                    } else {
+                        twitterClient.createFavorite(tweetId);
+                        likes++;
+                    }
+                }
+            }
         } catch (TwitterException ex) {
             saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
             twitterClient = getTwitterInstance(twitterAccount);
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
-
+        competitorService.incrementLikes(likes, competitorId);
         twitterAccount.setStatus(TwitterStatus.IDLE); // we reset the account
         twitterAccountService.save(twitterAccount);
     }
@@ -116,7 +147,7 @@ public class TwitterApiService {
                     twitterClient.destroyFavorite(s.getId());
                 }
                 paging.setPage(paging.getPage() + 1);
-                threadWait(60);
+                threadWait(getRandInt(15, 105));
             } catch (TwitterException ex) {
                 saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
                 twitterClient = getTwitterInstance(twitterAccount);
@@ -200,5 +231,9 @@ public class TwitterApiService {
         LocalDate localDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         currentMonth = localDate.getMonthValue();
         currentYear = localDate.getYear();
+    }
+
+    private static int getRandInt(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 }

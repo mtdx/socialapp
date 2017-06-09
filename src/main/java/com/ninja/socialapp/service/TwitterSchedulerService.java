@@ -84,6 +84,5 @@ public class TwitterSchedulerService {
             competitor.setStatus(cursor == 0 ? CompetitorStatus.DONE : CompetitorStatus.IN_PROGRESS);
             competitorService.save(competitor);
         });
-
     }
 }

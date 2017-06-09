@@ -107,4 +107,14 @@ public class CompetitorService {
         log.debug("Request to get Competitors by status : {}", status);
         return competitorRepository.findFirstByStatusOrderByIdAsc(status);
     }
+
+    /**
+     *  Updates the number of likes.
+     *
+     *  @param likes the number of likes
+     *  @param id the id of the entity
+     */
+    public void incrementLikes(int likes, Long id) {
+        competitorRepository.incrementLikes(likes, id);
+    }
 }
