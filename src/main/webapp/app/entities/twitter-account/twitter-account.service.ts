@@ -14,7 +14,6 @@ export class TwitterAccountService {
     constructor(private http: Http) { }
 
     create(twitterAccount: TwitterAccount): Observable<TwitterAccount> {
-        twitterAccount.status = TwitterStatus.PENDING_UPDATE; // default status
         const copy = this.convert(twitterAccount);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             return res.json();
@@ -22,7 +21,6 @@ export class TwitterAccountService {
     }
 
     update(twitterAccount: TwitterAccount): Observable<TwitterAccount> {
-        twitterAccount.status = TwitterStatus.PENDING_UPDATE; // default status
         const copy = this.convert(twitterAccount);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             return res.json();

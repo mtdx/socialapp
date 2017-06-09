@@ -58,6 +58,7 @@ public class CompetitorResource {
         if (competitor.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new competitor cannot already have an ID")).body(null);
         }
+        competitor.setStatus(CompetitorStatus.IN_PROGRESS);
         Competitor result = competitorService.save(competitor);
         return ResponseEntity.created(new URI("/api/competitors/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -79,6 +80,12 @@ public class CompetitorResource {
         log.debug("REST request to update Competitor : {}", competitor);
         if (competitor.getId() == null) {
             return createCompetitor(competitor);
+        }
+        if(competitor.isStop())
+            competitor.setStatus(CompetitorStatus.LOCK);
+        if(competitor.isReset()) {
+            competitor.setCursor(-1L);
+            competitor.setStatus(CompetitorStatus.IN_PROGRESS);
         }
         Competitor result = competitorService.save(competitor);
         return ResponseEntity.ok()

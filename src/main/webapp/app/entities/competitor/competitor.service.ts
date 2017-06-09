@@ -14,7 +14,6 @@ export class CompetitorService {
     constructor(private http: Http) { }
 
     create(competitor: Competitor): Observable<Competitor> {
-        competitor.status = CompetitorStatus.IN_PROGRESS; // default status
         const copy = this.convert(competitor);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             return res.json();
