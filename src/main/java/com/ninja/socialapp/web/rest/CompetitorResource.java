@@ -81,11 +81,14 @@ public class CompetitorResource {
         if (competitor.getId() == null) {
             return createCompetitor(competitor);
         }
-        if(competitor.isStop())
+        if(competitor.isStop()) {
             competitor.setStatus(CompetitorStatus.STOPPED);
+            competitor.setStop(false);
+        }
         if(competitor.isReset()) {
             competitor.setCursor(-1L);
             competitor.setStatus(CompetitorStatus.IN_PROGRESS);
+            competitor.setReset(false);
         }
         Competitor result = competitorService.save(competitor);
         return ResponseEntity.ok()
