@@ -35,6 +35,8 @@ public class TwitterApiService {
 
     private int currentYear;
 
+    private final int MAX_LIKES = 100;
+
     public TwitterApiService(TwitterErrorService twitterErrorService, TwitterAccountService twitterAccountService){
         this.twitterErrorService = twitterErrorService;
         this.twitterAccountService = twitterAccountService;
@@ -59,7 +61,7 @@ public class TwitterApiService {
             twitterAccount.setStatus(TwitterStatus.IDLE);
             twitterAccountService.save(twitterAccount);
         } catch (TwitterException ex) {
-            saveEx(ex, twitterAccount.getUsername());
+            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
         }
     }
 
@@ -67,13 +69,13 @@ public class TwitterApiService {
      * Just get and pass the  followers from the competitor it receives
      */
     public long setupFollowers(final TwitterAccount twitterAccount, Long cursor, final Competitor competitor){
-         Twitter twitterClient = getTwitterInstance(twitterAccount);
+        Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             IDs ids = twitterClient.getFollowersIDs(Long.parseLong(competitor.getUserid()), cursor);
             new Thread(() -> likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount, competitor)).start();
             return ids.getNextCursor();
         } catch (TwitterException ex) {
-            saveEx(ex, twitterAccount.getUsername());
+            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
         }
         return cursor;
     }
@@ -81,22 +83,30 @@ public class TwitterApiService {
     /**
      * Here we do most of the work, we like the followers we get
      */
-    private void likeFollowersTweetsOf(long[] followers, final Twitter twitterClient, final TwitterAccount twitterAccount, final Competitor competitor){
+    private void likeFollowersTweetsOf(long[] followers, Twitter twitterClient, final TwitterAccount twitterAccount, final Competitor competitor){
         log.debug("Call to create twitter likes via TwitterAPI: {}", twitterAccount.getEmail());
-        threadWait(31);
-        // test Async
-        // update account status
-        twitterAccount.setStatus(TwitterStatus.IDLE);
+
+        try {
+            if(twitterClient.showUser(twitterAccount.getUsername()).getFavouritesCount() >= MAX_LIKES){
+                destroyLikes(twitterAccount, twitterClient); // here we try to do some cleanup
+            }
+
+        } catch (TwitterException ex) {
+            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
+            twitterClient = getTwitterInstance(twitterAccount);
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+
+        twitterAccount.setStatus(TwitterStatus.IDLE); // we reset the account
         twitterAccountService.save(twitterAccount);
-        log.debug("EXIT LIKEFOLLOWERSTWEETSOF: {}", twitterAccount.getEmail());
     }
 
     /**
-     * Destroy previous likes older than x days
+     * Destroy previous likes older than 2 days
      */
-    public void destroyLikes(final TwitterAccount twitterAccount){
+    private void destroyLikes(final TwitterAccount twitterAccount, Twitter twitterClient){
         log.debug("Call to destroy twitter likes via TwitterAPI: {}", twitterAccount.getEmail());
-        Twitter twitterClient = getTwitterInstance(twitterAccount);
         Paging paging = new Paging(1);
         List<Status> list = new ArrayList<>();
         do {
@@ -108,7 +118,7 @@ public class TwitterApiService {
                 paging.setPage(paging.getPage() + 1);
                 threadWait(60);
             } catch (TwitterException ex) {
-                saveEx(ex, twitterAccount.getUsername());
+                saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
                 twitterClient = getTwitterInstance(twitterAccount);
             }
         } while (list.size() > 0);
@@ -129,9 +139,9 @@ public class TwitterApiService {
         return new TwitterFactory(cb.build()).getInstance();
     }
 
-    private void saveEx(TwitterException ex, String username) {
+    private void saveEx(TwitterException ex, String username, TwitterErrorType type) {
         TwitterError twitterError = new TwitterError();
-        twitterError.setType(TwitterErrorType.UPDATE);
+        twitterError.setType(type);
         twitterError.setErrorCode(ex.getErrorCode());
         twitterError.setAccount(username);
         twitterError.setErrorMessage(ex.getErrorMessage());
@@ -180,7 +190,7 @@ public class TwitterApiService {
             }
 
         } catch (TwitterException ex) {
-            saveEx(ex, username);
+            saveEx(ex, username, TwitterErrorType.LIKE);
         }
 
         return false;

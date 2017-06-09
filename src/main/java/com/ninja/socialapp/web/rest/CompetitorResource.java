@@ -87,6 +87,7 @@ public class CompetitorResource {
         }
         if(competitor.isReset()) {
             competitor.setCursor(-1L);
+            competitor.setLikes(0L);
             competitor.setStatus(CompetitorStatus.IN_PROGRESS);
             competitor.setReset(false);
         }

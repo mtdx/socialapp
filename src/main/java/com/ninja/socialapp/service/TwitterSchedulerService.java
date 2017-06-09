@@ -36,7 +36,7 @@ public class TwitterSchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "0 */2 * * * *")
+    @Scheduled(cron = "0 */4 * * * *")
     public void updateAccounts() {
         log.debug("Run scheduled update accounts {}");
         List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.PENDING_UPDATE);
@@ -52,7 +52,7 @@ public class TwitterSchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "30 * * * * *")
+    @Scheduled(cron = "30 */2 * * * *")
     public void processCompetitors() {
         log.debug("Run scheduled process competitors {}");
         competitorService.findFirstByStatusOrderByIdAsc(CompetitorStatus.IN_PROGRESS).ifPresent((Competitor competitor) -> {
