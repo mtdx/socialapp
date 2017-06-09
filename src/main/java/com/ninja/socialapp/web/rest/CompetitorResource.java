@@ -82,7 +82,7 @@ public class CompetitorResource {
             return createCompetitor(competitor);
         }
         if(competitor.isStop())
-            competitor.setStatus(CompetitorStatus.LOCK);
+            competitor.setStatus(CompetitorStatus.STOPPED);
         if(competitor.isReset()) {
             competitor.setCursor(-1L);
             competitor.setStatus(CompetitorStatus.IN_PROGRESS);
