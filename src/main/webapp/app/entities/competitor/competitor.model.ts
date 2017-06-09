@@ -2,7 +2,8 @@
 export const enum CompetitorStatus {
     'IN_PROGRESS',
     'DONE',
-    'LOCK'
+    'LOCK',
+    'STOPPED'
 
 };
 export class Competitor {

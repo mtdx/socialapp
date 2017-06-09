@@ -4,7 +4,8 @@
             "null": "",
             "IN_PROGRESS": "In Progress",
             "DONE": "Done",
-            "LOCK": "Lock"
+            "LOCK": "Lock",
+            "STOPPED": "Stopped"
         }
     }
 }
