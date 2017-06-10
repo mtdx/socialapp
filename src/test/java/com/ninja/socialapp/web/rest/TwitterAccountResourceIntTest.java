@@ -71,7 +71,7 @@ public class TwitterAccountResourceIntTest {
     private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";
 
-    private static final TwitterStatus DEFAULT_STATUS = TwitterStatus.IDLE;
+    private static final TwitterStatus DEFAULT_STATUS = TwitterStatus.PENDING_UPDATE;
     private static final TwitterStatus UPDATED_STATUS = TwitterStatus.PENDING_UPDATE;
 
     @Autowired
