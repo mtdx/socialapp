@@ -50,7 +50,7 @@ public class CompetitorResourceIntTest {
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";
 
     private static final Long DEFAULT_LIKES = 1L;
-    private static final Long UPDATED_LIKES = 2L;
+    private static final Long UPDATED_LIKES = 0L;
 
     private static final Long DEFAULT_CURSOR = -1L;
     private static final Long UPDATED_CURSOR = 2L;
