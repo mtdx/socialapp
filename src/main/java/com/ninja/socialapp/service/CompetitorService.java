@@ -114,7 +114,7 @@ public class CompetitorService {
      *  @param likes the number of likes
      *  @param id the id of the entity
      */
-    public void incrementLikes(int likes, Long id) {
+    public void incrementLikes(Long likes, Long id) {
         competitorRepository.incrementLikes(likes, id);
     }
 }

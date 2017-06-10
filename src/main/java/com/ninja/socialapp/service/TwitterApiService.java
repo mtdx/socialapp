@@ -89,7 +89,7 @@ public class TwitterApiService {
      */
     private void likeFollowersTweetsOf(long[] followers, Twitter twitterClient, final TwitterAccount twitterAccount, final long competitorId){
         log.debug("Call to create twitter likes via TwitterAPI: {}", twitterAccount.getEmail());
-        int likes = 0;
+        Long likes = 0L;
         try {
             if (twitterClient.showUser(twitterAccount.getUsername()).getFavouritesCount() >= MAX_LIKES) {
                 destroyLikes(twitterAccount, twitterClient); // here we try to do some cleanup
