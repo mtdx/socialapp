@@ -39,8 +39,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SocialappApp.class)
 public class ProxyResourceIntTest {
 
-    private static final String DEFAULT_HOST = "219.29.41.205";
-    private static final String UPDATED_HOST = "12.112.154.208";
+    private static final String DEFAULT_HOST = "253.11.220.40";
+    private static final String UPDATED_HOST = "254.60.72.240";
 
     private static final Integer DEFAULT_PORT = 0;
     private static final Integer UPDATED_PORT = 1;

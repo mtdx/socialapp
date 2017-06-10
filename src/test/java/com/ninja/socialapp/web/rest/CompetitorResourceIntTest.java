@@ -43,8 +43,8 @@ public class CompetitorResourceIntTest {
     private static final CompetitorStatus DEFAULT_STATUS = CompetitorStatus.IN_PROGRESS;
     private static final CompetitorStatus UPDATED_STATUS = CompetitorStatus.DONE;
 
-    private static final String DEFAULT_USERID = "8";
-    private static final String UPDATED_USERID = "7";
+    private static final String DEFAULT_USERID = "4";
+    private static final String UPDATED_USERID = "04";
 
     private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";

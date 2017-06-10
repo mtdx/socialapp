@@ -41,8 +41,8 @@ import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 @SpringBootTest(classes = SocialappApp.class)
 public class TwitterAccountResourceIntTest {
 
-    private static final String DEFAULT_EMAIL = "&a@[13.255.200.w:\\7]";
-    private static final String UPDATED_EMAIL = "g1@[010.215.7.y:w]";
+    private static final String DEFAULT_EMAIL = "97.z@[090.213.224.098]";
+    private static final String UPDATED_EMAIL = "\"\\q\"@sc2.hd";
 
     private static final String DEFAULT_CONSUMER_KEY = "AAAAAAAAAA";
     private static final String UPDATED_CONSUMER_KEY = "BBBBBBBBBB";
@@ -62,8 +62,8 @@ public class TwitterAccountResourceIntTest {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
-    private static final String DEFAULT_URL = "www.mFgzv1~psKdu064@-xSukjC-j_Xg8GqMlSBmBjnN1CRI-%~vRRfA04MCGmc@vvvv+SK:5SuBe%z7EOprIhOBa.DtrgQGMZ+A4vdcMU_BzZvO61XS87rHo0LXD%udmG488j1W8JektfUfB.FUcRKeP2BD#9uxgpLjy1_u6iEZJKNT1Ci:8x#te1b3Zt@nTa@8B4sJcM4iL+if63%uV6pGGBK-Rtmh8lGUW+yhmdv2@87zasFsL.xgq";
-    private static final String UPDATED_URL = "OGzBlUFv%Etoo-+wie7nvIl=:.S#m.fCbN0v.z9bpj#p0e8aDB:BE.Iq48iM@gpjT8COGQNPQ6:9rH5v:EDgbAtKEUJ#.cbsxy";
+    private static final String DEFAULT_URL = "yKUVd+5KkdOoJj3Z4sU0y@CqLCmidwje1CY7BtD-+QRMB4aFx_MAuctPtx8b7t-I0LgqH0Wjx-7IovrQVMKWDzk+DNLCd~TscUk9pGAUYL.1gML+=cLT.cqpuy";
+    private static final String UPDATED_URL = "pJ3SEqCAnWxoLeZrQNc9FW:iFb+W5g96pfd05xx.6oHLcQeY.lhcdg";
 
     private static final String DEFAULT_LOCATION = "AAAAAAAAAA";
     private static final String UPDATED_LOCATION = "BBBBBBBBBB";
