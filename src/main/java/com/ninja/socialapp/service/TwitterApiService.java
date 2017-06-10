@@ -94,28 +94,26 @@ public class TwitterApiService {
             if (twitterClient.showUser(twitterAccount.getUsername()).getFavouritesCount() >= MAX_LIKES) {
                 destroyLikes(twitterAccount, twitterClient); // here we try to do some cleanup
             }
-
             for (Long ID : followers) {
-                threadWait(getRandInt(2, 7));  // 180 per 15 min request limit
+                threadWait(getRandInt(2, 9));  // 180 per 15 min request limit
                 if (isSpamAccount(ID, twitterClient, twitterAccount.getUsername()))
                     continue;  // we try to target real accounts only
 
                 ResponseList<Status> statuses = twitterClient.getUserTimeline(ID);
                 Status tweet = statuses.get(0);
-                // if we already did the tweet
-                if (tweet.isFavorited() || tweet.isRetweeted()) continue;
+                if (tweet.isFavorited() || tweet.isRetweeted()) continue; // if we already did the tweet
 
                 LocalDate tweetDate = tweet.getCreatedAt().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 int tweetMonth = tweetDate.getMonthValue();
                 int tweetYear = tweetDate.getYear();
-                // we only favorite tweets younger than 1 month
-                if (currentYear == tweetYear && (currentMonth - tweetMonth) <= 2) {
+
+                if (currentYear == tweetYear && (currentMonth - tweetMonth) <= 2) {  // we only favorite tweets younger than 1 month
                     Long tweetId = tweet.getId();
                     String tweetText = tweet.getText();
                     threadWait(getRandInt(15, 105));
 
-                    if (tweetText.length() >= 70 && getRandInt(0, 100) < 1) {  // also we retweet, 1% & only long tweets
-                        twitterClient.retweetStatus(tweetId);
+                    if (tweetText.length() >= 70 && getRandInt(0, 100) < 1) {
+                        twitterClient.retweetStatus(tweetId); // also we retweet, 1% & only long tweets
                     } else {
                         twitterClient.createFavorite(tweetId);
                         likes++;
