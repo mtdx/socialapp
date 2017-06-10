@@ -1,0 +1,11 @@
+{
+    "socialappApp": {
+        "CompetitorStatus" : {
+            "null": "",
+            "IN_PROGRESS": "IN_PROGRESS",
+            "DONE": "DONE",
+            "LOCK": "LOCK",
+            "STOPPED": "STOPPED"
+        }
+    }
+}

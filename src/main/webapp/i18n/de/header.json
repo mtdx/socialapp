@@ -1,0 +1,23 @@
+{
+    "socialappApp": {
+        "header" : {
+            "home": {
+                "title": "Headers",
+                "createLabel": "Header erstellen",
+                "createOrEditLabel": "Header erstellen oder bearbeiten",
+                "search": "Suche nach Header"
+            },
+            "created": "Header erstellt mit ID {{ param }}",
+            "updated": "Header aktualisiert mit ID {{ param }}",
+            "deleted": "Header gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Header {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Header"
+            },
+            "name": "Name",
+            "image": "Image"
+        }
+    }
+}

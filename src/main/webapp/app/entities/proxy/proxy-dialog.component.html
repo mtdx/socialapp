@@ -1,0 +1,97 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myProxyLabel" jhiTranslate="socialappApp.proxy.home.createOrEditLabel">Create or edit a Proxy</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!proxy.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="proxy.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.proxy.host" for="field_host">Host</label>
+            <input type="text" class="form-control" name="host" id="field_host"
+                [(ngModel)]="proxy.host"
+            required minlength="7" maxlength="40" pattern="(^(?:(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)\.){3}(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)$)" />
+            <div [hidden]="!(editForm.controls.host?.dirty && editForm.controls.host?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.host?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.host?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 7 }">
+                   This field is required to be at least 7 characters.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.host?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.host?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Host' }">
+                    This field should follow pattern for "Host".
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.proxy.port" for="field_port">Port</label>
+            <input type="number" class="form-control" name="port" id="field_port"
+                [(ngModel)]="proxy.port"
+            required min="0" max="65535" />
+            <div [hidden]="!(editForm.controls.port?.dirty && editForm.controls.port?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.port?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.port?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.port?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 65535 }">
+                    This field cannot be more than 65535.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.port?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.proxy.username" for="field_username">Username</label>
+            <input type="text" class="form-control" name="username" id="field_username"
+                [(ngModel)]="proxy.username"
+            maxlength="20" />
+            <div [hidden]="!(editForm.controls.username?.dirty && editForm.controls.username?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.username?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
+                   This field cannot be longer than 20 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.proxy.password" for="field_password">Password</label>
+            <input type="text" class="form-control" name="password" id="field_password"
+                [(ngModel)]="proxy.password"
+            maxlength="20" />
+            <div [hidden]="!(editForm.controls.password?.dirty && editForm.controls.password?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.password?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
+                   This field cannot be longer than 20 characters.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

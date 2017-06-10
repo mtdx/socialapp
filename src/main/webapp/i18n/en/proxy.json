@@ -1,0 +1,25 @@
+{
+    "socialappApp": {
+        "proxy" : {
+            "home": {
+                "title": "Proxies",
+                "createLabel": "Create a new Proxy",
+                "createOrEditLabel": "Create or edit a Proxy",
+                "search": "Search for Proxy"
+            },
+            "created": "A new Proxy is created with identifier {{ param }}",
+            "updated": "A Proxy is updated with identifier {{ param }}",
+            "deleted": "A Proxy is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Proxy {{ id }}?"
+            },
+            "detail": {
+                "title": "Proxy"
+            },
+            "host": "Host",
+            "port": "Port",
+            "username": "Username",
+            "password": "Password"
+        }
+    }
+}

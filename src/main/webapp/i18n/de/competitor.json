@@ -1,0 +1,28 @@
+{
+    "socialappApp": {
+        "competitor" : {
+            "home": {
+                "title": "Competitors",
+                "createLabel": "Competitor erstellen",
+                "createOrEditLabel": "Competitor erstellen oder bearbeiten",
+                "search": "Suche nach Competitor"
+            },
+            "created": "Competitor erstellt mit ID {{ param }}",
+            "updated": "Competitor aktualisiert mit ID {{ param }}",
+            "deleted": "Competitor gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Competitor {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Competitor"
+            },
+            "status": "Status",
+            "userid": "Userid",
+            "username": "Username",
+            "likes": "Likes",
+            "cursor": "Cursor",
+            "stop": "Stop",
+            "reset": "Reset"
+        }
+    }
+}

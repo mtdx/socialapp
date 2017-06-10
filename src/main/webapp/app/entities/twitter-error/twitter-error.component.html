@@ -1,0 +1,81 @@
+<div>
+    <h2>
+        <span jhiTranslate="socialappApp.twitterError.home.title">Twitter Errors</span>
+        <button class="btn btn-primary float-right create-twitter-error" [routerLink]="['/', { outlets: { popup: ['twitter-error-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="socialappApp.twitterError.home.createLabel">
+            Create new Twitter Error
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'socialappApp.twitterError.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="twitterErrors">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="type"><span jhiTranslate="socialappApp.twitterError.type">Type</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="errorCode"><span jhiTranslate="socialappApp.twitterError.errorCode">Error Code</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="account"><span jhiTranslate="socialappApp.twitterError.account">Account</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="errorMessage"><span jhiTranslate="socialappApp.twitterError.errorMessage">Error Message</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="message"><span jhiTranslate="socialappApp.twitterError.message">Message</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="rateLimitStatus"><span jhiTranslate="socialappApp.twitterError.rateLimitStatus">Rate Limit Status</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="statusCode"><span jhiTranslate="socialappApp.twitterError.statusCode">Status Code</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let twitterError of twitterErrors ;trackBy: trackId">
+                <td><a [routerLink]="['../twitter-error', twitterError.id ]">{{twitterError.id}}</a></td>
+                <td jhiTranslate="{{'socialappApp.TwitterErrorType.' + twitterError.type}}">{{twitterError.type}}</td>
+                <td>{{twitterError.errorCode}}</td>
+                <td>{{twitterError.account}}</td>
+                <td>{{twitterError.errorMessage}}</td>
+                <td>{{twitterError.message}}</td>
+                <td>{{twitterError.rateLimitStatus}}</td>
+                <td>{{twitterError.statusCode}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../twitter-error', twitterError.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'twitter-error/'+ twitterError.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'twitter-error/'+ twitterError.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

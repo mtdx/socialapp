@@ -1,0 +1,49 @@
+
+<div *ngIf="competitor">
+    <h2><span jhiTranslate="socialappApp.competitor.detail.title">Competitor</span> {{competitor.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="socialappApp.competitor.status">Status</span></dt>
+        <dd>
+            <span jhiTranslate="{{'socialappApp.CompetitorStatus.' + competitor.status}}">{{competitor.status}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.competitor.userid">Userid</span></dt>
+        <dd>
+            <span>{{competitor.userid}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.competitor.username">Username</span></dt>
+        <dd>
+            <span>{{competitor.username}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.competitor.likes">Likes</span></dt>
+        <dd>
+            <span>{{competitor.likes}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.competitor.cursor">Cursor</span></dt>
+        <dd>
+            <span>{{competitor.cursor}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.competitor.stop">Stop</span></dt>
+        <dd>
+            <span>{{competitor.stop}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.competitor.reset">Reset</span></dt>
+        <dd>
+            <span>{{competitor.reset}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'competitor/'+ competitor.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,11 @@
+{
+    "socialappApp": {
+        "TwitterErrorType" : {
+            "null": "",
+            "UPDATE": "UPDATE",
+            "LIKE": "LIKE",
+            "RETWEET": "RETWEET",
+            "TWEET": "TWEET"
+        }
+    }
+}

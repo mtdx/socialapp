@@ -1,0 +1,37 @@
+
+<div *ngIf="proxy">
+    <h2><span jhiTranslate="socialappApp.proxy.detail.title">Proxy</span> {{proxy.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="socialappApp.proxy.host">Host</span></dt>
+        <dd>
+            <span>{{proxy.host}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.proxy.port">Port</span></dt>
+        <dd>
+            <span>{{proxy.port}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.proxy.username">Username</span></dt>
+        <dd>
+            <span>{{proxy.username}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.proxy.password">Password</span></dt>
+        <dd>
+            <span>{{proxy.password}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'proxy/'+ proxy.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

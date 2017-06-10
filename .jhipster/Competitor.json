@@ -1,0 +1,58 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "status",
+            "fieldType": "CompetitorStatus",
+            "fieldValues": "IN_PROGRESS,DONE,LOCK,STOPPED"
+        },
+        {
+            "fieldName": "userid",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": "2",
+            "fieldValidateRulesMaxlength": "20",
+            "fieldValidateRulesPattern": "(^\\d+$)"
+        },
+        {
+            "fieldName": "username",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": "4",
+            "fieldValidateRulesMaxlength": "15",
+            "fieldValidateRulesPattern": "(^[a-zA-Z0-9_]*$)"
+        },
+        {
+            "fieldName": "likes",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "cursor",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "stop",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "reset",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20170531095952",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "competitor",
+    "pagination": "infinite-scroll"
+}
