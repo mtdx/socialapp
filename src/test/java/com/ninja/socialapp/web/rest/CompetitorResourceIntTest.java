@@ -53,7 +53,7 @@ public class CompetitorResourceIntTest {
     private static final Long UPDATED_LIKES = 0L;
 
     private static final Long DEFAULT_CURSOR = -1L;
-    private static final Long UPDATED_CURSOR = 2L;
+    private static final Long UPDATED_CURSOR = -1L;
 
     private static final Boolean DEFAULT_STOP = false;
     private static final Boolean UPDATED_STOP = true;
