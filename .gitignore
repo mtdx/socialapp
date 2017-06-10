@@ -140,3 +140,6 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+
+# Custom
+/src/main/docker-production/
