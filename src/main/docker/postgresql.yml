@@ -1,7 +1,7 @@
 version: '2'
 services:
     socialapp-postgresql:
-        image: postgres:9.6.3
+        image: postgres:9.6.2
          volumes:
              - ~/volumes/jhipster/socialapp/postgresql/:/var/lib/postgresql/
         environment:
