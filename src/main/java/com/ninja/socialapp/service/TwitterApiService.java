@@ -38,7 +38,7 @@ public class TwitterApiService {
 
     private int currentYear;
 
-    private final int MAX_LIKES = 10000;
+    private final int MAX_LIKES = 5000;
 
     public TwitterApiService(TwitterErrorService twitterErrorService, TwitterAccountService twitterAccountService, CompetitorService competitorService){
         this.twitterErrorService = twitterErrorService;
