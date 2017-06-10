@@ -7,5 +7,6 @@ services:
         environment:
             - POSTGRES_USER=socialapp
             - POSTGRES_PASSWORD=
+            - POSTGRES_DB=socialapp
         ports:
             - 5432:5432
