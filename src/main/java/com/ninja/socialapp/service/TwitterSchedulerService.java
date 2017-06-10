@@ -58,7 +58,7 @@ public class TwitterSchedulerService {
         competitorService.findFirstByStatusOrderByIdAsc(CompetitorStatus.IN_PROGRESS).ifPresent((Competitor competitor) -> {
             List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
             twitterApiService.refreshDate();
-            competitorService.incrementLikes(30L, competitor.getId());
+
             competitor.setStatus(CompetitorStatus.LOCK); // next we update our statuses
             competitorService.save(competitor);
             for (TwitterAccount account : accounts) {
