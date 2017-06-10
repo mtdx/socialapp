@@ -56,10 +56,10 @@ public class CompetitorResourceIntTest {
     private static final Long UPDATED_CURSOR = -1L;
 
     private static final Boolean DEFAULT_STOP = false;
-    private static final Boolean UPDATED_STOP = true;
+    private static final Boolean UPDATED_STOP = false;
 
     private static final Boolean DEFAULT_RESET = false;
-    private static final Boolean UPDATED_RESET = true;
+    private static final Boolean UPDATED_RESET = false;
 
     @Autowired
     private CompetitorRepository competitorRepository;
