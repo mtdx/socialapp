@@ -1,7 +1,7 @@
 {
     "home": {
         "title": "Ninja Social App",
-        "subtitle": "Welcome to Ninja Social App",
+        "subtitle": "Welcome to Ninja Social App!",
         "logged": {
             "message": "You are logged in as user \"{{username}}\"."
         }
