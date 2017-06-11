@@ -59,6 +59,7 @@ public class CompetitorResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new competitor cannot already have an ID")).body(null);
         }
         competitor.setStatus(CompetitorStatus.IN_PROGRESS);
+        competitor.setLikes(0L);
         Competitor result = competitorService.save(competitor);
         return ResponseEntity.created(new URI("/api/competitors/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
