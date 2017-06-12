@@ -39,6 +39,12 @@ public class TwitterErrorService {
      */
     public TwitterError save(TwitterError twitterError) {
         log.debug("Request to save TwitterError : {}", twitterError);
+        if(twitterError.getMessage() != null && twitterError.getMessage().length() >= 255){
+            twitterError.setMessage(twitterError.getMessage().substring(0, 254));
+        }
+        if(twitterError.getErrorMessage() != null && twitterError.getErrorMessage().length() >= 255){
+            twitterError.setErrorMessage(twitterError.getErrorMessage().substring(0, 254));
+        }
         TwitterError result = twitterErrorRepository.save(twitterError);
         twitterErrorSearchRepository.save(result);
         return result;
