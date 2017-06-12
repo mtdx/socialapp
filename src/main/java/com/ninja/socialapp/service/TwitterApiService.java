@@ -94,11 +94,14 @@ public class TwitterApiService {
             if (twitterClient.showUser(twitterAccount.getUsername()).getFavouritesCount() >= MAX_LIKES) {
                 destroyLikes(twitterAccount, twitterClient); // here we try to do some cleanup
             }
-            for (Long ID : followers) {
-                threadWait(getRandInt(2, 9));  // 180 per 15 min request limit
-                if (isSpamAccount(ID, twitterClient, twitterAccount.getUsername()))
-                    continue;  // we try to target real accounts only
-
+        } catch (TwitterException ex) {
+            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
+        }
+        for (Long ID : followers) {
+            threadWait(getRandInt(2, 9));  // 180 per 15 min request limit
+            if (isSpamAccount(ID, twitterClient, twitterAccount.getUsername()))
+                continue;  // we try to target real accounts only
+            try {
                 ResponseList<Status> statuses = twitterClient.getUserTimeline(ID);
                 Status tweet = statuses.get(0);
                 if (tweet.isFavorited() || tweet.isRetweeted()) continue; // if we already did the tweet
@@ -119,12 +122,10 @@ public class TwitterApiService {
                         likes++;
                     }
                 }
+            } catch (TwitterException ex) {
+                saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
+                twitterClient = getTwitterInstance(twitterAccount);
             }
-        } catch (TwitterException ex) {
-            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
-            twitterClient = getTwitterInstance(twitterAccount);
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
         }
         competitorService.incrementLikes(likes, competitorId);
         twitterAccount.setStatus(TwitterStatus.IDLE); // we reset the account
