@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -22,4 +23,6 @@ public interface CompetitorRepository extends JpaRepository<Competitor,Long> {
     @Modifying
     @Query("update Competitor competitor set competitor.likes = competitor.likes + :likes where competitor.id = :id")
     void incrementLikes(@Param("likes") final Long likes, @Param("id") final Long id);
+
+    List<Competitor> findAllByStatus(CompetitorStatus status);
 }

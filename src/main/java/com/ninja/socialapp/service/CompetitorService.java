@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -116,5 +117,17 @@ public class CompetitorService {
      */
     public void incrementLikes(Long likes, Long id) {
         competitorRepository.incrementLikes(likes, id);
+    }
+
+    /**
+     *  Get competitors by status.
+     *
+     *  @param status the of the entities
+     *  @return the entities
+     */
+    @Transactional(readOnly = true)
+    public List<Competitor> findAllByStatus(CompetitorStatus status) {
+        log.debug("Request to get TwitterAccounts by status : {}", status);
+        return competitorRepository.findAllByStatus(status);
     }
 }
