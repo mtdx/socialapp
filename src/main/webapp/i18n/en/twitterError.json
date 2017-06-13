@@ -19,11 +19,11 @@
             "type": "Type",
             "errorCode": "Error Code",
             "account": "Account",
-            "errorMessage": "Error Message",
+            "errorMessage": "Error",
             "message": "Message",
-            "rateLimitStatus": "Rate Limit",
+            "rateLimitStatus": "Rate",
             "statusCode": "Status Code",
-            "created_at": "Created At"
+            "created_at": "Created"
         }
     }
 }

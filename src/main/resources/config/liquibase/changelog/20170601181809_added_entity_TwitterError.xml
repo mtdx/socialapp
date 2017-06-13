@@ -49,13 +49,8 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="created_at" type="timestamp">
-                <constraints nullable="true" />
-            </column>
-
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="twitter_error" columnName="created_at" columnDataType="datetime"/>
 
     </changeSet>
 </databaseChangeLog>
