@@ -10,6 +10,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -23,10 +25,14 @@ public class TwitterSchedulerService {
 
     private final CompetitorService competitorService;
 
-    public TwitterSchedulerService(TwitterAccountService twitterAccountService, TwitterApiService twitterApiService, CompetitorService competitorService) {
+    private final TwitterErrorService twitterErrorService;
+
+    public TwitterSchedulerService(TwitterAccountService twitterAccountService, TwitterApiService twitterApiService,
+                                   CompetitorService competitorService, TwitterErrorService twitterErrorService) {
         this.twitterAccountService = twitterAccountService;
         this.twitterApiService = twitterApiService;
         this.competitorService = competitorService;
+        this.twitterErrorService = twitterErrorService;
     }
 
     /**
@@ -84,5 +90,22 @@ public class TwitterSchedulerService {
             competitor.setStatus(cursor == 0 ? CompetitorStatus.DONE : CompetitorStatus.IN_PROGRESS);
             competitorService.save(competitor);
         });
+    }
+
+    /**
+     * We delete twitter errors older than 7 days to keep db small. Whe need to delete one by one to delete from search too.
+     * <p>
+     * This is scheduled to get fired every 1 minute.
+     * </p>
+     */
+    @Async
+    @Scheduled(cron = "0 0 23 * * *")
+    public void deleteTwitterErrors() {
+        log.debug("Run scheduled delete old twitter errors {}");
+        final int DAYS = 7; // how much time we keep data
+        List<Long> olderThanErrorsIds = twitterErrorService.findOlderThan(Instant.now().minus(Duration.ofDays(DAYS)));
+        for (Long olderThanErrorsId : olderThanErrorsIds){
+            twitterErrorService.delete(olderThanErrorsId);
+        }
     }
 }

@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.Instant;
+import java.util.List;
+
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
@@ -97,5 +100,17 @@ public class TwitterErrorService {
         log.debug("Request to search for a page of TwitterErrors for query {}", query);
         Page<TwitterError> result = twitterErrorSearchRepository.search(queryStringQuery(query), pageable);
         return result;
+    }
+
+    /**
+     *  Finds a list of entities ids older than a certain date.
+     *
+     *  @param instant the current time
+     *  @return a list of entity ids older than
+     */
+    @Transactional(readOnly = true)
+    public List<Long> findOlderThan(Instant instant) {
+        log.debug("Call to get older than : {}", instant);
+        return twitterErrorRepository.findOlderThan(instant);
     }
 }
