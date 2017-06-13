@@ -69,7 +69,7 @@ public class ProxyResource {
      * @param proxy the proxy to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated proxy,
      * or with status 400 (Bad Request) if the proxy is not valid,
-     * or with status 500 (Internal Server Error) if the proxy couldnt be updated
+     * or with status 500 (Internal Server Error) if the proxy couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/proxies")

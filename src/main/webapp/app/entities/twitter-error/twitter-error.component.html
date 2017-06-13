@@ -31,6 +31,8 @@
             <th jhiSortBy="message"><span jhiTranslate="socialappApp.twitterError.message">Message</span></th>
             <th jhiSortBy="rateLimitStatus"><span jhiTranslate="socialappApp.twitterError.rateLimitStatus">Rate Limit Status</span></th>
             <th jhiSortBy="statusCode"><span jhiTranslate="socialappApp.twitterError.statusCode">Status Code</span></th>
+            <th jhiSortBy="created"><span jhiTranslate="socialappApp.twitterError.created">Created</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="created_at"><span jhiTranslate="socialappApp.twitterError.created_at">Created At</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -48,6 +50,7 @@
                 <td>{{twitterError.message}}</td>
                 <td>{{twitterError.rateLimitStatus}}</td>
                 <td>{{twitterError.statusCode}}</td>
+                <td>{{twitterError.created_at | date:'medium'}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

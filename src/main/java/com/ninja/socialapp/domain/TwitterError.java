@@ -7,6 +7,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
@@ -51,6 +52,9 @@ public class TwitterError implements Serializable {
 
     @Column(name = "status_code")
     private Integer statusCode;
+
+    @Column(name = "created_at")
+    private Instant created_at;
 
     public Long getId() {
         return id;
@@ -151,6 +155,19 @@ public class TwitterError implements Serializable {
         this.statusCode = statusCode;
     }
 
+    public Instant getCreated_at() {
+        return created_at;
+    }
+
+    public TwitterError created_at(Instant created_at) {
+        this.created_at = created_at;
+        return this;
+    }
+
+    public void setCreated_at(Instant created_at) {
+        this.created_at = created_at;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -182,6 +199,7 @@ public class TwitterError implements Serializable {
             ", message='" + getMessage() + "'" +
             ", rateLimitStatus='" + getRateLimitStatus() + "'" +
             ", statusCode='" + getStatusCode() + "'" +
+            ", created_at='" + getCreated_at() + "'" +
             "}";
     }
 }

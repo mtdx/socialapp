@@ -22,7 +22,8 @@
             "errorMessage": "Error Message",
             "message": "Message",
             "rateLimitStatus": "Rate Limit",
-            "statusCode": "Status Code"
+            "statusCode": "Status Code",
+            "created_at": "Created At"
         }
     }
 }

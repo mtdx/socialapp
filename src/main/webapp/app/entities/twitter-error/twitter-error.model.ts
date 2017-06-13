@@ -16,6 +16,7 @@ export class TwitterError {
         public message?: string,
         public rateLimitStatus?: string,
         public statusCode?: number,
+        public created_at?: any,
     ) {
     }
 }

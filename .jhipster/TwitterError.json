@@ -42,6 +42,10 @@
         {
             "fieldName": "statusCode",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "created_at",
+            "fieldType": "Instant"
         }
     ],
     "changelogDate": "20170601181809",

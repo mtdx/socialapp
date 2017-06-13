@@ -32,6 +32,10 @@
         <dd>
             <span>{{twitterError.statusCode}}</span>
         </dd>
+        <dt><span jhiTranslate="socialappApp.twitterError.created_at">Created At</span></dt>
+        <dd>
+            <span>{{twitterError.created_at | date:'medium'}}</span>
+        </dd>
     </dl>
 
     <button type="submit"

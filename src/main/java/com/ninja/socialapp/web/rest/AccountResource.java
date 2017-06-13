@@ -197,7 +197,7 @@ public class AccountResource {
      *   cookie.
      *
      * @param series the series of an existing session
-     * @throws UnsupportedEncodingException if the series couldnt be URL decoded
+     * @throws UnsupportedEncodingException if the series couldn't be URL decoded
      */
     @DeleteMapping("/account/sessions/{series}")
     @Timed

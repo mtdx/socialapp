@@ -23,7 +23,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.util.List;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -60,6 +61,9 @@ public class TwitterErrorResourceIntTest {
 
     private static final Integer DEFAULT_STATUS_CODE = 1;
     private static final Integer UPDATED_STATUS_CODE = 2;
+
+    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private TwitterErrorRepository twitterErrorRepository;
@@ -110,7 +114,8 @@ public class TwitterErrorResourceIntTest {
             .errorMessage(DEFAULT_ERROR_MESSAGE)
             .message(DEFAULT_MESSAGE)
             .rateLimitStatus(DEFAULT_RATE_LIMIT_STATUS)
-            .statusCode(DEFAULT_STATUS_CODE);
+            .statusCode(DEFAULT_STATUS_CODE)
+            .created_at(DEFAULT_CREATED_AT);
         return twitterError;
     }
 
@@ -137,7 +142,8 @@ public class TwitterErrorResourceIntTest {
             .andExpect(jsonPath("$.[*].errorMessage").value(hasItem(DEFAULT_ERROR_MESSAGE.toString())))
             .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE.toString())))
             .andExpect(jsonPath("$.[*].rateLimitStatus").value(hasItem(DEFAULT_RATE_LIMIT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].statusCode").value(hasItem(DEFAULT_STATUS_CODE)));
+            .andExpect(jsonPath("$.[*].statusCode").value(hasItem(DEFAULT_STATUS_CODE)))
+            .andExpect(jsonPath("$.[*].created_at").value(hasItem(DEFAULT_CREATED_AT.toString())));
     }
 
     @Test
@@ -157,7 +163,8 @@ public class TwitterErrorResourceIntTest {
             .andExpect(jsonPath("$.errorMessage").value(DEFAULT_ERROR_MESSAGE.toString()))
             .andExpect(jsonPath("$.message").value(DEFAULT_MESSAGE.toString()))
             .andExpect(jsonPath("$.rateLimitStatus").value(DEFAULT_RATE_LIMIT_STATUS.toString()))
-            .andExpect(jsonPath("$.statusCode").value(DEFAULT_STATUS_CODE));
+            .andExpect(jsonPath("$.statusCode").value(DEFAULT_STATUS_CODE))
+            .andExpect(jsonPath("$.created_at").value(DEFAULT_CREATED_AT.toString()));
     }
 
     @Test
@@ -185,7 +192,8 @@ public class TwitterErrorResourceIntTest {
             .andExpect(jsonPath("$.[*].errorMessage").value(hasItem(DEFAULT_ERROR_MESSAGE.toString())))
             .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE.toString())))
             .andExpect(jsonPath("$.[*].rateLimitStatus").value(hasItem(DEFAULT_RATE_LIMIT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].statusCode").value(hasItem(DEFAULT_STATUS_CODE)));
+            .andExpect(jsonPath("$.[*].statusCode").value(hasItem(DEFAULT_STATUS_CODE)))
+            .andExpect(jsonPath("$.[*].created_at").value(hasItem(DEFAULT_CREATED_AT.toString())));
     }
 
     @Test
