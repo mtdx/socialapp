@@ -32,8 +32,6 @@ public class HeaderService {
 
     private final TwitterAccountService twitterAccountService;
 
-
-
     public HeaderService(HeaderRepository headerRepository, HeaderSearchRepository headerSearchRepository, TwitterAccountService twitterAccountService) {
         this.headerRepository = headerRepository;
         this.headerSearchRepository = headerSearchRepository;

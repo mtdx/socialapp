@@ -1,5 +1,6 @@
 package com.ninja.socialapp.service;
 
+import com.ninja.socialapp.domain.Avatar;
 import com.ninja.socialapp.domain.Header;
 import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
@@ -119,5 +120,18 @@ public class TwitterAccountService {
     public List<TwitterAccount> findAllByHeader(Header header) {
         log.debug("Request to get TwitterAccounts by status : {}", header);
         return twitterAccountRepository.findAllByHeader(header);
+    }
+
+
+    /**
+     *  Get twitterAccounts by avatar.
+     *
+     *  @param avatar the entity we search by
+     *  @return the entities
+     */
+    @Transactional(readOnly = true)
+    public List<TwitterAccount> findAllByAvatar(Avatar avatar) {
+        log.debug("Request to get TwitterAccounts by status : {}", avatar);
+        return twitterAccountRepository.findAllByAvatar(avatar);
     }
 }

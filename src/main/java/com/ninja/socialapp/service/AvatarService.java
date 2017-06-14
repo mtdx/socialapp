@@ -1,6 +1,8 @@
 package com.ninja.socialapp.service;
 
 import com.ninja.socialapp.domain.Avatar;
+import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import com.ninja.socialapp.repository.AvatarRepository;
 import com.ninja.socialapp.repository.search.AvatarSearchRepository;
 import org.slf4j.Logger;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -26,9 +30,12 @@ public class AvatarService {
 
     private final AvatarSearchRepository avatarSearchRepository;
 
-    public AvatarService(AvatarRepository avatarRepository, AvatarSearchRepository avatarSearchRepository) {
+    private final TwitterAccountService twitterAccountService;
+
+    public AvatarService(AvatarRepository avatarRepository, AvatarSearchRepository avatarSearchRepository, TwitterAccountService twitterAccountService) {
         this.avatarRepository = avatarRepository;
         this.avatarSearchRepository = avatarSearchRepository;
+        this.twitterAccountService = twitterAccountService;
     }
 
     /**
@@ -41,6 +48,11 @@ public class AvatarService {
         log.debug("Request to save Avatar : {}", avatar);
         Avatar result = avatarRepository.save(avatar);
         avatarSearchRepository.save(result);
+        List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByAvatar(avatar);
+        for (TwitterAccount account : twitterAccounts) {
+            account.setStatus(TwitterStatus.PENDING_UPDATE);
+            twitterAccountService.save(account); // we update related accounts
+        }
         return result;
     }
 
