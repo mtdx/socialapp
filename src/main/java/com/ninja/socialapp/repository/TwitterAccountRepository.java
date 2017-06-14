@@ -1,5 +1,6 @@
 package com.ninja.socialapp.repository;
 
+import com.ninja.socialapp.domain.Header;
 import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,6 @@ import java.util.List;
 public interface TwitterAccountRepository extends JpaRepository<TwitterAccount,Long> {
 
     List<TwitterAccount> findAllByStatus(TwitterStatus status);
+
+    List<TwitterAccount> findAllByHeader(Header header);
 }

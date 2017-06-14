@@ -1,6 +1,8 @@
 package com.ninja.socialapp.service;
 
 import com.ninja.socialapp.domain.Header;
+import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import com.ninja.socialapp.repository.HeaderRepository;
 import com.ninja.socialapp.repository.search.HeaderSearchRepository;
 import org.slf4j.Logger;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -26,9 +30,14 @@ public class HeaderService {
 
     private final HeaderSearchRepository headerSearchRepository;
 
-    public HeaderService(HeaderRepository headerRepository, HeaderSearchRepository headerSearchRepository) {
+    private final TwitterAccountService twitterAccountService;
+
+
+
+    public HeaderService(HeaderRepository headerRepository, HeaderSearchRepository headerSearchRepository, TwitterAccountService twitterAccountService) {
         this.headerRepository = headerRepository;
         this.headerSearchRepository = headerSearchRepository;
+        this.twitterAccountService = twitterAccountService;
     }
 
     /**
@@ -41,6 +50,11 @@ public class HeaderService {
         log.debug("Request to save Header : {}", header);
         Header result = headerRepository.save(header);
         headerSearchRepository.save(result);
+        List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByHeader(header);
+        for (TwitterAccount account : twitterAccounts) {
+            account.setStatus(TwitterStatus.PENDING_UPDATE);
+            twitterAccountService.save(account); // we update related accounts
+        }
         return result;
     }
 
