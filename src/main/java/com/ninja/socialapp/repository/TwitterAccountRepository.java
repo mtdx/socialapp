@@ -4,6 +4,7 @@ import com.ninja.socialapp.domain.Avatar;
 import com.ninja.socialapp.domain.Header;
 import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
