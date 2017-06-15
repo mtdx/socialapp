@@ -118,7 +118,7 @@ public class TwitterAccountService {
      */
     @Transactional(readOnly = true)
     public List<TwitterAccount> findAllByHeader(Header header) {
-        log.debug("Request to get TwitterAccounts by status : {}", header);
+        log.debug("Request to get TwitterAccounts by header : {}", header);
         return twitterAccountRepository.findAllByHeader(header);
     }
 
@@ -131,7 +131,7 @@ public class TwitterAccountService {
      */
     @Transactional(readOnly = true)
     public List<TwitterAccount> findAllByAvatar(Avatar avatar) {
-        log.debug("Request to get TwitterAccounts by status : {}", avatar);
+        log.debug("Request to get TwitterAccounts by avatar : {}", avatar);
         return twitterAccountRepository.findAllByAvatar(avatar);
     }
 }
