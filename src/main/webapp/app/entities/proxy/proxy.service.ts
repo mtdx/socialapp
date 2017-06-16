@@ -9,6 +9,7 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 export class ProxyService {
 
     private resourceUrl = 'api/proxies';
+    private resourceUrlRestrict = 'api/proxies-restrict';
     private resourceSearchUrl = 'api/_search/proxies';
 
     constructor(private http: Http) { }
@@ -36,6 +37,11 @@ export class ProxyService {
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    queryrestrict(req?: any): Observable<ResponseWrapper> {
+        return this.http.get(this.resourceUrlRestrict)
             .map((res: Response) => this.convertResponse(res));
     }
 

@@ -48,7 +48,7 @@ export class TwitterAccountDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => { this.avatars = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.headerService.query()
             .subscribe((res: ResponseWrapper) => { this.headers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.proxyService.query()
+        this.proxyService.queryrestrict()
             .subscribe((res: ResponseWrapper) => { this.proxies = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
     clear() {

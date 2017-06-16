@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.List;
+
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
@@ -91,5 +93,16 @@ public class ProxyService {
         log.debug("Request to search for a page of Proxies for query {}", query);
         Page<Proxy> result = proxySearchRepository.search(queryStringQuery(query), pageable);
         return result;
+    }
+
+    /**
+     *  Get all the proxies under a certain number of uses.
+     *
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Proxy> findAllRestrict() {
+        log.debug("Request to get all Proxies Restrict");
+        return proxyRepository.findAllRestrict(1001L);
     }
 }
