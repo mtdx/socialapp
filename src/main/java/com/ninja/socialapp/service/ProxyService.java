@@ -103,7 +103,7 @@ public class ProxyService {
     @Transactional(readOnly = true)
     public List<Proxy> findAllRestrict() {
         log.debug("Request to get all Proxies Restrict");
-        final Long MAX_ACCOUNTS = 2L;
+        final Long MAX_ACCOUNTS = 15L;
         return proxyRepository.findAllRestrict(MAX_ACCOUNTS);
     }
 }
