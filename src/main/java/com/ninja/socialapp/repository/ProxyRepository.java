@@ -16,6 +16,6 @@ import java.util.List;
 @Repository
 public interface ProxyRepository extends JpaRepository<Proxy,Long> {
 
-    @Query("select proxy from Proxy proxy where proxy.id = :num")
+    @Query("select proxy from Proxy proxy  where (select count(proxy_id) from proxy left join TwitterAccount ON proxy.id = proxy_id) <= :num")
     List<Proxy> findAllRestrict(@Param("num") final Long num);
 }
