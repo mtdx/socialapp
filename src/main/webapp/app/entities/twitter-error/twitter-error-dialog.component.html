@@ -24,14 +24,12 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterError.errorCode" for="field_errorCode">Error Code</label>
             <input type="number" class="form-control" name="errorCode" id="field_errorCode"
-                [(ngModel)]="twitterError.errorCode"
-             />
+                [(ngModel)]="twitterError.errorCode"  />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterError.account" for="field_account">Account</label>
             <input type="text" class="form-control" name="account" id="field_account"
-                [(ngModel)]="twitterError.account"
-            minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" />
+                [(ngModel)]="twitterError.account" minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" />
             <div [hidden]="!(editForm.controls.account?.dirty && editForm.controls.account?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.account?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 4 }">
@@ -50,20 +48,17 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterError.errorMessage" for="field_errorMessage">Error Message</label>
             <input type="text" class="form-control" name="errorMessage" id="field_errorMessage"
-                [(ngModel)]="twitterError.errorMessage"
-             />
+                [(ngModel)]="twitterError.errorMessage"  />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterError.message" for="field_message">Message</label>
             <input type="text" class="form-control" name="message" id="field_message"
-                [(ngModel)]="twitterError.message"
-             />
+                [(ngModel)]="twitterError.message"  />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterError.rateLimitStatus" for="field_rateLimitStatus">Rate Limit Status</label>
             <input type="text" class="form-control" name="rateLimitStatus" id="field_rateLimitStatus"
-                [(ngModel)]="twitterError.rateLimitStatus"
-            maxlength="20" />
+                [(ngModel)]="twitterError.rateLimitStatus" maxlength="20" />
             <div [hidden]="!(editForm.controls.rateLimitStatus?.dirty && editForm.controls.rateLimitStatus?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.rateLimitStatus?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
@@ -74,8 +69,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterError.statusCode" for="field_statusCode">Status Code</label>
             <input type="number" class="form-control" name="statusCode" id="field_statusCode"
-                [(ngModel)]="twitterError.statusCode"
-             />
+                [(ngModel)]="twitterError.statusCode"  />
         </div>
 
     </div>

@@ -24,8 +24,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.competitor.userid" for="field_userid">Userid</label>
             <input type="text" class="form-control" name="userid" id="field_userid"
-                [(ngModel)]="competitor.userid"
-            required minlength="2" maxlength="20" pattern="(^\d+$)" />
+                [(ngModel)]="competitor.userid" required minlength="2" maxlength="20" pattern="(^\d+$)" />
             <div [hidden]="!(editForm.controls.userid?.dirty && editForm.controls.userid?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.userid?.errors?.required" jhiTranslate="entity.validation.required">
@@ -48,8 +47,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.competitor.username" for="field_username">Username</label>
             <input type="text" class="form-control" name="username" id="field_username"
-                [(ngModel)]="competitor.username"
-            required minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" />
+                [(ngModel)]="competitor.username" required minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" />
             <div [hidden]="!(editForm.controls.username?.dirty && editForm.controls.username?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.username?.errors?.required" jhiTranslate="entity.validation.required">
@@ -72,26 +70,22 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.competitor.likes" for="field_likes">Likes</label>
             <input type="number" class="form-control" name="likes" id="field_likes"
-                [(ngModel)]="competitor.likes"
-             />
+                [(ngModel)]="competitor.likes"  />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.competitor.cursor" for="field_cursor">Cursor</label>
             <input type="number" class="form-control" name="cursor" id="field_cursor"
-                [(ngModel)]="competitor.cursor"
-             />
+                [(ngModel)]="competitor.cursor"  />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.competitor.stop" for="field_stop">Stop</label>
             <input type="checkbox" class="form-control" name="stop" id="field_stop"
-                [(ngModel)]="competitor.stop"
-             />
+                [(ngModel)]="competitor.stop"  />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.competitor.reset" for="field_reset">Reset</label>
             <input type="checkbox" class="form-control" name="reset" id="field_reset"
-                [(ngModel)]="competitor.reset"
-             />
+                [(ngModel)]="competitor.reset"  />
         </div>
 
     </div>

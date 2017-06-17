@@ -69,7 +69,7 @@ public class TwitterErrorResource {
      * @param twitterError the twitterError to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated twitterError,
      * or with status 400 (Bad Request) if the twitterError is not valid,
-     * or with status 500 (Internal Server Error) if the twitterError couldnt be updated
+     * or with status 500 (Internal Server Error) if the twitterError couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/twitter-errors")

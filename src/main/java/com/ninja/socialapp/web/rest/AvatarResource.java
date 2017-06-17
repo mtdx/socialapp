@@ -69,7 +69,7 @@ public class AvatarResource {
      * @param avatar the avatar to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated avatar,
      * or with status 400 (Bad Request) if the avatar is not valid,
-     * or with status 500 (Internal Server Error) if the avatar couldnt be updated
+     * or with status 500 (Internal Server Error) if the avatar couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/avatars")

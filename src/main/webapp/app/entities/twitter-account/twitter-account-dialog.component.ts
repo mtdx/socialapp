@@ -51,6 +51,7 @@ export class TwitterAccountDialogComponent implements OnInit {
         this.proxyService.query()
             .subscribe((res: ResponseWrapper) => { this.proxies = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
+
     clear() {
         this.activeModal.dismiss('cancel');
     }

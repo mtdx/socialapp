@@ -69,7 +69,7 @@ public class CompetitorResource {
      * @param competitor the competitor to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated competitor,
      * or with status 400 (Bad Request) if the competitor is not valid,
-     * or with status 500 (Internal Server Error) if the competitor couldnt be updated
+     * or with status 500 (Internal Server Error) if the competitor couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/competitors")

@@ -15,8 +15,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.email" for="field_email">Email</label>
             <input type="text" class="form-control" name="email" id="field_email"
-                [(ngModel)]="twitterAccount.email"
-            required minlength="3" maxlength="254" pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|&#34;(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*&#34;)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])" />
+                [(ngModel)]="twitterAccount.email" required minlength="3" maxlength="254" pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|&#34;(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*&#34;)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])" />
             <div [hidden]="!(editForm.controls.email?.dirty && editForm.controls.email?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.email?.errors?.required" jhiTranslate="entity.validation.required">
@@ -39,8 +38,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.consumerKey" for="field_consumerKey">Consumer Key</label>
             <input type="text" class="form-control" name="consumerKey" id="field_consumerKey"
-                [(ngModel)]="twitterAccount.consumerKey"
-            required minlength="4" maxlength="60" pattern="(^[a-zA-Z0-9]*$)" />
+                [(ngModel)]="twitterAccount.consumerKey" required minlength="4" maxlength="60" pattern="(^[a-zA-Z0-9]*$)" />
             <div [hidden]="!(editForm.controls.consumerKey?.dirty && editForm.controls.consumerKey?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.consumerKey?.errors?.required" jhiTranslate="entity.validation.required">
@@ -63,8 +61,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.consumerSecret" for="field_consumerSecret">Consumer Secret</label>
             <input type="text" class="form-control" name="consumerSecret" id="field_consumerSecret"
-                [(ngModel)]="twitterAccount.consumerSecret"
-            required minlength="4" maxlength="60" pattern="(^[a-zA-Z0-9]*$)" />
+                [(ngModel)]="twitterAccount.consumerSecret" required minlength="4" maxlength="60" pattern="(^[a-zA-Z0-9]*$)" />
             <div [hidden]="!(editForm.controls.consumerSecret?.dirty && editForm.controls.consumerSecret?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.consumerSecret?.errors?.required" jhiTranslate="entity.validation.required">
@@ -87,8 +84,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.accessToken" for="field_accessToken">Access Token</label>
             <input type="text" class="form-control" name="accessToken" id="field_accessToken"
-                [(ngModel)]="twitterAccount.accessToken"
-            required minlength="4" maxlength="80" pattern="(^[a-zA-Z0-9-]*$)" />
+                [(ngModel)]="twitterAccount.accessToken" required minlength="4" maxlength="80" pattern="(^[a-zA-Z0-9-]*$)" />
             <div [hidden]="!(editForm.controls.accessToken?.dirty && editForm.controls.accessToken?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.accessToken?.errors?.required" jhiTranslate="entity.validation.required">
@@ -111,8 +107,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.accessTokenSecret" for="field_accessTokenSecret">Access Token Secret</label>
             <input type="text" class="form-control" name="accessTokenSecret" id="field_accessTokenSecret"
-                [(ngModel)]="twitterAccount.accessTokenSecret"
-            required minlength="4" maxlength="60" pattern="(^[a-zA-Z0-9]*$)" />
+                [(ngModel)]="twitterAccount.accessTokenSecret" required minlength="4" maxlength="60" pattern="(^[a-zA-Z0-9]*$)" />
             <div [hidden]="!(editForm.controls.accessTokenSecret?.dirty && editForm.controls.accessTokenSecret?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.accessTokenSecret?.errors?.required" jhiTranslate="entity.validation.required">
@@ -135,8 +130,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.name" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
-                [(ngModel)]="twitterAccount.name"
-            required minlength="3" maxlength="20" />
+                [(ngModel)]="twitterAccount.name" required minlength="3" maxlength="20" />
             <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
@@ -155,8 +149,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.description" for="field_description">Description</label>
             <input type="text" class="form-control" name="description" id="field_description"
-                [(ngModel)]="twitterAccount.description"
-            maxlength="160" />
+                [(ngModel)]="twitterAccount.description" maxlength="160" />
             <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.description?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 160 }">
@@ -167,8 +160,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.url" for="field_url">Url</label>
             <input type="text" class="form-control" name="url" id="field_url"
-                [(ngModel)]="twitterAccount.url"
-            pattern="(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)" />
+                [(ngModel)]="twitterAccount.url" pattern="(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)" />
             <div [hidden]="!(editForm.controls.url?.dirty && editForm.controls.url?.invalid)">
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.url?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Url' }">
@@ -179,8 +171,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.location" for="field_location">Location</label>
             <input type="text" class="form-control" name="location" id="field_location"
-                [(ngModel)]="twitterAccount.location"
-            maxlength="60" />
+                [(ngModel)]="twitterAccount.location" maxlength="60" />
             <div [hidden]="!(editForm.controls.location?.dirty && editForm.controls.location?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.location?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 60 }">
@@ -191,8 +182,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.username" for="field_username">Username</label>
             <input type="text" class="form-control" name="username" id="field_username"
-                [(ngModel)]="twitterAccount.username"
-            required minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" />
+                [(ngModel)]="twitterAccount.username" required minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" />
             <div [hidden]="!(editForm.controls.username?.dirty && editForm.controls.username?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.username?.errors?.required" jhiTranslate="entity.validation.required">

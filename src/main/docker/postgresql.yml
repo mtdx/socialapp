@@ -3,7 +3,7 @@ services:
     socialapp-postgresql:
         image: postgres:9.6.2
         # volumes:
-        #     - ~/volumes/jhipster/socialapp/postgresql/:/var/lib/postgresql/
+        #     - ~/volumes/jhipster/socialapp/postgresql/:/var/lib/postgresql/data/
         environment:
             - POSTGRES_USER=socialapp
             - POSTGRES_PASSWORD=

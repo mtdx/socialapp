@@ -69,7 +69,7 @@ public class TwitterAccountResource {
      * @param twitterAccount the twitterAccount to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated twitterAccount,
      * or with status 400 (Bad Request) if the twitterAccount is not valid,
-     * or with status 500 (Internal Server Error) if the twitterAccount couldnt be updated
+     * or with status 500 (Internal Server Error) if the twitterAccount couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/twitter-accounts")
