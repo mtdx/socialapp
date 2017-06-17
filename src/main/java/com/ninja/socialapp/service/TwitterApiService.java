@@ -110,7 +110,7 @@ public class TwitterApiService {
                 int tweetMonth = tweetDate.getMonthValue();
                 int tweetYear = tweetDate.getYear();
 
-                if (currentYear == tweetYear && (currentMonth - tweetMonth) <= 2) {  // we only favorite tweets younger than 1 month
+                if (currentYear == tweetYear && (currentMonth - tweetMonth) <= 2) {  // we only favorite tweets newer than 2 months
                     Long tweetId = tweet.getId();
                     String tweetText = tweet.getText();
                     threadWait(getRandInt(15, 105));
