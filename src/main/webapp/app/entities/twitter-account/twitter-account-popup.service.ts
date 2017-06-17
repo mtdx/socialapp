@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TwitterAccount } from './twitter-account.model';
 import { TwitterAccountService } from './twitter-account.service';
+
 @Injectable()
 export class TwitterAccountPopupService {
     private isOpen = false;

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Proxy } from './proxy.model';
 import { ProxyService } from './proxy.service';
+
 @Injectable()
 export class ProxyPopupService {
     private isOpen = false;

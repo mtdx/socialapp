@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Header } from './header.model';
 import { HeaderService } from './header.service';
+
 @Injectable()
 export class HeaderPopupService {
     private isOpen = false;

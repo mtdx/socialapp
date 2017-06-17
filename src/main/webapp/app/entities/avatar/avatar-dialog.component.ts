@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 
@@ -25,6 +25,7 @@ export class AvatarDialogComponent implements OnInit {
         private dataUtils: DataUtils,
         private alertService: AlertService,
         private avatarService: AvatarService,
+        private elementRef: ElementRef,
         private eventManager: EventManager
     ) {
     }
@@ -33,6 +34,7 @@ export class AvatarDialogComponent implements OnInit {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
     }
+
     byteSize(field) {
         return this.dataUtils.byteSize(field);
     }
@@ -42,7 +44,7 @@ export class AvatarDialogComponent implements OnInit {
     }
 
     setFileData(event, avatar, field, isImage) {
-        if (event.target.files && event.target.files[0]) {
+        if (event && event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
             if (isImage && !/^image\//.test(file.type)) {
                 return;
@@ -53,6 +55,11 @@ export class AvatarDialogComponent implements OnInit {
             });
         }
     }
+
+    clearInputImage(field: string, fieldContentType: string, idInput: string) {
+        this.dataUtils.clearInputImage(this.avatar, this.elementRef, field, fieldContentType, idInput);
+    }
+
     clear() {
         this.activeModal.dismiss('cancel');
     }

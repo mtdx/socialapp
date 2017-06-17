@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TwitterError } from './twitter-error.model';
 import { TwitterErrorService } from './twitter-error.service';
+
 @Injectable()
 export class TwitterErrorPopupService {
     private isOpen = false;

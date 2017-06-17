@@ -15,8 +15,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.header.name" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
-                [(ngModel)]="header.name"
-            required maxlength="20" />
+                [(ngModel)]="header.name" required maxlength="20" />
             <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
@@ -34,16 +33,14 @@
                 <img [src]="'data:' + header.imageContentType + ';base64,' + header.image" style="max-height: 100px;" *ngIf="header.image" alt="header image"/>
                 <div *ngIf="header.image" class="form-text text-danger clearfix">
                     <span class="pull-left">{{header.imageContentType}}, {{byteSize(header.image)}}</span>
-                    <button type="button" (click)="header.image=null;header.imageContentType=null;"
-                            class="btn btn-default btn-xs pull-right">
+                    <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-default btn-xs pull-right">
                         <span class="fa fa-times"></span>
                     </button>
                 </div>
-                <input type="file" (change)="setFileData($event, header, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                <input type="file" id="fileImage" (change)="setFileData($event, header, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
             </div>
             <input type="hidden" class="form-control" name="image" id="field_image"
-                [(ngModel)]="header.image"
-            required maxbytes="400000" />
+                [(ngModel)]="header.image" required maxbytes="400000" />
             <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
                 [(ngModel)]="header.imageContentType" />
             <div [hidden]="!(editForm.controls.image?.dirty && editForm.controls.image?.invalid)">

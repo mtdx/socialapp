@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Competitor } from './competitor.model';
 import { CompetitorService } from './competitor.service';
+
 @Injectable()
 export class CompetitorPopupService {
     private isOpen = false;

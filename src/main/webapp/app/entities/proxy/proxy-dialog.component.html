@@ -15,8 +15,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.proxy.host" for="field_host">Host</label>
             <input type="text" class="form-control" name="host" id="field_host"
-                [(ngModel)]="proxy.host"
-            required minlength="7" maxlength="40" pattern="(^(?:(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)\.){3}(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)$)" />
+                [(ngModel)]="proxy.host" required minlength="7" maxlength="40" pattern="(^(?:(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)\.){3}(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)$)" />
             <div [hidden]="!(editForm.controls.host?.dirty && editForm.controls.host?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.host?.errors?.required" jhiTranslate="entity.validation.required">
@@ -39,8 +38,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.proxy.port" for="field_port">Port</label>
             <input type="number" class="form-control" name="port" id="field_port"
-                [(ngModel)]="proxy.port"
-            required min="0" max="65535" />
+                [(ngModel)]="proxy.port" required min="0" max="65535" />
             <div [hidden]="!(editForm.controls.port?.dirty && editForm.controls.port?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.port?.errors?.required" jhiTranslate="entity.validation.required">
@@ -63,8 +61,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.proxy.username" for="field_username">Username</label>
             <input type="text" class="form-control" name="username" id="field_username"
-                [(ngModel)]="proxy.username"
-            maxlength="20" />
+                [(ngModel)]="proxy.username" maxlength="20" />
             <div [hidden]="!(editForm.controls.username?.dirty && editForm.controls.username?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.username?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
@@ -75,8 +72,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.proxy.password" for="field_password">Password</label>
             <input type="text" class="form-control" name="password" id="field_password"
-                [(ngModel)]="proxy.password"
-            maxlength="20" />
+                [(ngModel)]="proxy.password" maxlength="20" />
             <div [hidden]="!(editForm.controls.password?.dirty && editForm.controls.password?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.password?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
