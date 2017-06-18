@@ -11,70 +11,108 @@
 
             <jhi-alert-error></jhi-alert-error>
 
-            <form name="form" role="form" (ngSubmit)="save()" #settingsForm="ngForm" *ngIf="twitterSettings" novalidate>
+            <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
                 <div class="form-group">
-                    <label class="form-control-label" for="firstName" jhiTranslate="settings.form.firstname">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="{{'settings.form.firstname.placeholder' | translate}}"
-                           [(ngModel)]="twitterSettings.firstName" minlength=1 maxlength=50 #firstNameInput="ngModel" required>
-                    <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.maxLikes" for="field_maxLikes">Max Likes</label>
+                    <input type="number" class="form-control" name="maxLikes" id="field_maxLikes"
+                           [(ngModel)]="twitterSettings.maxLikes" required min="1" />
+                    <div [hidden]="!(editForm.controls.maxLikes?.dirty && editForm.controls.maxLikes?.invalid)">
                         <small class="form-text text-danger"
-                               *ngIf="firstNameInput.errors.required" jhiTranslate="settings.messages.validate.firstname.required">
-                            Your first name is required.
+                               [hidden]="!editForm.controls.maxLikes?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
                         </small>
                         <small class="form-text text-danger"
-                               *ngIf="firstNameInput.errors.minlength" jhiTranslate="settings.messages.validate.firstname.minlength">
-                            Your first name is required to be at least 1 character.
+                               [hidden]="!editForm.controls.maxLikes?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 1 }">
+                            This field should be at least 1.
                         </small>
                         <small class="form-text text-danger"
-                               *ngIf="firstNameInput.errors.maxlength" jhiTranslate="settings.messages.validate.firstname.maxlength">
-                            Your first name cannot be longer than 50 characters.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="lastName" jhiTranslate="settings.form.lastname">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="{{'settings.form.lastname.placeholder' | translate}}"
-                           [(ngModel)]="twitterSettings.lastName" minlength=1 maxlength=50 #lastNameInput="ngModel" required>
-                    <div *ngIf="lastNameInput.dirty && lastNameInput.invalid">
-                        <small class="form-text text-danger"
-                               *ngIf="lastNameInput.errors.required" jhiTranslate="settings.messages.validate.lastname.required">
-                            Your last name is required.
-                        </small>
-                        <small class="form-text text-danger"
-                               *ngIf="lastNameInput.errors.minlength" jhiTranslate="settings.messages.validate.lastname.minlength">
-                            Your last name is required to be at least 1 character.
-                        </small>
-                        <small class="form-text text-danger"
-                               *ngIf="lastNameInput.errors.maxlength" jhiTranslate="settings.messages.validate.lastname.maxlength">
-                            Your last name cannot be longer than 50 characters.
+                               [hidden]="!editForm.controls.maxLikes?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
                         </small>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="email" jhiTranslate="global.form.email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="{{'global.form.email.placeholder' | translate}}"
-                           [(ngModel)]="twitterSettings.email" minlength="5" maxlength="100" #emailInput="ngModel" required>
-                    <div *ngIf="emailInput.dirty && emailInput.invalid">
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.hasDefaultProfileImage" for="field_hasDefaultProfileImage">Has Default Profile Image</label>
+                    <input type="checkbox" class="form-control" name="hasDefaultProfileImage" id="field_hasDefaultProfileImage"
+                           [(ngModel)]="twitterSettings.hasDefaultProfileImage"  />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.hasNoDescription" for="field_hasNoDescription">Has No Description</label>
+                    <input type="checkbox" class="form-control" name="hasNoDescription" id="field_hasNoDescription"
+                           [(ngModel)]="twitterSettings.hasNoDescription"  />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.accountAgeLessThan" for="field_accountAgeLessThan">Account Age Less Than</label>
+                    <input type="number" class="form-control" name="accountAgeLessThan" id="field_accountAgeLessThan"
+                           [(ngModel)]="twitterSettings.accountAgeLessThan" required min="1" />
+                    <div [hidden]="!(editForm.controls.accountAgeLessThan?.dirty && editForm.controls.accountAgeLessThan?.invalid)">
                         <small class="form-text text-danger"
-                               *ngIf="emailInput.errors.required" jhiTranslate="global.messages.validate.email.required">
-                            Your email is required.
+                               [hidden]="!editForm.controls.accountAgeLessThan?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
                         </small>
                         <small class="form-text text-danger"
-                               *ngIf="emailInput.errors.email" jhiTranslate="global.messages.validate.email.invalid">
-                            Your email is invalid.
+                               [hidden]="!editForm.controls.accountAgeLessThan?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 1 }">
+                            This field should be at least 1.
                         </small>
                         <small class="form-text text-danger"
-                               *ngIf="emailInput.errors.minlength" jhiTranslate="global.messages.validate.email.minlength">
-                            Your email is required to be at least 5 characters.
-                        </small>
-                        <small class="form-text text-danger"
-                               *ngIf="emailInput.errors.maxlength" jhiTranslate="global.messages.validate.email.maxlength">
-                            Your email cannot be longer than 100 characters.
+                               [hidden]="!editForm.controls.accountAgeLessThan?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
                         </small>
                     </div>
                 </div>
-                <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary" jhiTranslate="settings.form.button">Save</button>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.minActivity" for="field_minActivity">Min Activity</label>
+                    <input type="number" class="form-control" name="minActivity" id="field_minActivity"
+                           [(ngModel)]="twitterSettings.minActivity" required min="1" />
+                    <div [hidden]="!(editForm.controls.minActivity?.dirty && editForm.controls.minActivity?.invalid)">
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.minActivity?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.minActivity?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 1 }">
+                            This field should be at least 1.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.minActivity?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.followingToFollowersRatio" for="field_followingToFollowersRatio">Following To Followers Ratio</label>
+                    <input type="number" class="form-control" name="followingToFollowersRatio" id="field_followingToFollowersRatio"
+                           [(ngModel)]="twitterSettings.followingToFollowersRatio"  />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.likesToTweetsRatio" for="field_likesToTweetsRatio">Likes To Tweets Ratio</label>
+                    <input type="number" class="form-control" name="likesToTweetsRatio" id="field_likesToTweetsRatio"
+                           [(ngModel)]="twitterSettings.likesToTweetsRatio"  />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.notLikeTweetsOlderThan" for="field_notLikeTweetsOlderThan">Not Like Tweets Older Than</label>
+                    <input type="number" class="form-control" name="notLikeTweetsOlderThan" id="field_notLikeTweetsOlderThan"
+                           [(ngModel)]="twitterSettings.notLikeTweetsOlderThan" required min="1" />
+                    <div [hidden]="!(editForm.controls.notLikeTweetsOlderThan?.dirty && editForm.controls.notLikeTweetsOlderThan?.invalid)">
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.notLikeTweetsOlderThan?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.notLikeTweetsOlderThan?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 1 }">
+                            This field should be at least 1.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.notLikeTweetsOlderThan?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
             </form>
 
         </div>

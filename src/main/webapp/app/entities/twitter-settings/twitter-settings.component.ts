@@ -1,34 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { JhiLanguageService } from 'ng-jhipster';
 
-import { Principal, AccountService, JhiLanguageHelper } from '../../shared';
+import { TwitterSettings } from './twitter-settings.model';
 
 @Component({
     selector: 'jhi-twitter-settings',
     templateUrl: './twitter-settings.component.html'
 })
 export class TwitterSettingsComponent implements OnInit {
-    error: string;
-    success: string;
-    twitterSettings: any;
+    twitterSettings: TwitterSettings;
+    authorities: any[];
+    isSaving: boolean;
+    success: boolean;
 
     constructor(
-        private account: AccountService,
-        private principal: Principal
+
     ) {
     }
 
     ngOnInit() {
-
+        this.isSaving = false;
+        this.success = false;
+        this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
     }
 
     save() {
-        this.account.save(this.twitterSettings).subscribe(() => {
-            this.error = null;
-            this.success = 'OK';
-        }, () => {
-            this.success = null;
-            this.error = 'ERROR';
-        });
+        this.isSaving = true;
     }
 }
