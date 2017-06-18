@@ -1,0 +1,18 @@
+{
+    "socialappApp": {
+        "twitterSettings" : {
+            "home": {
+                "title": "Twitter Settings"
+            },
+            "updated": "Twitter Settings aktualisiert mit ID {{ param }}",
+            "maxLikes": "Max Likes",
+            "hasDefaultProfileImage": "Has Default Profile Image",
+            "hasNoDescription": "Has No Description",
+            "accountAgeLessThan": "Account Age Less Than",
+            "minActivity": "Min Activity",
+            "followingToFollowersRatio": "Following To Followers Ratio",
+            "likesToTweetsRatio": "Likes To Tweets Ratio",
+            "notLikeTweetsOlderThan": "Not Like Tweets Older Than"
+        }
+    }
+}
