@@ -25,11 +25,6 @@ export class TwitterSettingsService {
         });
     }
 
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
-        return new ResponseWrapper(res.headers, jsonResponse, res.status);
-    }
-
     private convert(twitterSettings: TwitterSettings): TwitterSettings {
         const copy: TwitterSettings = Object.assign({}, twitterSettings);
         return copy;

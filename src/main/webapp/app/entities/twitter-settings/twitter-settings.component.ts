@@ -12,7 +12,8 @@ import { TwitterSettingsService } from './twitter-settings.service';
 export class TwitterSettingsComponent implements OnInit, OnDestroy {
     twitterSettings: TwitterSettings;
     isSaving: boolean;
-    success: boolean;
+    error: string;
+    success: string;
 
     constructor(
         private twitterSettingsService: TwitterSettingsService,
@@ -21,7 +22,7 @@ export class TwitterSettingsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.isSaving = false;
-        this.success = false;
+        this.success = null;
         this.load();
     }
 
@@ -39,5 +40,14 @@ export class TwitterSettingsComponent implements OnInit, OnDestroy {
 
     save() {
         this.isSaving = true;
+        this.twitterSettingsService.update(this.twitterSettings).subscribe(() => {
+            this.error = null;
+            this.success = 'OK';
+            this.isSaving = false;
+        }, () => {
+            this.success = null;
+            this.error = 'ERROR';
+            this.isSaving = false;
+        });
     }
 }

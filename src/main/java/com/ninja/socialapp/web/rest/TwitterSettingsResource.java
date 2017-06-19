@@ -33,26 +33,6 @@ public class TwitterSettingsResource {
     }
 
     /**
-     * POST  /twitter-settings : Create a new twitterSettings.
-     *
-     * @param twitterSettings the twitterSettings to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new twitterSettings, or with status 400 (Bad Request) if the twitterSettings has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PostMapping("/twitter-settings")
-    @Timed
-    public ResponseEntity<TwitterSettings> createTwitterSettings(@Valid @RequestBody TwitterSettings twitterSettings) throws URISyntaxException {
-        log.debug("REST request to save TwitterSettings : {}", twitterSettings);
-        if (twitterSettings.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new twitterSettings cannot already have an ID")).body(null);
-        }
-        TwitterSettings result = twitterSettingsService.save(twitterSettings);
-        return ResponseEntity.created(new URI("/api/twitter-settings/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /**
      * PUT  /twitter-settings : Updates an existing twitterSettings.
      *
      * @param twitterSettings the twitterSettings to update
@@ -65,13 +45,19 @@ public class TwitterSettingsResource {
     @Timed
     public ResponseEntity<TwitterSettings> updateTwitterSettings(@Valid @RequestBody TwitterSettings twitterSettings) throws URISyntaxException {
         log.debug("REST request to update TwitterSettings : {}", twitterSettings);
-        if (twitterSettings.getId() == null) {
-            return createTwitterSettings(twitterSettings);
-        }
-        TwitterSettings result = twitterSettingsService.save(twitterSettings);
+        TwitterSettings newTwitterSettings = twitterSettingsService.findOne();
+        newTwitterSettings.setMaxLikes(twitterSettings.getMaxLikes());
+        newTwitterSettings.setHasDefaultProfileImage(twitterSettings.isHasDefaultProfileImage());
+        newTwitterSettings.hasNoDescription(twitterSettings.isHasNoDescription());
+        newTwitterSettings.accountAgeLessThan(twitterSettings.getAccountAgeLessThan());
+        newTwitterSettings.minActivity(twitterSettings.getMinActivity());
+        newTwitterSettings.followingToFollowersRatio(twitterSettings.getFollowingToFollowersRatio());
+        newTwitterSettings.likesToTweetsRatio(twitterSettings.getLikesToTweetsRatio());
+        newTwitterSettings.notLikeTweetsOlderThan(twitterSettings.getNotLikeTweetsOlderThan());
+        twitterSettingsService.save(newTwitterSettings);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, twitterSettings.getId().toString()))
-            .body(result);
+            .body(newTwitterSettings);
     }
 
     /**
