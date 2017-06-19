@@ -3,6 +3,7 @@ package com.ninja.socialapp.service;
 import com.ninja.socialapp.domain.Competitor;
 import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.domain.TwitterError;
+import com.ninja.socialapp.domain.TwitterSettings;
 import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import org.slf4j.Logger;
@@ -38,8 +39,6 @@ public class TwitterApiService {
 
     private int currentYear;
 
-    private final int MAX_LIKES = 5000;
-
     public TwitterApiService(TwitterErrorService twitterErrorService, TwitterAccountService twitterAccountService, CompetitorService competitorService){
         this.twitterErrorService = twitterErrorService;
         this.twitterAccountService = twitterAccountService;
@@ -72,11 +71,11 @@ public class TwitterApiService {
     /**
      * Just get and pass the  followers from the competitor it receives
      */
-    public long setupFollowers(final TwitterAccount twitterAccount, Long cursor, final Competitor competitor){
+    public long setupFollowers(final TwitterAccount twitterAccount, Long cursor, final Competitor competitor, final TwitterSettings twitterSettings){
         Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             IDs ids = twitterClient.getFollowersIDs(Long.parseLong(competitor.getUserid()), cursor);
-            new Thread(() -> likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount, competitor.getId())).start();
+            new Thread(() -> likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount, competitor.getId(), twitterSettings)).start();
             return ids.getNextCursor();
         } catch (TwitterException ex) {
             saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
@@ -87,11 +86,12 @@ public class TwitterApiService {
     /**
      * Here we do most of the work, we like the followers we get
      */
-    private void likeFollowersTweetsOf(long[] followers, Twitter twitterClient, final TwitterAccount twitterAccount, final long competitorId){
+    private void likeFollowersTweetsOf(long[] followers, Twitter twitterClient, final TwitterAccount twitterAccount,
+                                       final long competitorId, final TwitterSettings twitterSettings){
         log.debug("Call to create twitter likes via TwitterAPI: {}", twitterAccount.getEmail());
         Long likes = 0L;
         try {
-            if (twitterClient.showUser(twitterAccount.getUsername()).getFavouritesCount() >= MAX_LIKES) {
+            if (twitterClient.showUser(twitterAccount.getUsername()).getFavouritesCount() >= twitterSettings.getMaxLikes()) {
                 destroyLikes(twitterAccount, twitterClient); // here we try to do some cleanup
             }
         } catch (TwitterException ex) {
@@ -99,7 +99,7 @@ public class TwitterApiService {
         }
         for (Long ID : followers) {
             threadWait(getRandInt(2, 9));  // 180 per 15 min request limit
-            if (isSpamAccount(ID, twitterClient, twitterAccount.getUsername()))
+            if (isSpamAccount(ID, twitterClient, twitterAccount.getUsername(), twitterSettings))
                 continue;  // we try to target real accounts only
             try {
                 ResponseList<Status> statuses = twitterClient.getUserTimeline(ID);
@@ -109,8 +109,8 @@ public class TwitterApiService {
                 LocalDate tweetDate = tweet.getCreatedAt().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 int tweetMonth = tweetDate.getMonthValue();
                 int tweetYear = tweetDate.getYear();
-
-                if (currentYear == tweetYear && (currentMonth - tweetMonth) <= 2) {  // we only favorite tweets newer than 2 months
+                int difference = (currentYear - tweetYear) * 12 + currentMonth - tweetMonth;
+                if (twitterSettings.getNotLikeTweetsOlderThan() != 0 && difference <= twitterSettings.getNotLikeTweetsOlderThan()) {  // we only favorite tweets newer than x months
                     Long tweetId = tweet.getId();
                     String tweetText = tweet.getText();
                     threadWait(getRandInt(15, 105));
@@ -193,21 +193,23 @@ public class TwitterApiService {
         }
     }
 
-    private boolean isSpamAccount(long ID, Twitter twitterClient, String username) {
+    private boolean isSpamAccount(long ID, Twitter twitterClient, String username, final TwitterSettings twitterSettings) {
         try {
             User user = twitterClient.showUser(ID);
-            if (user.isDefaultProfileImage() || user.getDescription().length() == 0) {
+            if ((twitterSettings.isHasDefaultProfileImage() && user.isDefaultProfileImage())
+                || (twitterSettings.isHasNoDescription() && user.getDescription().length() == 0)) {
                 return true;
             }
 
             LocalDate tweetData = user.getCreatedAt().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             int accountMonth = tweetData.getMonthValue();
             int accountYear = tweetData.getYear();
-            if (accountYear == currentYear && (currentMonth - accountMonth) <= 3) {
+            int difference = (currentYear - accountYear) * 12 + currentMonth - accountMonth;
+            if (twitterSettings.getAccountAgeLessThan() != 0 && difference < twitterSettings.getAccountAgeLessThan()) {
                 return true;
             }
 
-            byte activityRaw = 35; // a minimum activity metric
+            int activityRaw = twitterSettings.getMinActivity(); // a minimum activity metric
             int likes = user.getFavouritesCount(); // likes
             int followers = user.getFollowersCount(); // followers
             int following = user.getFriendsCount(); // following
@@ -215,7 +217,8 @@ public class TwitterApiService {
             if (likes <= activityRaw || followers <= activityRaw || following <= activityRaw || statuses <= activityRaw) {
                 return true;
             }
-            if ((following / followers) >= 3 || (likes / statuses) >= 3) {
+            if ((twitterSettings.getFollowingToFollowersRatio() != null && twitterSettings.getFollowingToFollowersRatio() > 0 && (following / followers) >= twitterSettings.getFollowingToFollowersRatio())
+                || (twitterSettings.getLikesToTweetsRatio() != null && twitterSettings.getLikesToTweetsRatio() > 0 && (likes / statuses) >= twitterSettings.getLikesToTweetsRatio())) {
                 return true;
             }
 

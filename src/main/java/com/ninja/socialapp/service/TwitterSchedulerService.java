@@ -2,6 +2,7 @@ package com.ninja.socialapp.service;
 
 import com.ninja.socialapp.domain.Competitor;
 import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.TwitterSettings;
 import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import org.slf4j.Logger;
@@ -27,12 +28,16 @@ public class TwitterSchedulerService {
 
     private final TwitterErrorService twitterErrorService;
 
+    private final TwitterSettingsService twitterSettingsService;
+
     public TwitterSchedulerService(TwitterAccountService twitterAccountService, TwitterApiService twitterApiService,
-                                   CompetitorService competitorService, TwitterErrorService twitterErrorService) {
+                                   CompetitorService competitorService, TwitterErrorService twitterErrorService,
+                                   TwitterSettingsService twitterSettingsService) {
         this.twitterAccountService = twitterAccountService;
         this.twitterApiService = twitterApiService;
         this.competitorService = competitorService;
         this.twitterErrorService = twitterErrorService;
+        this.twitterSettingsService = twitterSettingsService;
     }
 
     /**
@@ -62,6 +67,7 @@ public class TwitterSchedulerService {
     public void processCompetitors() {
         log.debug("Run scheduled process competitors {}");
         competitorService.findFirstByStatusOrderByIdAsc(CompetitorStatus.IN_PROGRESS).ifPresent((Competitor competitor) -> {
+            TwitterSettings twitterSettings = twitterSettingsService.findOne();
             List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
             twitterApiService.refreshDate();
 
@@ -83,7 +89,7 @@ public class TwitterSchedulerService {
                     twitterAccountService.save(account);
                     continue;   // no point moving on as competitor followers are done
                 }
-                cursor = twitterApiService.setupFollowers(account, cursor, competitor);
+                cursor = twitterApiService.setupFollowers(account, cursor, competitor, twitterSettings);
             }
 
             competitor.setCursor(cursor);  // we save our cursor to keep track and update back our status
