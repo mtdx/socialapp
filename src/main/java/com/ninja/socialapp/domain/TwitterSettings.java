@@ -5,8 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -27,7 +26,7 @@ public class TwitterSettings implements Serializable {
     private Long id;
 
     @NotNull
-    @Min(value = 1)
+    @Min(value = 0)
     @Column(name = "max_likes", nullable = false)
     private Integer maxLikes;
 
@@ -38,7 +37,7 @@ public class TwitterSettings implements Serializable {
     private Boolean hasNoDescription;
 
     @NotNull
-    @Min(value = 1)
+    @Min(value = 0)
     @Column(name = "account_age_less_than", nullable = false)
     private Integer accountAgeLessThan;
 
@@ -54,7 +53,7 @@ public class TwitterSettings implements Serializable {
     private Integer likesToTweetsRatio;
 
     @NotNull
-    @Min(value = 1)
+    @Min(value = 0)
     @Column(name = "not_like_tweets_older_than", nullable = false)
     private Integer notLikeTweetsOlderThan;
 

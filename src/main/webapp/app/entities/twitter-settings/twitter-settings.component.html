@@ -16,15 +16,15 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.maxLikes" for="field_maxLikes">Max Likes (number of likes until start doing unlikes)</label>
                     <input type="number" class="form-control" name="maxLikes" id="field_maxLikes"
-                           [(ngModel)]="twitterSettings.maxLikes" required min="1" />
+                           [(ngModel)]="twitterSettings.maxLikes" required min="0" />
                     <div [hidden]="!(editForm.controls.maxLikes?.dirty && editForm.controls.maxLikes?.invalid)">
                         <small class="form-text text-danger"
                                [hidden]="!editForm.controls.maxLikes?.errors?.required" jhiTranslate="entity.validation.required">
                             This field is required.
                         </small>
                         <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.maxLikes?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 1 }">
-                            This field should be at least 1.
+                               [hidden]="!editForm.controls.maxLikes?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                            This field should be at least 0.
                         </small>
                         <small class="form-text text-danger"
                                [hidden]="!editForm.controls.maxLikes?.errors?.number" jhiTranslate="entity.validation.number">
@@ -45,15 +45,15 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.accountAgeLessThan" for="field_accountAgeLessThan">Skip If Account Age Less Than (months, 0 = disabled)</label>
                     <input type="number" class="form-control" name="accountAgeLessThan" id="field_accountAgeLessThan"
-                           [(ngModel)]="twitterSettings.accountAgeLessThan" required min="1" />
+                           [(ngModel)]="twitterSettings.accountAgeLessThan" required min="0" />
                     <div [hidden]="!(editForm.controls.accountAgeLessThan?.dirty && editForm.controls.accountAgeLessThan?.invalid)">
                         <small class="form-text text-danger"
                                [hidden]="!editForm.controls.accountAgeLessThan?.errors?.required" jhiTranslate="entity.validation.required">
                             This field is required.
                         </small>
                         <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.accountAgeLessThan?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 1 }">
-                            This field should be at least 1.
+                               [hidden]="!editForm.controls.accountAgeLessThan?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                            This field should be at least 0.
                         </small>
                         <small class="form-text text-danger"
                                [hidden]="!editForm.controls.accountAgeLessThan?.errors?.number" jhiTranslate="entity.validation.number">
@@ -93,15 +93,15 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.notLikeTweetsOlderThan" for="field_notLikeTweetsOlderThan">Skip If Like Tweet Older Than (months, 0 = disabled)</label>
                     <input type="number" class="form-control" name="notLikeTweetsOlderThan" id="field_notLikeTweetsOlderThan"
-                           [(ngModel)]="twitterSettings.notLikeTweetsOlderThan" required min="1" />
+                [(ngModel)]="twitterSettings.notLikeTweetsOlderThan" required min="0" />
                     <div [hidden]="!(editForm.controls.notLikeTweetsOlderThan?.dirty && editForm.controls.notLikeTweetsOlderThan?.invalid)">
                         <small class="form-text text-danger"
                                [hidden]="!editForm.controls.notLikeTweetsOlderThan?.errors?.required" jhiTranslate="entity.validation.required">
                             This field is required.
                         </small>
                         <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.notLikeTweetsOlderThan?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 1 }">
-                            This field should be at least 1.
+                               [hidden]="!editForm.controls.notLikeTweetsOlderThan?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                            This field should be at least 0.
                         </small>
                         <small class="form-text text-danger"
                                [hidden]="!editForm.controls.notLikeTweetsOlderThan?.errors?.number" jhiTranslate="entity.validation.number">
