@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiLanguageService } from 'ng-jhipster';
 
@@ -10,9 +9,8 @@ import { TwitterSettingsService } from './twitter-settings.service';
     selector: 'jhi-twitter-settings',
     templateUrl: './twitter-settings.component.html'
 })
-export class TwitterSettingsComponent implements OnInit {
+export class TwitterSettingsComponent implements OnInit, OnDestroy {
     twitterSettings: TwitterSettings;
-    private subscription: Subscription;
     isSaving: boolean;
     success: boolean;
 
@@ -24,6 +22,10 @@ export class TwitterSettingsComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.success = false;
+        this.load();
+    }
+
+    load() {
         this.twitterSettingsService.find().subscribe((twitterSettings) => {
             this.twitterSettings = twitterSettings;
         });
@@ -33,9 +35,7 @@ export class TwitterSettingsComponent implements OnInit {
         window.history.back();
     }
 
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-    }
+    ngOnDestroy() {}
 
     save() {
         this.isSaving = true;

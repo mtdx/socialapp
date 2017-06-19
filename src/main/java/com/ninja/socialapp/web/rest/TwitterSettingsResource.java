@@ -75,17 +75,15 @@ public class TwitterSettingsResource {
     }
 
     /**
-     * GET  /twitter-settings/:id : get the "id" twitterSettings.
+     * GET  /twitter-settings/ get the twitterSettings.
      *
-     * @param id the id of the twitterSettings to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the twitterSettings, or with status 404 (Not Found)
      */
-    @GetMapping("/twitter-settings/{id}")
+    @GetMapping("/twitter-settings")
     @Timed
-    public ResponseEntity<TwitterSettings> getTwitterSettings(@PathVariable Long id) {
-        log.debug("REST request to get TwitterSettings : {}", id);
-        TwitterSettings twitterSettings = twitterSettingsService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(twitterSettings));
+    public ResponseEntity<TwitterSettings> getTwitterSettings() {
+        log.debug("REST request to get TwitterSettings : {}");
+        return ResponseEntity.ok(twitterSettingsService.findOne());
     }
 
 }

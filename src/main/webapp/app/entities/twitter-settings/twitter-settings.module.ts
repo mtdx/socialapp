@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { SocialappSharedModule } from '../../shared';
 import {
+    TwitterSettingsService,
     TwitterSettingsComponent,
     twitterSettingsRoute,
 } from './';
@@ -23,6 +24,7 @@ const ENTITY_STATES = [
         TwitterSettingsComponent,
     ],
     providers: [
+        TwitterSettingsService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

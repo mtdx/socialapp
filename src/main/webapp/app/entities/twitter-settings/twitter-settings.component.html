@@ -11,10 +11,10 @@
 
             <jhi-alert-error></jhi-alert-error>
 
-            <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" *ngIf="twitterSettings">
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.maxLikes" for="field_maxLikes">Max Likes</label>
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.maxLikes" for="field_maxLikes">Max Likes (number of likes until start doing unlikes)</label>
                     <input type="number" class="form-control" name="maxLikes" id="field_maxLikes"
                            [(ngModel)]="twitterSettings.maxLikes" required min="1" />
                     <div [hidden]="!(editForm.controls.maxLikes?.dirty && editForm.controls.maxLikes?.invalid)">
@@ -33,17 +33,17 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.hasDefaultProfileImage" for="field_hasDefaultProfileImage">Has Default Profile Image</label>
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.hasDefaultProfileImage" for="field_hasDefaultProfileImage">Skip If Has Default Profile Image</label>
                     <input type="checkbox" class="form-control" name="hasDefaultProfileImage" id="field_hasDefaultProfileImage"
                            [(ngModel)]="twitterSettings.hasDefaultProfileImage"  />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.hasNoDescription" for="field_hasNoDescription">Has No Description</label>
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.hasNoDescription" for="field_hasNoDescription">Skip If Has No Description</label>
                     <input type="checkbox" class="form-control" name="hasNoDescription" id="field_hasNoDescription"
                            [(ngModel)]="twitterSettings.hasNoDescription"  />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.accountAgeLessThan" for="field_accountAgeLessThan">Account Age Less Than</label>
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.accountAgeLessThan" for="field_accountAgeLessThan">Skip If Account Age Less Than (months, 0 = disabled)</label>
                     <input type="number" class="form-control" name="accountAgeLessThan" id="field_accountAgeLessThan"
                            [(ngModel)]="twitterSettings.accountAgeLessThan" required min="1" />
                     <div [hidden]="!(editForm.controls.accountAgeLessThan?.dirty && editForm.controls.accountAgeLessThan?.invalid)">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.minActivity" for="field_minActivity">Min Activity</label>
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.minActivity" for="field_minActivity">Min Activity (minimum likes, tweets, followers, following)</label>
                     <input type="number" class="form-control" name="minActivity" id="field_minActivity"
                            [(ngModel)]="twitterSettings.minActivity" required min="1" />
                     <div [hidden]="!(editForm.controls.minActivity?.dirty && editForm.controls.minActivity?.invalid)">
@@ -81,17 +81,17 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.followingToFollowersRatio" for="field_followingToFollowersRatio">Following To Followers Ratio</label>
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.followingToFollowersRatio" for="field_followingToFollowersRatio">Following To Followers Ratio (eg. 3, skip if 3 times more following than followers)</label>
                     <input type="number" class="form-control" name="followingToFollowersRatio" id="field_followingToFollowersRatio"
                            [(ngModel)]="twitterSettings.followingToFollowersRatio"  />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.likesToTweetsRatio" for="field_likesToTweetsRatio">Likes To Tweets Ratio</label>
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.likesToTweetsRatio" for="field_likesToTweetsRatio">Likes To Tweets Ratio (eg. 3, skip if 3 times more likes than tweets)</label>
                     <input type="number" class="form-control" name="likesToTweetsRatio" id="field_likesToTweetsRatio"
                            [(ngModel)]="twitterSettings.likesToTweetsRatio"  />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.notLikeTweetsOlderThan" for="field_notLikeTweetsOlderThan">Not Like Tweets Older Than</label>
+                    <label class="form-control-label" jhiTranslate="socialappApp.twitterSettings.notLikeTweetsOlderThan" for="field_notLikeTweetsOlderThan">Skip If Like Tweet Older Than (months, 0 = disabled)</label>
                     <input type="number" class="form-control" name="notLikeTweetsOlderThan" id="field_notLikeTweetsOlderThan"
                            [(ngModel)]="twitterSettings.notLikeTweetsOlderThan" required min="1" />
                     <div [hidden]="!(editForm.controls.notLikeTweetsOlderThan?.dirty && editForm.controls.notLikeTweetsOlderThan?.invalid)">

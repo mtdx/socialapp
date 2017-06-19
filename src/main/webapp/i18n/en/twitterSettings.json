@@ -5,14 +5,14 @@
                 "title": "Twitter Settings"
             },
             "updated": "Twitter Settings updated with identifier {{ param }}",
-            "maxLikes": "Max Likes",
-            "hasDefaultProfileImage": "Has Default Profile Image",
-            "hasNoDescription": "Has No Description",
-            "accountAgeLessThan": "Account Age Less Than",
-            "minActivity": "Min Activity",
-            "followingToFollowersRatio": "Following To Followers Ratio",
-            "likesToTweetsRatio": "Likes To Tweets Ratio",
-            "notLikeTweetsOlderThan": "Not Like Tweets Older Than"
+            "maxLikes": "Max Likes (number of likes until start doing unlikes)",
+            "hasDefaultProfileImage": "Skip If Has Default Profile Image",
+            "hasNoDescription": "Skip If Has No Description",
+            "accountAgeLessThan": "Skip If Account Age Less Than (months, 0 = disabled)",
+            "minActivity": "Min Activity (minimum likes, tweets, followers, following)",
+            "followingToFollowersRatio": "Following To Followers Ratio (eg. 3, skip if 900 following and just 300 followers)",
+            "likesToTweetsRatio": "Likes To Tweets Ratio (eg. 3, skip if 900 likes and just 300 tweets)",
+            "notLikeTweetsOlderThan": "Skip If Like Tweet Older Than (months, 0 = disabled)"
         }
     }
 }

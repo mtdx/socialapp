@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 /**
  * Service Implementation for managing TwitterSettings.
@@ -38,12 +40,32 @@ public class TwitterSettingsService {
     /**
      *  Get one twitterSettings by id.
      *
-     *  @param id the id of the entity
      *  @return the entity
      */
     @Transactional(readOnly = true)
-    public TwitterSettings findOne(Long id) {
-        log.debug("Request to get TwitterSettings : {}", id);
-        return twitterSettingsRepository.findOne(id);
+    public TwitterSettings findOne() {
+        log.debug("Request to get TwitterSettings : {}");
+        Optional<TwitterSettings> twitterSettings = twitterSettingsRepository.findOne();
+        return twitterSettings.orElseGet(this::saveDefault);
+    }
+
+    /**
+     * Save the default twitterSettings.
+     *
+     * @return the persisted entity
+     */
+    public TwitterSettings saveDefault() {
+        log.debug("Request to save default TwitterSettings : {}");
+        TwitterSettings defaultTwitterSettings = new TwitterSettings();
+        defaultTwitterSettings.setMaxLikes(5000); // likes until start doing unlikes
+        defaultTwitterSettings.setHasDefaultProfileImage(true); // skip if
+        defaultTwitterSettings.hasNoDescription(true);  // skip if
+        defaultTwitterSettings.accountAgeLessThan(3); // skip if less, (months)
+        defaultTwitterSettings.minActivity(35); // minimum likes, tweets, followers, following
+        defaultTwitterSettings.followingToFollowersRatio(3); // eg. 3 => 900 following 300 followers
+        defaultTwitterSettings.likesToTweetsRatio(3);   // eg. 3 => 900 likes 300 tweets
+        defaultTwitterSettings.notLikeTweetsOlderThan(2); // skip if less, (months)
+        TwitterSettings result = twitterSettingsRepository.save(defaultTwitterSettings);
+        return result;
     }
 }
