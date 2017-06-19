@@ -10,8 +10,8 @@
             "hasNoDescription": "Skip If Has No Description",
             "accountAgeLessThan": "Skip If Account Age Less Than (months, 0 = disabled)",
             "minActivity": "Min Activity (minimum likes, tweets, followers, following)",
-            "followingToFollowersRatio": "Following To Followers Ratio (eg. 3, skip if 900 following and just 300 followers)",
-            "likesToTweetsRatio": "Likes To Tweets Ratio (eg. 3, skip if 900 likes and just 300 tweets)",
+            "followingToFollowersRatio": "Following To Followers Ratio (eg. 3, skip if 3 times more following than followers)",
+            "likesToTweetsRatio": "Likes To Tweets Ratio (eg. 3, skip if 3 times more likes than tweets)",
             "notLikeTweetsOlderThan": "Skip If Like Tweet Older Than (months, 0 = disabled)"
         }
     }
