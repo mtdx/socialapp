@@ -2,6 +2,7 @@ version: '2'
 services:
     socialapp-app:
         image: socialapp
+        restart: always
         environment:
             - SPRING_PROFILES_ACTIVE=prod,swagger
             - SPRING_DATASOURCE_URL=jdbc:postgresql://socialapp-postgresql:5432/socialapp

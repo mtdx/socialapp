@@ -2,6 +2,7 @@ version: '2'
 services:
     socialapp-sonar:
         image: sonarqube:6.2-alpine
+        restart: always
         ports:
             - 9000:9000
             - 9092:9092
