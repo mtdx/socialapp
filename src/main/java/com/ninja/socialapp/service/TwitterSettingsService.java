@@ -42,7 +42,6 @@ public class TwitterSettingsService {
      *
      *  @return the entity
      */
-    @Transactional(readOnly = true)
     public TwitterSettings findOne() {
         log.debug("Request to get TwitterSettings : {}");
         Optional<TwitterSettings> twitterSettings = twitterSettingsRepository.findOne();

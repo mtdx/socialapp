@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -31,7 +32,7 @@ public class ProxySchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "0 */15 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     public void updateProxies() {
         log.debug("Run scheduled update proxies {}");
         final String USERNAME = "ninja";
@@ -41,9 +42,11 @@ public class ProxySchedulerService {
         if (!response.isEmpty()) {
             List<Proxy> proxies = proxyService.findAllByUsernameAndPassword(USERNAME, PASSWORD);
             String lines[] = response.split("\n");
-            for (int i = 0; i < lines.length; i++) {
-                String line[] = lines[i].split(":");
-                Proxy proxy = proxies.size() > i ? proxies.get(i) : new Proxy();
+            for (String line1 : lines) {
+                String line[] = line1.split(":");
+                Proxy proxy = proxyGet(proxies, line[0]);
+                if (proxySkip(proxy, line))
+                    continue; // no point saving
                 proxy.setHost(line[0]);
                 proxy.setPort(Integer.valueOf(line[1]));
                 proxy.setUsername(line[2]);
@@ -51,5 +54,25 @@ public class ProxySchedulerService {
                 proxyService.save(proxy);
             }
         }
+    }
+
+    /**
+     * Small utility function
+     */
+    private Proxy proxyGet(List<Proxy> proxies, String host){
+        for (Proxy proxy : proxies) {
+            if (proxy.getHost().equals(host)) return proxy;
+        }
+        return new Proxy();
+    }
+
+    /**
+     * Small utility function
+     */
+    private boolean proxySkip(Proxy proxy, String line[]) {
+        return (proxy.getHost() != null && proxy.getHost().equals(line[0]) &&
+            proxy.getPort() != null && Objects.equals(proxy.getPort(), Integer.valueOf(line[1])) &&
+            proxy.getUsername() != null && proxy.getUsername().equals(line[2]) &&
+            proxy.getPassword() != null && proxy.getPassword().equals(line[3]));
     }
 }
