@@ -1,7 +1,7 @@
 version: '2'
 services:
     socialapp-app:
-        image: socialapp
+        image: mcdxq/app:socialapp
         restart: always
         environment:
             - SPRING_PROFILES_ACTIVE=prod,swagger
