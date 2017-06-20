@@ -10,5 +10,11 @@
 
         <addUniqueConstraint tableName="proxy" columnNames="host"/>
 
+        <createIndex tableName="proxy"
+                     indexName="k_proxy_username_password">
+            <column name="username"/>
+            <column name="jhi_password"/>
+        </createIndex>
+
     </changeSet>
 </databaseChangeLog>

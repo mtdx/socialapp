@@ -106,4 +106,15 @@ public class ProxyService {
         final Long MAX_ACCOUNTS = 15L;
         return proxyRepository.findAllRestrict(MAX_ACCOUNTS);
     }
+
+    /**
+     *  Get all the proxies by username and password.
+     *
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Proxy> findAllByUsernameAndPassword(String username, String password) {
+        log.debug("Request to get all Proxies Restrict");
+        return proxyRepository.findAllByUsernameAndPassword(username, password);
+    }
 }
