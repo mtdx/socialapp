@@ -1,4 +1,6 @@
-export class Proxy {
+import { BaseEntity } from './../../shared';
+
+export class Proxy implements BaseEntity {
     constructor(
         public id?: number,
         public host?: string,

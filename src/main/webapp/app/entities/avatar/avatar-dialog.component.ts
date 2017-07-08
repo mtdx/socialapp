@@ -4,7 +4,7 @@ import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EventManager, AlertService, DataUtils } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Avatar } from './avatar.model';
 import { AvatarPopupService } from './avatar-popup.service';
@@ -22,11 +22,11 @@ export class AvatarDialogComponent implements OnInit {
 
     constructor(
         public activeModal: NgbActiveModal,
-        private dataUtils: DataUtils,
-        private alertService: AlertService,
+        private dataUtils: JhiDataUtils,
+        private alertService: JhiAlertService,
         private avatarService: AvatarService,
         private elementRef: ElementRef,
-        private eventManager: EventManager
+        private eventManager: JhiEventManager
     ) {
     }
 
@@ -68,24 +68,19 @@ export class AvatarDialogComponent implements OnInit {
         this.isSaving = true;
         if (this.avatar.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.avatarService.update(this.avatar), false);
+                this.avatarService.update(this.avatar));
         } else {
             this.subscribeToSaveResponse(
-                this.avatarService.create(this.avatar), true);
+                this.avatarService.create(this.avatar));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Avatar>, isCreated: boolean) {
+    private subscribeToSaveResponse(result: Observable<Avatar>) {
         result.subscribe((res: Avatar) =>
-            this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Avatar, isCreated: boolean) {
-        this.alertService.success(
-            isCreated ? 'socialappApp.avatar.created'
-            : 'socialappApp.avatar.updated',
-            { param : result.id }, null);
-
+    private onSaveSuccess(result: Avatar) {
         this.eventManager.broadcast({ name: 'avatarListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);

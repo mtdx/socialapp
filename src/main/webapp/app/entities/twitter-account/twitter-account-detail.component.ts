@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { EventManager  } from 'ng-jhipster';
+import { JhiEventManager  } from 'ng-jhipster';
 
 import { TwitterAccount } from './twitter-account.model';
 import { TwitterAccountService } from './twitter-account.service';
@@ -17,7 +17,7 @@ export class TwitterAccountDetailComponent implements OnInit, OnDestroy {
     private eventSubscriber: Subscription;
 
     constructor(
-        private eventManager: EventManager,
+        private eventManager: JhiEventManager,
         private twitterAccountService: TwitterAccountService,
         private route: ActivatedRoute
     ) {

@@ -1,24 +1,17 @@
 const webpack = require('webpack');
-const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StringReplacePlugin = require('string-replace-webpack-plugin');
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
-const WebpackNotifierPlugin = require('webpack-notifier');
 const MergeJsonWebpackPlugin = require("merge-jsons-webpack-plugin")
-const path = require('path');
 
-module.exports = function (options) {
+const utils = require('./utils.js');
+
+module.exports = (options) => {
     const DATAS = {
-        VERSION: JSON.stringify(require("../package.json").version),
-        DEBUG_INFO_ENABLED: options.env === 'dev'
+        VERSION: `'${utils.parseVersion()}'`,
+        DEBUG_INFO_ENABLED: options.env === 'development'
     };
     return {
-        entry: {
-            'polyfills': './src/main/webapp/app/polyfills',
-            'global': './src/main/webapp/content/css/global.css',
-            'main': './src/main/webapp/app/app.main'
-        },
         resolve: {
             extensions: ['.ts', '.js'],
             modules: ['node_modules']
@@ -26,14 +19,6 @@ module.exports = function (options) {
         module: {
             rules: [
                 { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports-loader?jQuery=jquery' },
-                {
-                    test: /\.ts$/,
-                    loaders: [
-                        'angular2-template-loader',
-                        'awesome-typescript-loader'
-                    ],
-                    exclude: ['node_modules/generator-jhipster']
-                },
                 {
                     test: /\.html$/,
                     loader: 'html-loader',
@@ -60,26 +45,49 @@ module.exports = function (options) {
                     loaders: ['file-loader?hash=sha512&digest=hex&name=content/[hash].[ext]']
                 },
                 {
+                    test: /manifest.webapp$/,
+                    loader: 'file-loader?name=manifest.webapp!web-app-manifest-loader'
+                },
+                {
                     test: /app.constants.ts$/,
                     loader: StringReplacePlugin.replace({
                         replacements: [{
                             pattern: /\/\* @toreplace (\w*?) \*\//ig,
-                            replacement: function (match, p1, offset, string) {
-                                return `_${p1} = ${DATAS[p1]};`;
-                            }
+                            replacement: (match, p1, offset, string) => `_${p1} = ${DATAS[p1]};`
                         }]
                     })
                 }
             ]
         },
         plugins: [
-            new CommonsChunkPlugin({
-                names: ['manifest', 'polyfills'].reverse()
+            new webpack.DefinePlugin({
+                'process.env': {
+                    'NODE_ENV': JSON.stringify(options.env)
+                }
             }),
-            new webpack.DllReferencePlugin({
-                context: './',
-                manifest: require(path.resolve('./target/www/vendor.json'))
+            new webpack.optimize.CommonsChunkPlugin({
+                name: 'polyfills',
+                chunks: ['polyfills']
             }),
+            new webpack.optimize.CommonsChunkPlugin({
+                name: 'vendor',
+                chunks: ['main'],
+                minChunks: module => utils.isExternalLib(module)
+            }),
+            new webpack.optimize.CommonsChunkPlugin({
+                name: ['polyfills', 'vendor'].reverse()
+            }),
+            new webpack.optimize.CommonsChunkPlugin({
+                name: ['manifest'],
+                minChunks: Infinity,
+            }),
+            /**
+             * See: https://github.com/angular/angular/issues/11580
+             */
+            new webpack.ContextReplacementPlugin(
+                /angular(\\|\/)core(\\|\/)@angular/,
+                utils.root('src/main/webapp/app'), {}
+            ),
             new CopyWebpackPlugin([
                 { from: './node_modules/core-js/client/shim.min.js', to: 'core-js-shim.min.js' },
                 { from: './node_modules/swagger-ui/dist', to: 'swagger-ui/dist' },
@@ -96,8 +104,8 @@ module.exports = function (options) {
             new MergeJsonWebpackPlugin({
                 output: {
                     groupBy: [
-                        { pattern: "./src/main/webapp/i18n/en/*.json", fileName: "./target/www/i18n/en/all.json" },
-                        { pattern: "./src/main/webapp/i18n/de/*.json", fileName: "./target/www/i18n/de/all.json" }
+                        { pattern: "./src/main/webapp/i18n/en/*.json", fileName: "./target/www/i18n/en.json" },
+                        { pattern: "./src/main/webapp/i18n/de/*.json", fileName: "./target/www/i18n/de.json" }
                         // jhipster-needle-i18n-language-webpack - JHipster will add/remove languages in this array
                     ]
                 }
@@ -107,14 +115,7 @@ module.exports = function (options) {
                 chunksSortMode: 'dependency',
                 inject: 'body'
             }),
-            new AddAssetHtmlPlugin([
-                { filepath: path.resolve('./target/www/vendor.dll.js'), includeSourcemap: false }
-            ]),
-            new StringReplacePlugin(),
-            new WebpackNotifierPlugin({
-                title: 'JHipster',
-                contentImage: path.join(__dirname, 'logo.png')
-            })
+            new StringReplacePlugin()
         ]
     };
 };

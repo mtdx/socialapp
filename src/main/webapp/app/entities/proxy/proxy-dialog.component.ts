@@ -4,7 +4,7 @@ import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EventManager, AlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Proxy } from './proxy.model';
 import { ProxyPopupService } from './proxy-popup.service';
@@ -22,9 +22,9 @@ export class ProxyDialogComponent implements OnInit {
 
     constructor(
         public activeModal: NgbActiveModal,
-        private alertService: AlertService,
+        private alertService: JhiAlertService,
         private proxyService: ProxyService,
-        private eventManager: EventManager
+        private eventManager: JhiEventManager
     ) {
     }
 
@@ -41,24 +41,19 @@ export class ProxyDialogComponent implements OnInit {
         this.isSaving = true;
         if (this.proxy.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.proxyService.update(this.proxy), false);
+                this.proxyService.update(this.proxy));
         } else {
             this.subscribeToSaveResponse(
-                this.proxyService.create(this.proxy), true);
+                this.proxyService.create(this.proxy));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Proxy>, isCreated: boolean) {
+    private subscribeToSaveResponse(result: Observable<Proxy>) {
         result.subscribe((res: Proxy) =>
-            this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Proxy, isCreated: boolean) {
-        this.alertService.success(
-            isCreated ? 'socialappApp.proxy.created'
-            : 'socialappApp.proxy.updated',
-            { param : result.id }, null);
-
+    private onSaveSuccess(result: Proxy) {
         this.eventManager.broadcast({ name: 'proxyListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);

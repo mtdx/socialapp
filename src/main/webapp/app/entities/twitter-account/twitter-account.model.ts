@@ -1,14 +1,12 @@
+import { BaseEntity } from './../../shared';
 
 export const enum TwitterStatus {
     'IDLE',
     'PENDING_UPDATE',
     'WORKING'
+}
 
-};
-import { Avatar } from '../avatar';
-import { Header } from '../header';
-import { Proxy } from '../proxy';
-export class TwitterAccount {
+export class TwitterAccount implements BaseEntity {
     constructor(
         public id?: number,
         public email?: string,
@@ -22,9 +20,9 @@ export class TwitterAccount {
         public location?: string,
         public username?: string,
         public status?: TwitterStatus,
-        public avatar?: Avatar,
-        public header?: Header,
-        public proxy?: Proxy,
+        public avatar?: BaseEntity,
+        public header?: BaseEntity,
+        public proxy?: BaseEntity,
     ) {
     }
 }

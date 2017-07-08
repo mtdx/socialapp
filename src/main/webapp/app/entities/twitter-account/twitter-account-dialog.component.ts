@@ -4,7 +4,7 @@ import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EventManager, AlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { TwitterAccount } from './twitter-account.model';
 import { TwitterAccountPopupService } from './twitter-account-popup.service';
@@ -32,12 +32,12 @@ export class TwitterAccountDialogComponent implements OnInit {
 
     constructor(
         public activeModal: NgbActiveModal,
-        private alertService: AlertService,
+        private alertService: JhiAlertService,
         private twitterAccountService: TwitterAccountService,
         private avatarService: AvatarService,
         private headerService: HeaderService,
         private proxyService: ProxyService,
-        private eventManager: EventManager
+        private eventManager: JhiEventManager
     ) {
     }
 
@@ -60,24 +60,19 @@ export class TwitterAccountDialogComponent implements OnInit {
         this.isSaving = true;
         if (this.twitterAccount.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.twitterAccountService.update(this.twitterAccount), false);
+                this.twitterAccountService.update(this.twitterAccount));
         } else {
             this.subscribeToSaveResponse(
-                this.twitterAccountService.create(this.twitterAccount), true);
+                this.twitterAccountService.create(this.twitterAccount));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<TwitterAccount>, isCreated: boolean) {
+    private subscribeToSaveResponse(result: Observable<TwitterAccount>) {
         result.subscribe((res: TwitterAccount) =>
-            this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: TwitterAccount, isCreated: boolean) {
-        this.alertService.success(
-            isCreated ? 'socialappApp.twitterAccount.created'
-            : 'socialappApp.twitterAccount.updated',
-            { param : result.id }, null);
-
+    private onSaveSuccess(result: TwitterAccount) {
         this.eventManager.broadcast({ name: 'twitterAccountListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);

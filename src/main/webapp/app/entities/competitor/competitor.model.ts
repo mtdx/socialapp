@@ -1,12 +1,13 @@
+import { BaseEntity } from './../../shared';
 
 export const enum CompetitorStatus {
     'IN_PROGRESS',
     'DONE',
     'LOCK',
     'STOPPED'
+}
 
-};
-export class Competitor {
+export class Competitor implements BaseEntity {
     constructor(
         public id?: number,
         public status?: CompetitorStatus,

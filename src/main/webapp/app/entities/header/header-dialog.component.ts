@@ -4,7 +4,7 @@ import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EventManager, AlertService, DataUtils } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Header } from './header.model';
 import { HeaderPopupService } from './header-popup.service';
@@ -22,11 +22,11 @@ export class HeaderDialogComponent implements OnInit {
 
     constructor(
         public activeModal: NgbActiveModal,
-        private dataUtils: DataUtils,
-        private alertService: AlertService,
+        private dataUtils: JhiDataUtils,
+        private alertService: JhiAlertService,
         private headerService: HeaderService,
         private elementRef: ElementRef,
-        private eventManager: EventManager
+        private eventManager: JhiEventManager
     ) {
     }
 
@@ -68,24 +68,19 @@ export class HeaderDialogComponent implements OnInit {
         this.isSaving = true;
         if (this.header.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.headerService.update(this.header), false);
+                this.headerService.update(this.header));
         } else {
             this.subscribeToSaveResponse(
-                this.headerService.create(this.header), true);
+                this.headerService.create(this.header));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Header>, isCreated: boolean) {
+    private subscribeToSaveResponse(result: Observable<Header>) {
         result.subscribe((res: Header) =>
-            this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Header, isCreated: boolean) {
-        this.alertService.success(
-            isCreated ? 'socialappApp.header.created'
-            : 'socialappApp.header.updated',
-            { param : result.id }, null);
-
+    private onSaveSuccess(result: Header) {
         this.eventManager.broadcast({ name: 'headerListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);

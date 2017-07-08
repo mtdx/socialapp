@@ -4,7 +4,7 @@ import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EventManager, AlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Competitor } from './competitor.model';
 import { CompetitorPopupService } from './competitor-popup.service';
@@ -22,9 +22,9 @@ export class CompetitorDialogComponent implements OnInit {
 
     constructor(
         public activeModal: NgbActiveModal,
-        private alertService: AlertService,
+        private alertService: JhiAlertService,
         private competitorService: CompetitorService,
-        private eventManager: EventManager
+        private eventManager: JhiEventManager
     ) {
     }
 
@@ -41,24 +41,19 @@ export class CompetitorDialogComponent implements OnInit {
         this.isSaving = true;
         if (this.competitor.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.competitorService.update(this.competitor), false);
+                this.competitorService.update(this.competitor));
         } else {
             this.subscribeToSaveResponse(
-                this.competitorService.create(this.competitor), true);
+                this.competitorService.create(this.competitor));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Competitor>, isCreated: boolean) {
+    private subscribeToSaveResponse(result: Observable<Competitor>) {
         result.subscribe((res: Competitor) =>
-            this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Competitor, isCreated: boolean) {
-        this.alertService.success(
-            isCreated ? 'socialappApp.competitor.created'
-            : 'socialappApp.competitor.updated',
-            { param : result.id }, null);
-
+    private onSaveSuccess(result: Competitor) {
         this.eventManager.broadcast({ name: 'competitorListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);

@@ -1,12 +1,13 @@
+import { BaseEntity } from './../../shared';
 
 const enum TwitterErrorType {
     'UPDATE',
     'LIKE',
     'RETWEET',
     'TWEET'
+}
 
-};
-export class TwitterError {
+export class TwitterError implements BaseEntity {
     constructor(
         public id?: number,
         public type?: TwitterErrorType,

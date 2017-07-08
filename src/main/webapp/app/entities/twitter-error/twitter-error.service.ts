@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { DateUtils } from 'ng-jhipster';
+import { JhiDateUtils } from 'ng-jhipster';
 
 import { TwitterError } from './twitter-error.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
@@ -12,7 +12,7 @@ export class TwitterErrorService {
     private resourceUrl = 'api/twitter-errors';
     private resourceSearchUrl = 'api/_search/twitter-errors';
 
-    constructor(private http: Http, private dateUtils: DateUtils) { }
+    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
     find(id: number): Observable<TwitterError> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
