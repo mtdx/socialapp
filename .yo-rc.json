@@ -4,7 +4,7 @@
       "packageName": "com.ninja.socialapp",
       "nativeLanguage": "en"
     },
-    "jhipsterVersion": "4.5.3",
+    "jhipsterVersion": "4.6.0",
     "baseName": "socialapp",
     "packageName": "com.ninja.socialapp",
     "packageFolder": "com/ninja/socialapp",
@@ -22,7 +22,7 @@
     "buildTool": "maven",
     "enableSocialSignIn": true,
     "rememberMeKey": "e0c7d51d3ab41d434f069ef88379876331849c75",
-    "clientFramework": "angular2",
+    "clientFramework": "angularX",
     "useSass": false,
     "clientPackageManager": "yarn",
     "applicationType": "monolith",

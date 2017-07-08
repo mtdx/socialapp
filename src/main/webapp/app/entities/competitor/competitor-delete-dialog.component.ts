@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AlertService, EventManager } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
 
 import { Competitor } from './competitor.model';
 import { CompetitorPopupService } from './competitor-popup.service';
@@ -19,8 +19,7 @@ export class CompetitorDeleteDialogComponent {
     constructor(
         private competitorService: CompetitorService,
         public activeModal: NgbActiveModal,
-        private alertService: AlertService,
-        private eventManager: EventManager
+        private eventManager: JhiEventManager
     ) {
     }
 
@@ -36,7 +35,6 @@ export class CompetitorDeleteDialogComponent {
             });
             this.activeModal.dismiss(true);
         });
-        this.alertService.success('socialappApp.competitor.deleted', { param : id }, null);
     }
 }
 

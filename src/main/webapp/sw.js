@@ -1,5 +1,5 @@
-var dataCacheName = '"Socialapp-v1';
-var cacheName = '"Socialapp-1';
+var dataCacheName = 'Socialapp-v1';
+var cacheName = 'Socialapp-1';
 var filesToCache = [
     '/',
     '/index.html'

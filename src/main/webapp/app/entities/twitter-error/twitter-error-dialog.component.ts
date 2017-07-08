@@ -4,7 +4,7 @@ import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EventManager, AlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { TwitterError } from './twitter-error.model';
 import { TwitterErrorPopupService } from './twitter-error-popup.service';
@@ -22,9 +22,9 @@ export class TwitterErrorDialogComponent implements OnInit {
 
     constructor(
         public activeModal: NgbActiveModal,
-        private alertService: AlertService,
+        private alertService: JhiAlertService,
         private twitterErrorService: TwitterErrorService,
-        private eventManager: EventManager
+        private eventManager: JhiEventManager
     ) {
     }
 
@@ -41,24 +41,19 @@ export class TwitterErrorDialogComponent implements OnInit {
         this.isSaving = true;
         if (this.twitterError.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.twitterErrorService.update(this.twitterError), false);
+                this.twitterErrorService.update(this.twitterError));
         } else {
             this.subscribeToSaveResponse(
-                this.twitterErrorService.create(this.twitterError), true);
+                this.twitterErrorService.create(this.twitterError));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<TwitterError>, isCreated: boolean) {
+    private subscribeToSaveResponse(result: Observable<TwitterError>) {
         result.subscribe((res: TwitterError) =>
-            this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: TwitterError, isCreated: boolean) {
-        this.alertService.success(
-            isCreated ? 'socialappApp.twitterError.created'
-            : 'socialappApp.twitterError.updated',
-            { param : result.id }, null);
-
+    private onSaveSuccess(result: TwitterError) {
         this.eventManager.broadcast({ name: 'twitterErrorListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);

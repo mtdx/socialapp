@@ -20,6 +20,7 @@ export * from './user/user.model';
 export * from './user/user.service';
 export * from './model/response-wrapper.model';
 export * from './model/request-util';
+export * from './model/base-entity';
 export * from './social/social.service';
 export * from './social/social.component';
 export * from './shared-libs.module';

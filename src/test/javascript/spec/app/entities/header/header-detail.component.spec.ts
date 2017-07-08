@@ -1,9 +1,10 @@
+/* tslint:disable max-line-length */
 import { ComponentFixture, TestBed, async, inject } from '@angular/core/testing';
 import { OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
-import { DateUtils, DataUtils, EventManager } from 'ng-jhipster';
+import { JhiDateUtils, JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 import { SocialappTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
 import { HeaderDetailComponent } from '../../../../../../main/webapp/app/entities/header/header-detail.component';
@@ -22,15 +23,15 @@ describe('Component Tests', () => {
                 imports: [SocialappTestModule],
                 declarations: [HeaderDetailComponent],
                 providers: [
-                    DateUtils,
-                    DataUtils,
+                    JhiDateUtils,
+                    JhiDataUtils,
                     DatePipe,
                     {
                         provide: ActivatedRoute,
                         useValue: new MockActivatedRoute({id: 123})
                     },
                     HeaderService,
-                    EventManager
+                    JhiEventManager
                 ]
             }).overrideTemplate(HeaderDetailComponent, '')
             .compileComponents();
@@ -41,7 +42,6 @@ describe('Component Tests', () => {
             comp = fixture.componentInstance;
             service = fixture.debugElement.injector.get(HeaderService);
         });
-
 
         describe('OnInit', () => {
             it('Should call load all on init', () => {
@@ -54,7 +54,7 @@ describe('Component Tests', () => {
 
             // THEN
             expect(service.find).toHaveBeenCalledWith(123);
-            expect(comp.header).toEqual(jasmine.objectContaining({id:10}));
+            expect(comp.header).toEqual(jasmine.objectContaining({id: 10}));
             });
         });
     });

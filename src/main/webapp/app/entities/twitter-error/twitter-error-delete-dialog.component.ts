@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AlertService, EventManager } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
 
 import { TwitterError } from './twitter-error.model';
 import { TwitterErrorPopupService } from './twitter-error-popup.service';
@@ -19,8 +19,7 @@ export class TwitterErrorDeleteDialogComponent {
     constructor(
         private twitterErrorService: TwitterErrorService,
         public activeModal: NgbActiveModal,
-        private alertService: AlertService,
-        private eventManager: EventManager
+        private eventManager: JhiEventManager
     ) {
     }
 
@@ -36,7 +35,6 @@ export class TwitterErrorDeleteDialogComponent {
             });
             this.activeModal.dismiss(true);
         });
-        this.alertService.success('socialappApp.twitterError.deleted', { param : id }, null);
     }
 }
 
