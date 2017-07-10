@@ -1,10 +1,10 @@
 <div>
     <h2>
-        <span jhiTranslate="socialappApp.competitor.home.title">Competitors</span>
-        <button class="btn btn-primary float-right create-competitor" [routerLink]="['/', { outlets: { popup: ['competitor-new'] } }]">
+        <span jhiTranslate="socialappApp.twitterKeyword.home.title">Twitter Keywords</span>
+        <button class="btn btn-primary float-right create-twitter-keyword" [routerLink]="['/', { outlets: { popup: ['twitter-keyword-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span class="hidden-sm-down"  jhiTranslate="socialappApp.competitor.home.createLabel">
-            Create new Competitor
+            <span class="hidden-sm-down"  jhiTranslate="socialappApp.twitterKeyword.home.createLabel">
+            Create new Twitter Keyword
             </span>
         </button>
     </h2>
@@ -13,7 +13,7 @@
         <div class="col-sm-12">
             <form name="searchForm" class="form-inline">
                 <div class="input-group w-100 mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'socialappApp.competitor.home.search' | translate }}">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'socialappApp.twitterKeyword.home.search' | translate }}">
                     <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
                         <span class="fa fa-search"></span>
                     </button>
@@ -25,52 +25,48 @@
         </div>
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="competitors">
+    <div class="table-responsive" *ngIf="twitterKeywords">
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="status"><span jhiTranslate="socialappApp.competitor.status">Status</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="userid"><span jhiTranslate="socialappApp.competitor.userid">Userid</span></th>
-            <th jhiSortBy="username"><span jhiTranslate="socialappApp.competitor.username">Username</span></th>
-            <th jhiSortBy="likes"><span jhiTranslate="socialappApp.competitor.likes">Likes</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="cursor"><span jhiTranslate="socialappApp.competitor.cursor">Cursor</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="created"><span jhiTranslate="socialappApp.competitor.created_at">Created</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="status"><span jhiTranslate="socialappApp.twitterKeyword.status">Status</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="keyword"><span jhiTranslate="socialappApp.twitterKeyword.keyword">Keyword</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="competitors"><span jhiTranslate="socialappApp.twitterKeyword.competitors">Competitors</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="page"><span jhiTranslate="socialappApp.twitterKeyword.page">Page</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="created"><span jhiTranslate="socialappApp.twitterKeyword.created_at">Created</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-            <tr *ngFor="let competitor of competitors ;trackBy: trackId">
-                <td><a [routerLink]="['../competitor', competitor.id ]">{{competitor.id}}</a></td>
+            <tr *ngFor="let twitterKeyword of twitterKeywords ;trackBy: trackId">
+                <td><a [routerLink]="['../twitter-keyword', twitterKeyword.id ]">{{twitterKeyword.id}}</a></td>
                 <td>
-                    <span class="badge {{competitor.status}}" jhiTranslate="{{'socialappApp.CompetitorStatus.' + competitor.status}}">
-                        {{competitor.status}}
+                    <span class="badge {{twitterKeyword.status}}" jhiTranslate="{{'socialappApp.KeywordStatus.' + twitterKeyword.status}}">
+                        {{twitterKeyword.status}}
                     </span>
                 </td>
-                <td>{{competitor.userid}}</td>
-                <td>
-                    <a target="_blank" href="https://twitter.com/{{competitor.username}}">{{competitor.username}}</a>
-                </td>
-                <td>{{competitor.likes}}</td>
-                <td>{{competitor.cursor}}</td>
-                <td>{{competitor.created | date:'short'}}</td>
+                <td>{{twitterKeyword.keyword}}</td>
+                <td>{{twitterKeyword.competitors}}</td>
+                <td>{{twitterKeyword.page}}</td>
+                <td>{{twitterKeyword.created | date:'short'}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['../competitor', competitor.id ]"
+                                [routerLink]="['../twitter-keyword', twitterKeyword.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'competitor/'+ competitor.id + '/edit'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'twitter-keyword/'+ twitterKeyword.id + '/edit'} }]"
                                 replaceUrl="true"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
                             <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'competitor/'+ competitor.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'twitter-keyword/'+ twitterKeyword.id + '/delete'} }]"
                                 replaceUrl="true"
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>

@@ -1,0 +1,60 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myTwitterKeywordLabel" jhiTranslate="socialappApp.twitterKeyword.home.createOrEditLabel">Create or edit a Twitter Keyword</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!twitterKeyword.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="twitterKeyword.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterKeyword.keyword" for="field_keyword">Keyword</label>
+            <input type="text" class="form-control" name="keyword" id="field_keyword"
+                [(ngModel)]="twitterKeyword.keyword" required minlength="3" />
+            <div [hidden]="!(editForm.controls.keyword?.dirty && editForm.controls.keyword?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.keyword?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.keyword?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 3 }">
+                   This field is required to be at least 3 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group" [hidden]="!twitterKeyword.competitors">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterKeyword.competitors" for="field_competitors">Competitors</label>
+            <input type="number" class="form-control" name="competitors" id="field_competitors"
+                [(ngModel)]="twitterKeyword.competitors" readonly/>
+        </div>
+        <div class="form-group" [hidden]="!twitterKeyword.page">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterKeyword.page" for="field_page">Page</label>
+            <input type="number" class="form-control" name="page" id="field_page"
+                [(ngModel)]="twitterKeyword.page" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterKeyword.stop" for="field_stop">Stop</label>
+            <input type="checkbox" class="form-control" name="stop" id="field_stop"
+                [(ngModel)]="twitterKeyword.stop"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterKeyword.reset" for="field_reset">Reset</label>
+            <input type="checkbox" class="form-control" name="reset" id="field_reset"
+                [(ngModel)]="twitterKeyword.reset"  />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

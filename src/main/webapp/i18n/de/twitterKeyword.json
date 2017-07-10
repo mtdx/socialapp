@@ -1,0 +1,28 @@
+{
+    "socialappApp": {
+        "twitterKeyword" : {
+            "home": {
+                "title": "Twitter Keywords",
+                "createLabel": "Twitter Keyword erstellen",
+                "createOrEditLabel": "Twitter Keyword erstellen oder bearbeiten",
+                "search": "Suche nach Twitter Keyword"
+            },
+            "created": "Twitter Keyword erstellt mit ID {{ param }}",
+            "updated": "Twitter Keyword aktualisiert mit ID {{ param }}",
+            "deleted": "Twitter Keyword gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Twitter Keyword {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Twitter Keyword"
+            },
+            "status": "Status",
+            "keyword": "Keyword",
+            "competitors": "Competitors",
+            "page": "Page",
+            "stop": "Stop",
+            "reset": "Reset",
+            "created_at": "Created"
+        }
+    }
+}

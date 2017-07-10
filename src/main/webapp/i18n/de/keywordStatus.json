@@ -1,0 +1,11 @@
+{
+    "socialappApp": {
+        "KeywordStatus" : {
+            "null": "",
+            "IN_PROGRESS": "In Progress",
+            "DONE": "Done",
+            "LOCK": "Lock",
+            "STOPPED": "Stopped"
+        }
+    }
+}

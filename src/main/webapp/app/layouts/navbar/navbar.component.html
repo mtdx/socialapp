@@ -35,6 +35,12 @@
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
                     <li>
+                        <a class="dropdown-item" routerLink="twitter-keyword" routerLinkActive="active" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-file-word-o" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.twitterKeyword">Keywords</span>
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item" routerLink="competitor" routerLinkActive="active" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-users" aria-hidden="true"></i>
                             <span jhiTranslate="global.menu.entities.competitor">Competitors</span>

@@ -1,0 +1,49 @@
+
+<div *ngIf="twitterKeyword">
+    <h2><span jhiTranslate="socialappApp.twitterKeyword.detail.title">Twitter Keyword</span> {{twitterKeyword.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="socialappApp.twitterKeyword.status">Status</span></dt>
+        <dd>
+            <span jhiTranslate="{{'socialappApp.KeywordStatus.' + twitterKeyword.status}}">{{twitterKeyword.status}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterKeyword.keyword">Keyword</span></dt>
+        <dd>
+            <span>{{twitterKeyword.keyword}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterKeyword.competitors">Competitors</span></dt>
+        <dd>
+            <span>{{twitterKeyword.competitors}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterKeyword.page">Page</span></dt>
+        <dd>
+            <span>{{twitterKeyword.page}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterKeyword.stop">Stop</span></dt>
+        <dd>
+            <span>{{twitterKeyword.stop}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterKeyword.reset">Reset</span></dt>
+        <dd>
+            <span>{{twitterKeyword.reset}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterKeyword.created_at">Created</span></dt>
+        <dd>
+            <span>{{twitterKeyword.created | date:'medium'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'twitter-keyword/'+ twitterKeyword.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
