@@ -103,10 +103,9 @@ public class ProxyService {
      *
      *  @return the list of entities
      */
-    @Transactional(readOnly = true)
     public List<Proxy> findAllRestrict() {
         log.debug("Request to get all Proxies Restrict");
-        return proxyRepository.findAllRestrict(twitterSettingsService.findOne().getAccountsPerProxy());
+        return proxyRepository.findAllRestrict(twitterSettingsService.findOne().getAccountsPerProxy().longValue());
     }
 
     /**
