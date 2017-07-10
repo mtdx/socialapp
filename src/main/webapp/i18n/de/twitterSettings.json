@@ -12,7 +12,9 @@
             "minActivity": "Min Activity (minimum likes, tweets, followers, following)",
             "followingToFollowersRatio": "Following To Followers Ratio (eg. 3, skip if 3 times more following than followers)",
             "likesToTweetsRatio": "Likes To Tweets Ratio (eg. 3, skip if 3 times more likes than tweets)",
-            "notLikeTweetsOlderThan": "Skip If Like Tweet Older Than (months, 0 = disabled)"
+            "notLikeTweetsOlderThan": "Skip If Like Tweet Older Than (months, 0 = disabled)",
+            "retweetPercent": "Retweet Percent",
+            "minCompetitorFollowers": "Minimum Competitor Followers"
         }
     }
 }

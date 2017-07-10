@@ -57,6 +57,16 @@ public class TwitterSettings implements Serializable {
     @Column(name = "not_like_tweets_older_than", nullable = false)
     private Integer notLikeTweetsOlderThan;
 
+    @NotNull
+    @Min(value = 0)
+    @Column(name = "retweet_percent", nullable = false)
+    private Integer retweetPercent;
+
+    @NotNull
+    @Min(value = 0)
+    @Column(name = "min_competitor_followers", nullable = false)
+    private Integer minCompetitorFollowers;
+
     public Long getId() {
         return id;
     }
@@ -169,6 +179,32 @@ public class TwitterSettings implements Serializable {
         this.notLikeTweetsOlderThan = notLikeTweetsOlderThan;
     }
 
+    public Integer getRetweetPercent() {
+        return retweetPercent;
+    }
+
+    public TwitterSettings retweetPercent(Integer retweetPercent) {
+        this.retweetPercent = retweetPercent;
+        return this;
+    }
+
+    public void setRetweetPercent(Integer retweetPercent) {
+        this.retweetPercent = retweetPercent;
+    }
+
+    public Integer getMinCompetitorFollowers() {
+        return minCompetitorFollowers;
+    }
+
+    public TwitterSettings minCompetitorFollowers(Integer minCompetitorFollowers) {
+        this.minCompetitorFollowers = minCompetitorFollowers;
+        return this;
+    }
+
+    public void setMinCompetitorFollowers(Integer minCompetitorFollowers) {
+        this.minCompetitorFollowers = minCompetitorFollowers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -201,6 +237,8 @@ public class TwitterSettings implements Serializable {
             ", followingToFollowersRatio='" + getFollowingToFollowersRatio() + "'" +
             ", likesToTweetsRatio='" + getLikesToTweetsRatio() + "'" +
             ", notLikeTweetsOlderThan='" + getNotLikeTweetsOlderThan() + "'" +
+            ", retweetPercent='" + getRetweetPercent() + "'" +
+            ", minCompetitorFollowers='" + getMinCompetitorFollowers() + "'" +
             "}";
     }
 }

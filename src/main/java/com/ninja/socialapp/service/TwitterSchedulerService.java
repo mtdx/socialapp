@@ -125,6 +125,7 @@ public class TwitterSchedulerService {
     @Scheduled(cron = "0 */5 * * * *")
     public void addTwitterCompetitors() {
         log.debug("Run scheduled add twitter competitors {}");
+        final int BATCH = 10;
         if (competitorService.countAllByStatus(CompetitorStatus.IN_PROGRESS) == 0){
 
         }

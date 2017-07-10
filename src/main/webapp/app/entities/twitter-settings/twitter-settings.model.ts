@@ -1,4 +1,6 @@
-export class TwitterSettings {
+import { BaseEntity } from './../../shared';
+
+export class TwitterSettings implements BaseEntity {
     constructor(
         public id?: number,
         public maxLikes?: number,
@@ -9,6 +11,8 @@ export class TwitterSettings {
         public followingToFollowersRatio?: number,
         public likesToTweetsRatio?: number,
         public notLikeTweetsOlderThan?: number,
+        public retweetPercent?: number,
+        public minCompetitorFollowers?: number,
     ) {
         this.hasDefaultProfileImage = false;
         this.hasNoDescription = false;
