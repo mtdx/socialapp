@@ -259,3 +259,12 @@ Social Buttons
 .table-responsive .table.table-striped .text-right .flex-btn-group-container span.hidden-md-down{
     display: none;
 }
+
+.dropdown-menu.lang {
+    min-width: auto;
+}
+
+
+.dropdown-menu.lang li a {
+    text-transform: uppercase;
+}
