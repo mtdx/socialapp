@@ -54,6 +54,8 @@ public class TwitterSettingsResource {
         newTwitterSettings.followingToFollowersRatio(twitterSettings.getFollowingToFollowersRatio());
         newTwitterSettings.likesToTweetsRatio(twitterSettings.getLikesToTweetsRatio());
         newTwitterSettings.notLikeTweetsOlderThan(twitterSettings.getNotLikeTweetsOlderThan());
+        newTwitterSettings.setRetweetPercent(twitterSettings.getRetweetPercent());
+        newTwitterSettings.setMinCompetitorFollowers(twitterSettings.getMinCompetitorFollowers());
         twitterSettingsService.save(newTwitterSettings);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, twitterSettings.getId().toString()))

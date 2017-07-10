@@ -64,6 +64,8 @@ public class TwitterSettingsService {
         defaultTwitterSettings.followingToFollowersRatio(3); // eg. 3 => 900 following 300 followers
         defaultTwitterSettings.likesToTweetsRatio(3);   // eg. 3 => 900 likes 300 tweets
         defaultTwitterSettings.notLikeTweetsOlderThan(2); // skip if less, (months)
+        defaultTwitterSettings.setRetweetPercent(1); // skip if less
+        defaultTwitterSettings.setMinCompetitorFollowers(2500); // skip if less
         TwitterSettings result = twitterSettingsRepository.save(defaultTwitterSettings);
         return result;
     }
