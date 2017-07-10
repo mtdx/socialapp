@@ -5,7 +5,8 @@
             "UPDATE": "Update",
             "LIKE": "Like",
             "RETWEET": "Retweet",
-            "TWEET": "Tweet"
+            "TWEET": "Tweet",
+            "SEARCH": "Search"
         }
     }
 }

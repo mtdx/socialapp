@@ -5,7 +5,7 @@
         {
             "fieldName": "type",
             "fieldType": "TwitterErrorType",
-            "fieldValues": "UPDATE,LIKE,RETWEET,TWEET"
+            "fieldValues": "UPDATE,LIKE,RETWEET,TWEET,SEARCH"
         },
         {
             "fieldName": "errorCode",

@@ -228,6 +228,24 @@ public class TwitterApiService {
         return false;
     }
 
+    /**
+     * Adds competitors by keyword
+     */
+    public long addCompetitors(final TwitterAccount twitterAccount, Integer page, final Competitor competitor, final TwitterSettings twitterSettings){
+        Twitter twitterClient = getTwitterInstance(twitterAccount);
+        try {
+            ResponseList<User> users = twitterClient.searchUsers("csgo", page);
+            for (User user : users){
+                String a;
+            }
+            return ++page;
+        } catch (TwitterException ex) {
+            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
+        }
+
+        return page;
+    }
+
     public void refreshDate(){
         LocalDate localDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         currentMonth = localDate.getMonthValue();

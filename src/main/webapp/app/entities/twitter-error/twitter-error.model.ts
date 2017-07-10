@@ -4,7 +4,8 @@ const enum TwitterErrorType {
     'UPDATE',
     'LIKE',
     'RETWEET',
-    'TWEET'
+    'TWEET',
+    'SEARCH'
 }
 
 export class TwitterError implements BaseEntity {

@@ -256,6 +256,10 @@ Social Buttons
     background-color: #5bc0de;
 }
 
+.badge.SEARCH {
+    background-color: #7b7353;
+}
+
 .table-responsive .table.table-striped .text-right .flex-btn-group-container span.hidden-md-down{
     display: none;
 }
