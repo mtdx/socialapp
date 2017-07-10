@@ -61,6 +61,7 @@ public class CompetitorResource {
         }
         competitor.setStatus(CompetitorStatus.IN_PROGRESS);
         competitor.setLikes(0L);
+        competitor.setCursor(-1L);
         competitor.setCreated(Instant.now());
         Competitor result = competitorService.save(competitor);
         return ResponseEntity.created(new URI("/api/competitors/" + result.getId()))
