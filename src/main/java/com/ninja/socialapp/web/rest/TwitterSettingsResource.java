@@ -56,6 +56,7 @@ public class TwitterSettingsResource {
         newTwitterSettings.notLikeTweetsOlderThan(twitterSettings.getNotLikeTweetsOlderThan());
         newTwitterSettings.setRetweetPercent(twitterSettings.getRetweetPercent());
         newTwitterSettings.setMinCompetitorFollowers(twitterSettings.getMinCompetitorFollowers());
+        newTwitterSettings.setAccountsPerProxy(twitterSettings.getAccountsPerProxy());
         twitterSettingsService.save(newTwitterSettings);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, twitterSettings.getId().toString()))

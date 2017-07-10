@@ -14,7 +14,8 @@
             "likesToTweetsRatio": "Likes To Tweets Ratio (eg. 3, skip if 3 times more likes than tweets)",
             "notLikeTweetsOlderThan": "Skip If Like Tweet Older Than (months, 0 = disabled)",
             "retweetPercent": "Retweet Percent",
-            "minCompetitorFollowers": "Minimum Competitor Followers"
+            "minCompetitorFollowers": "Minimum Competitor Followers",
+            "accountsPerProxy": "Accounts Per Proxy"
         }
     }
 }

@@ -67,6 +67,11 @@ public class TwitterSettings implements Serializable {
     @Column(name = "min_competitor_followers", nullable = false)
     private Integer minCompetitorFollowers;
 
+    @NotNull
+    @Min(value = 1)
+    @Column(name = "accounts_per_proxy", nullable = false)
+    private Integer accountsPerProxy;
+
     public Long getId() {
         return id;
     }
@@ -205,6 +210,19 @@ public class TwitterSettings implements Serializable {
         this.minCompetitorFollowers = minCompetitorFollowers;
     }
 
+    public Integer getAccountsPerProxy() {
+        return accountsPerProxy;
+    }
+
+    public TwitterSettings accountsPerProxy(Integer accountsPerProxy) {
+        this.accountsPerProxy = accountsPerProxy;
+        return this;
+    }
+
+    public void setAccountsPerProxy(Integer accountsPerProxy) {
+        this.accountsPerProxy = accountsPerProxy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -239,6 +257,7 @@ public class TwitterSettings implements Serializable {
             ", notLikeTweetsOlderThan='" + getNotLikeTweetsOlderThan() + "'" +
             ", retweetPercent='" + getRetweetPercent() + "'" +
             ", minCompetitorFollowers='" + getMinCompetitorFollowers() + "'" +
+            ", accountsPerProxy='" + getAccountsPerProxy() + "'" +
             "}";
     }
 }

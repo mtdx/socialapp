@@ -13,6 +13,7 @@ export class TwitterSettings implements BaseEntity {
         public notLikeTweetsOlderThan?: number,
         public retweetPercent?: number,
         public minCompetitorFollowers?: number,
+        public accountsPerProxy?: number,
     ) {
         this.hasDefaultProfileImage = false;
         this.hasNoDescription = false;
