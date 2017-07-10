@@ -130,4 +130,16 @@ public class CompetitorService {
         log.debug("Request to get TwitterAccounts by status : {}", status);
         return competitorRepository.findAllByStatus(status);
     }
+
+    /**
+     *  Get competitors count by status.
+     *
+     *  @param status the of the entities
+     *  @return the entities
+     */
+    @Transactional(readOnly = true)
+    public Integer countAllByStatus(CompetitorStatus status) {
+        log.debug("Request to get TwitterAccounts by status : {}", status);
+        return competitorRepository.countAllByStatus(status);
+    }
 }

@@ -25,4 +25,6 @@ public interface CompetitorRepository extends JpaRepository<Competitor,Long> {
     void incrementLikes(@Param("likes") final Long likes, @Param("id") final Long id);
 
     List<Competitor> findAllByStatus(CompetitorStatus status);
+
+    Integer countAllByStatus(CompetitorStatus status);
 }

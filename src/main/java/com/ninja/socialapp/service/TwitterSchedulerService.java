@@ -114,4 +114,19 @@ public class TwitterSchedulerService {
             twitterErrorService.delete(olderThanErrorsId);
         }
     }
+
+    /**
+     * We delete twitter errors older than 7 days to keep db small. Whe need to delete one by one to delete from search too.
+     * <p>
+     * This is scheduled to get fired every 1 minute.
+     * </p>
+     */
+    @Async
+    @Scheduled(cron = "0 */5 * * * *")
+    public void addTwitterCompetitors() {
+        log.debug("Run scheduled add twitter competitors {}");
+        if (competitorService.countAllByStatus(CompetitorStatus.IN_PROGRESS) == 0){
+
+        }
+    }
 }
