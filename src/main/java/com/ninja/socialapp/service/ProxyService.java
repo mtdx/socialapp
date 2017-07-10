@@ -113,8 +113,8 @@ public class ProxyService {
      *  @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Proxy> findAllByUsernameAndPassword(String username, String password) {
+    public List<Proxy> findAllByUsernameAndPasswordOrderById(String username, String password) {
         log.debug("Request to get all Proxies Restrict");
-        return proxyRepository.findAllByUsernameAndPassword(username, password);
+        return proxyRepository.findAllByUsernameAndPasswordOrderById(username, password);
     }
 }

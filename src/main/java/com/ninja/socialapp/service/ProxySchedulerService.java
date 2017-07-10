@@ -28,7 +28,7 @@ public class ProxySchedulerService {
     /**
      * We check for new proxies from the buyproxies.org API and we update ours (should update monthly)
      * <p>
-     * This is scheduled to get fired every 15 minutes.
+     * This is scheduled to get fired every 5 minutes.
      * </p>
      */
     @Async
@@ -40,13 +40,17 @@ public class ProxySchedulerService {
         final String API_URL = "http://api.buyproxies.org/?a=showProxies&pid=39606&key=16f11daa3e601378b177eb03e567b9d3";
         String response = new RestTemplate().getForEntity(API_URL, String.class).getBody();
         if (!response.isEmpty()) {
-            List<Proxy> proxies = proxyService.findAllByUsernameAndPassword(USERNAME, PASSWORD);
+            List<Proxy> proxies = proxyService.findAllByUsernameAndPasswordOrderById(USERNAME, PASSWORD);
             String lines[] = response.split("\n");
-            for (String line1 : lines) {
-                String line[] = line1.split(":");
-                Proxy proxy = proxyGet(proxies, line[0]);
-                if (proxySkip(proxy, line))
-                    continue; // no point saving
+            for (int i = 0; i < lines.length; i++) {
+                String line[] = lines[i].split(":");
+                Proxy proxy = new Proxy();
+                if (! proxies.isEmpty() && proxies.size() > i) {
+                    proxy = proxies.get(i);
+                    if (proxySkip(proxy, line))
+                        continue; // no point saving
+                }
+
                 proxy.setHost(line[0]);
                 proxy.setPort(Integer.valueOf(line[1]));
                 proxy.setUsername(line[2]);
@@ -54,16 +58,6 @@ public class ProxySchedulerService {
                 proxyService.save(proxy);
             }
         }
-    }
-
-    /**
-     * Small utility function
-     */
-    private Proxy proxyGet(List<Proxy> proxies, String host){
-        for (Proxy proxy : proxies) {
-            if (proxy.getHost().equals(host)) return proxy;
-        }
-        return new Proxy();
     }
 
     /**
