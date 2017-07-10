@@ -240,7 +240,7 @@ public class TwitterApiService {
             }
             return ++page;
         } catch (TwitterException ex) {
-            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
+            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.SEARCH);
         }
 
         return page;

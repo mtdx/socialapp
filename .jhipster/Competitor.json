@@ -48,6 +48,10 @@
         {
             "fieldName": "reset",
             "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "created",
+            "fieldType": "Instant"
         }
     ],
     "changelogDate": "20170531095952",

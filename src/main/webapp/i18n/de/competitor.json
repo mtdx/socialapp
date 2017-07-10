@@ -22,7 +22,8 @@
             "likes": "Likes",
             "cursor": "Cursor",
             "stop": "Stop",
-            "reset": "Reset"
+            "reset": "Reset",
+            "created_at": "Created"
         }
     }
 }

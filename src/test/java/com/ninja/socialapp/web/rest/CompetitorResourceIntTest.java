@@ -23,6 +23,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,6 +62,9 @@ public class CompetitorResourceIntTest {
 
     private static final Boolean DEFAULT_RESET = false;
     private static final Boolean UPDATED_RESET = false;
+
+    private static final Instant DEFAULT_CREATED = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private CompetitorRepository competitorRepository;
@@ -110,7 +115,8 @@ public class CompetitorResourceIntTest {
             .likes(DEFAULT_LIKES)
             .cursor(DEFAULT_CURSOR)
             .stop(DEFAULT_STOP)
-            .reset(DEFAULT_RESET);
+            .reset(DEFAULT_RESET)
+            .created(DEFAULT_CREATED);
         return competitor;
     }
 
@@ -142,6 +148,7 @@ public class CompetitorResourceIntTest {
         assertThat(testCompetitor.getCursor()).isEqualTo(DEFAULT_CURSOR);
         assertThat(testCompetitor.isStop()).isEqualTo(DEFAULT_STOP);
         assertThat(testCompetitor.isReset()).isEqualTo(DEFAULT_RESET);
+        assertThat(testCompetitor.getCreated()).isEqualTo(DEFAULT_CREATED);
 
         // Validate the Competitor in Elasticsearch
         Competitor competitorEs = competitorSearchRepository.findOne(testCompetitor.getId());
@@ -220,7 +227,8 @@ public class CompetitorResourceIntTest {
             .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES.intValue())))
             .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())))
             .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())))
-            .andExpect(jsonPath("$.[*].reset").value(hasItem(DEFAULT_RESET.booleanValue())));
+            .andExpect(jsonPath("$.[*].reset").value(hasItem(DEFAULT_RESET.booleanValue())))
+            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())));
     }
 
     @Test
@@ -240,7 +248,8 @@ public class CompetitorResourceIntTest {
             .andExpect(jsonPath("$.likes").value(DEFAULT_LIKES.intValue()))
             .andExpect(jsonPath("$.cursor").value(DEFAULT_CURSOR.intValue()))
             .andExpect(jsonPath("$.stop").value(DEFAULT_STOP.booleanValue()))
-            .andExpect(jsonPath("$.reset").value(DEFAULT_RESET.booleanValue()));
+            .andExpect(jsonPath("$.reset").value(DEFAULT_RESET.booleanValue()))
+            .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()));
     }
 
     @Test
@@ -268,7 +277,8 @@ public class CompetitorResourceIntTest {
             .likes(UPDATED_LIKES)
             .cursor(UPDATED_CURSOR)
             .stop(UPDATED_STOP)
-            .reset(UPDATED_RESET);
+            .reset(UPDATED_RESET)
+            .created(UPDATED_CREATED);
 
         restCompetitorMockMvc.perform(put("/api/competitors")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -286,6 +296,7 @@ public class CompetitorResourceIntTest {
         assertThat(testCompetitor.getCursor()).isEqualTo(UPDATED_CURSOR);
         assertThat(testCompetitor.isStop()).isEqualTo(UPDATED_STOP);
         assertThat(testCompetitor.isReset()).isEqualTo(UPDATED_RESET);
+        assertThat(testCompetitor.getCreated()).isEqualTo(UPDATED_CREATED);
 
         // Validate the Competitor in Elasticsearch
         Competitor competitorEs = competitorSearchRepository.findOne(testCompetitor.getId());
@@ -349,7 +360,8 @@ public class CompetitorResourceIntTest {
             .andExpect(jsonPath("$.[*].likes").value(hasItem(DEFAULT_LIKES.intValue())))
             .andExpect(jsonPath("$.[*].cursor").value(hasItem(DEFAULT_CURSOR.intValue())))
             .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())))
-            .andExpect(jsonPath("$.[*].reset").value(hasItem(DEFAULT_RESET.booleanValue())));
+            .andExpect(jsonPath("$.[*].reset").value(hasItem(DEFAULT_RESET.booleanValue())))
+            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())));
     }
 
     @Test

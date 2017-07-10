@@ -35,6 +35,7 @@
             <th jhiSortBy="username"><span jhiTranslate="socialappApp.competitor.username">Username</span></th>
             <th jhiSortBy="likes"><span jhiTranslate="socialappApp.competitor.likes">Likes</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="cursor"><span jhiTranslate="socialappApp.competitor.cursor">Cursor</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="created"><span jhiTranslate="socialappApp.competitor.created_at">Created</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -50,6 +51,7 @@
                 <td>{{competitor.username}}</td>
                 <td>{{competitor.likes}}</td>
                 <td>{{competitor.cursor}}</td>
+                <td>{{competitor.created | date:'short'}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

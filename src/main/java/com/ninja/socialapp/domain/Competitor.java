@@ -7,6 +7,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
@@ -54,6 +55,9 @@ public class Competitor implements Serializable {
 
     @Column(name = "jhi_reset")
     private Boolean reset;
+
+    @Column(name = "created")
+    private Instant created;
 
     public Long getId() {
         return id;
@@ -154,6 +158,19 @@ public class Competitor implements Serializable {
         this.reset = reset;
     }
 
+    public Instant getCreated() {
+        return created;
+    }
+
+    public Competitor created(Instant created) {
+        this.created = created;
+        return this;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -185,6 +202,7 @@ public class Competitor implements Serializable {
             ", cursor='" + getCursor() + "'" +
             ", stop='" + isStop() + "'" +
             ", reset='" + isReset() + "'" +
+            ", created='" + getCreated() + "'" +
             "}";
     }
 }

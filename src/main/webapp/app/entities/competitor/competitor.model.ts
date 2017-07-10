@@ -1,6 +1,6 @@
 import { BaseEntity } from './../../shared';
 
-export const enum CompetitorStatus {
+const enum CompetitorStatus {
     'IN_PROGRESS',
     'DONE',
     'LOCK',
@@ -17,6 +17,7 @@ export class Competitor implements BaseEntity {
         public cursor?: number,
         public stop?: boolean,
         public reset?: boolean,
+        public created?: any,
     ) {
         this.stop = false;
         this.reset = false;

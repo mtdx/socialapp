@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -60,6 +61,7 @@ public class CompetitorResource {
         }
         competitor.setStatus(CompetitorStatus.IN_PROGRESS);
         competitor.setLikes(0L);
+        competitor.setCreated(Instant.now());
         Competitor result = competitorService.save(competitor);
         return ResponseEntity.created(new URI("/api/competitors/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
