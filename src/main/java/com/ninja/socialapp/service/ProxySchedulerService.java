@@ -32,7 +32,7 @@ public class ProxySchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 */5 * * * *")
     public void updateProxies() {
         log.debug("Run scheduled update proxies {}");
         final String USERNAME = "ninja";
