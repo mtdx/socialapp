@@ -66,11 +66,11 @@
             </column>
 
             <column name="avatar_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="header_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="proxy_id" type="bigint">

@@ -3,6 +3,8 @@ package com.ninja.socialapp.web.rest;
 import com.ninja.socialapp.SocialappApp;
 
 import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.Avatar;
+import com.ninja.socialapp.domain.Header;
 import com.ninja.socialapp.domain.Proxy;
 import com.ninja.socialapp.repository.TwitterAccountRepository;
 import com.ninja.socialapp.service.TwitterAccountService;
@@ -128,6 +130,16 @@ public class TwitterAccountResourceIntTest {
             .location(DEFAULT_LOCATION)
             .username(DEFAULT_USERNAME)
             .status(DEFAULT_STATUS);
+        // Add required entity
+        Avatar avatar = AvatarResourceIntTest.createEntity(em);
+        em.persist(avatar);
+        em.flush();
+        twitterAccount.setAvatar(avatar);
+        // Add required entity
+        Header header = HeaderResourceIntTest.createEntity(em);
+        em.persist(header);
+        em.flush();
+        twitterAccount.setHeader(header);
         // Add required entity
         Proxy proxy = ProxyResourceIntTest.createEntity(em);
         em.persist(proxy);

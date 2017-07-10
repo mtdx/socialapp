@@ -5,12 +5,18 @@
             "relationshipName": "avatar",
             "otherEntityName": "avatar",
             "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
             "otherEntityField": "name"
         },
         {
             "relationshipName": "header",
             "otherEntityName": "header",
             "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
             "otherEntityField": "name"
         },
         {

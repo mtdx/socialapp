@@ -84,10 +84,12 @@ public class TwitterAccount implements Serializable {
     @Column(name = "status")
     private TwitterStatus status;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Avatar avatar;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Header header;
 
     @ManyToOne(optional = false)

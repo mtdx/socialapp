@@ -205,17 +205,27 @@
 
         <div class="form-group">
             <label jhiTranslate="socialappApp.twitterAccount.avatar" for="field_avatar">Avatar</label>
-            <select class="form-control" id="field_avatar" name="avatar" [(ngModel)]="twitterAccount.avatar" >
-                <option [ngValue]="null"></option>
+            <select class="form-control" id="field_avatar" name="avatar" [(ngModel)]="twitterAccount.avatar"  required>
                 <option [ngValue]="avatarOption.id === twitterAccount.avatar?.id ? twitterAccount.avatar : avatarOption" *ngFor="let avatarOption of avatars; trackBy: trackAvatarById">{{avatarOption.name}}</option>
             </select>
         </div>
+        <div [hidden]="!(editForm.controls.avatar?.dirty && editForm.controls.avatar?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.avatar?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
         <div class="form-group">
             <label jhiTranslate="socialappApp.twitterAccount.header" for="field_header">Header</label>
-            <select class="form-control" id="field_header" name="header" [(ngModel)]="twitterAccount.header" >
-                <option [ngValue]="null"></option>
+            <select class="form-control" id="field_header" name="header" [(ngModel)]="twitterAccount.header"  required>
                 <option [ngValue]="headerOption.id === twitterAccount.header?.id ? twitterAccount.header : headerOption" *ngFor="let headerOption of headers; trackBy: trackHeaderById">{{headerOption.name}}</option>
             </select>
+        </div>
+        <div [hidden]="!(editForm.controls.header?.dirty && editForm.controls.header?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.header?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
         </div>
         <div class="form-group">
             <label jhiTranslate="socialappApp.twitterAccount.proxy" for="field_proxy">Proxy</label>
