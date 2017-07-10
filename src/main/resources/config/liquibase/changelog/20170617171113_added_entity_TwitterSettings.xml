@@ -61,7 +61,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="accounts_per_proxy" type="integer">
+            <column name="accounts_per_proxy" type="bigint">
                 <constraints nullable="false" />
             </column>
 

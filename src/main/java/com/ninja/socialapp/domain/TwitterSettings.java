@@ -68,9 +68,9 @@ public class TwitterSettings implements Serializable {
     private Integer minCompetitorFollowers;
 
     @NotNull
-    @Min(value = 1)
+    @Min(value = 1L)
     @Column(name = "accounts_per_proxy", nullable = false)
-    private Integer accountsPerProxy;
+    private Long accountsPerProxy;
 
     public Long getId() {
         return id;
@@ -210,16 +210,16 @@ public class TwitterSettings implements Serializable {
         this.minCompetitorFollowers = minCompetitorFollowers;
     }
 
-    public Integer getAccountsPerProxy() {
+    public Long getAccountsPerProxy() {
         return accountsPerProxy;
     }
 
-    public TwitterSettings accountsPerProxy(Integer accountsPerProxy) {
+    public TwitterSettings accountsPerProxy(Long accountsPerProxy) {
         this.accountsPerProxy = accountsPerProxy;
         return this;
     }
 
-    public void setAccountsPerProxy(Integer accountsPerProxy) {
+    public void setAccountsPerProxy(Long accountsPerProxy) {
         this.accountsPerProxy = accountsPerProxy;
     }
 

@@ -53,7 +53,7 @@ public class TwitterSettingsService {
      *
      * @return the persisted entity
      */
-    public TwitterSettings saveDefault() {
+    private TwitterSettings saveDefault() {
         log.debug("Request to save default TwitterSettings : {}");
         TwitterSettings defaultTwitterSettings = new TwitterSettings();
         defaultTwitterSettings.setMaxLikes(5000); // likes until start doing unlikes
@@ -66,7 +66,7 @@ public class TwitterSettingsService {
         defaultTwitterSettings.notLikeTweetsOlderThan(2); // skip if less, (months)
         defaultTwitterSettings.setRetweetPercent(1); // skip if less
         defaultTwitterSettings.setMinCompetitorFollowers(2500); // skip if less
-        defaultTwitterSettings.setAccountsPerProxy(20); // don't save if less
+        defaultTwitterSettings.setAccountsPerProxy(20L); // don't show if less
         TwitterSettings result = twitterSettingsRepository.save(defaultTwitterSettings);
         return result;
     }

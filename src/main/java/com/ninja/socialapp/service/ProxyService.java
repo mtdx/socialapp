@@ -28,9 +28,12 @@ public class ProxyService {
 
     private final ProxySearchRepository proxySearchRepository;
 
-    public ProxyService(ProxyRepository proxyRepository, ProxySearchRepository proxySearchRepository) {
+    private final TwitterSettingsService twitterSettingsService;
+
+    public ProxyService(ProxyRepository proxyRepository, ProxySearchRepository proxySearchRepository, TwitterSettingsService twitterSettingsService) {
         this.proxyRepository = proxyRepository;
         this.proxySearchRepository = proxySearchRepository;
+        this.twitterSettingsService = twitterSettingsService;
     }
 
     /**
@@ -103,8 +106,7 @@ public class ProxyService {
     @Transactional(readOnly = true)
     public List<Proxy> findAllRestrict() {
         log.debug("Request to get all Proxies Restrict");
-        final Long MAX_ACCOUNTS = 15L;
-        return proxyRepository.findAllRestrict(MAX_ACCOUNTS);
+        return proxyRepository.findAllRestrict(twitterSettingsService.findOne().getAccountsPerProxy());
     }
 
     /**
