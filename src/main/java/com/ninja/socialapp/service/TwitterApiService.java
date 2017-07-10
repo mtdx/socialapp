@@ -114,8 +114,8 @@ public class TwitterApiService {
                     String tweetText = tweet.getText();
                     threadWait(getRandInt(15, 105));
 
-                    if (tweetText.length() >= 70 && getRandInt(0, 100) < 1) {
-                        twitterClient.retweetStatus(tweetId); // also we retweet, 1% & only long tweets
+                    if (tweetText.length() >= 70 && getRandInt(1, 100) <= twitterSettings.getRetweetPercent()) {
+                        twitterClient.retweetStatus(tweetId); // also we retweet, a % & only long tweets
                     } else {
                         twitterClient.createFavorite(tweetId);
                         likes++;
