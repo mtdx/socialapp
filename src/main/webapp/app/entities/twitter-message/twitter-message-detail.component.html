@@ -1,0 +1,37 @@
+
+<div *ngIf="twitterMessage">
+    <h2><span jhiTranslate="socialappApp.twitterMessage.detail.title">Twitter Message</span> {{twitterMessage.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="socialappApp.twitterMessage.accountName">Account Name</span></dt>
+        <dd>
+            <span>{{twitterMessage.accountName}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterMessage.accountDescription">Account Description</span></dt>
+        <dd>
+            <span>{{twitterMessage.accountDescription}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterMessage.accountUrl">Account Url</span></dt>
+        <dd>
+            <span>{{twitterMessage.accountUrl}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterMessage.accountLocation">Account Location</span></dt>
+        <dd>
+            <span>{{twitterMessage.accountLocation}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'twitter-message/'+ twitterMessage.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

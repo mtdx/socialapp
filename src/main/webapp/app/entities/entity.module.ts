@@ -8,6 +8,7 @@ import { SocialappTwitterAccountModule } from './twitter-account/twitter-account
 import { SocialappTwitterErrorModule } from './twitter-error/twitter-error.module';
 import { SocialappTwitterSettingsModule } from './twitter-settings/twitter-settings.module';
 import { SocialappTwitterKeywordModule } from './twitter-keyword/twitter-keyword.module';
+import { SocialappTwitterMessageModule } from './twitter-message/twitter-message.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -20,6 +21,7 @@ import { SocialappTwitterKeywordModule } from './twitter-keyword/twitter-keyword
         SocialappTwitterErrorModule,
         SocialappTwitterSettingsModule,
         SocialappTwitterKeywordModule,
+        SocialappTwitterMessageModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

@@ -1,0 +1,25 @@
+{
+    "socialappApp": {
+        "twitterMessage" : {
+            "home": {
+                "title": "Twitter Messages",
+                "createLabel": "Create a new Twitter Message",
+                "createOrEditLabel": "Create or edit a Twitter Message",
+                "search": "Search for Twitter Message"
+            },
+            "created": "A new Twitter Message is created with identifier {{ param }}",
+            "updated": "A Twitter Message is updated with identifier {{ param }}",
+            "deleted": "A Twitter Message is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Twitter Message {{ id }}?"
+            },
+            "detail": {
+                "title": "Twitter Message"
+            },
+            "accountName": "Account Name",
+            "accountDescription": "Account Description",
+            "accountUrl": "Account Url",
+            "accountLocation": "Account Location"
+        }
+    }
+}

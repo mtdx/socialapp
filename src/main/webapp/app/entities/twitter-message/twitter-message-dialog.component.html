@@ -1,0 +1,77 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myTwitterMessageLabel" jhiTranslate="socialappApp.twitterMessage.home.createOrEditLabel">Create or edit a Twitter Message</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!twitterMessage.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="twitterMessage.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterMessage.accountName" for="field_accountName">Account Name</label>
+            <input type="text" class="form-control" name="accountName" id="field_accountName"
+                [(ngModel)]="twitterMessage.accountName" required minlength="3" maxlength="20" />
+            <div [hidden]="!(editForm.controls.accountName?.dirty && editForm.controls.accountName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.accountName?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.accountName?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 3 }">
+                   This field is required to be at least 3 characters.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.accountName?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
+                   This field cannot be longer than 20 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterMessage.accountDescription" for="field_accountDescription">Account Description</label>
+            <input type="text" class="form-control" name="accountDescription" id="field_accountDescription"
+                [(ngModel)]="twitterMessage.accountDescription" maxlength="160" />
+            <div [hidden]="!(editForm.controls.accountDescription?.dirty && editForm.controls.accountDescription?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.accountDescription?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 160 }">
+                   This field cannot be longer than 160 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterMessage.accountUrl" for="field_accountUrl">Account Url</label>
+            <input type="text" class="form-control" name="accountUrl" id="field_accountUrl"
+                [(ngModel)]="twitterMessage.accountUrl" pattern="(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)" />
+            <div [hidden]="!(editForm.controls.accountUrl?.dirty && editForm.controls.accountUrl?.invalid)">
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.accountUrl?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Account Url' }">
+                    This field should follow pattern for "Account Url".
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterMessage.accountLocation" for="field_accountLocation">Account Location</label>
+            <input type="text" class="form-control" name="accountLocation" id="field_accountLocation"
+                [(ngModel)]="twitterMessage.accountLocation" maxlength="60" />
+            <div [hidden]="!(editForm.controls.accountLocation?.dirty && editForm.controls.accountLocation?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.accountLocation?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 60 }">
+                   This field cannot be longer than 60 characters.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
