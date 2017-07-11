@@ -65,7 +65,7 @@ public class TwitterApiService {
                 twitterClient.updateProfileBanner(new ByteArrayInputStream(twitterAccount.getHeader().getImage()));
 
             twitterAccount.setUsername(user.getScreenName());
-            twitterAccount.setStatus(twitterAccount.getStatus());
+            twitterAccount.setStatus(TwitterStatus.IDLE);
             twitterAccountService.save(twitterAccount);
         } catch (TwitterException ex) {
             saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
