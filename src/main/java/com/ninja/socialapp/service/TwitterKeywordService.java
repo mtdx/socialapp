@@ -107,4 +107,14 @@ public class TwitterKeywordService {
         log.debug("Request to get keyword by status : {}", status);
         return twitterKeywordRepository.findFirstByStatusOrderByIdAsc(status);
     }
+
+    /**
+     *  Updates the number of competitors.
+     *
+     *  @param competitors the number of likes
+     *  @param id the id of the entity
+     */
+    public void incrementCompetitors(Integer competitors, Long id) {
+        twitterKeywordRepository.incrementCompetitors(competitors, id);
+    }
 }

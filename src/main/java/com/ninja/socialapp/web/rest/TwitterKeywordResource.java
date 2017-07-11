@@ -61,7 +61,7 @@ public class TwitterKeywordResource {
         }
         twitterKeyword.setStatus(KeywordStatus.IN_PROGRESS);
         twitterKeyword.setCompetitors(0);
-        twitterKeyword.setPage(0);
+        twitterKeyword.setPage(1);
         twitterKeyword.setKeyword(twitterKeyword.getKeyword().toLowerCase().trim());
         twitterKeyword.setCreated(Instant.now());
         TwitterKeyword result = twitterKeywordService.save(twitterKeyword);
@@ -91,7 +91,7 @@ public class TwitterKeywordResource {
             twitterKeyword.setStop(false);
         }
         if(twitterKeyword.isReset()) {
-            twitterKeyword.setPage(0);
+            twitterKeyword.setPage(1);
             twitterKeyword.setCompetitors(0);
             twitterKeyword.setStatus(KeywordStatus.IN_PROGRESS);
             twitterKeyword.setReset(false);

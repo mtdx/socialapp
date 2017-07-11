@@ -52,7 +52,7 @@ public class TwitterSchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "0 */4 * * * *")
+    @Scheduled(cron = "0 */2 * * * *")
     public void updateAccounts() {
         log.debug("Run scheduled update accounts {}");
         List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.PENDING_UPDATE);
@@ -64,11 +64,11 @@ public class TwitterSchedulerService {
     /**
      * We check for competitors and like their followers keeping a cursor
      * <p>
-     * This is scheduled to get fired every 1 minute.
+     * This is scheduled to get fired every 4 minute.
      * </p>
      */
     @Async
-    @Scheduled(cron = "30 */2 * * * *")
+    @Scheduled(cron = "30 */4 * * * *")
     public void processCompetitors() {
         log.debug("Run scheduled process competitors {}");
         competitorService.findFirstByStatusOrderByIdAsc(CompetitorStatus.IN_PROGRESS).ifPresent((Competitor competitor) -> {
@@ -106,7 +106,7 @@ public class TwitterSchedulerService {
     /**
      * We delete twitter errors older than 7 days to keep db small. Whe need to delete one by one to delete from search too.
      * <p>
-     * This is scheduled to get fired every 1 minute.
+     * This is scheduled to get fired every day.
      * </p>
      */
     @Async
@@ -127,7 +127,7 @@ public class TwitterSchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "30 */45 * * * *")
+    @Scheduled(cron = "30 */1 * * * *") // todo
     public void processKeywords() {
         log.debug("Run scheduled process keywords {}");
         if (competitorService.countAllByStatus(CompetitorStatus.IN_PROGRESS) == 0) {
@@ -143,9 +143,9 @@ public class TwitterSchedulerService {
                     twitterAccountService.save(account);
                 }
                 final int MAX_PAGE = 1000 / 20; // as per their documentation
-                int page = twitterKeyword.getPage() == null ? 0 : twitterKeyword.getPage(); // if cursor -1 update to done
+                int page = twitterKeyword.getPage() == null ? 1 : twitterKeyword.getPage(); // if cursor -1 update to done
                 for (TwitterAccount account : accounts) {
-                    if (page >= MAX_PAGE) {
+                    if (page > MAX_PAGE) {
                         if (twitterKeyword.getStatus() != KeywordStatus.DONE) {  // we don't want to save multiple times
                             twitterKeyword.setStatus(KeywordStatus.DONE);
                             twitterKeywordService.save(twitterKeyword);

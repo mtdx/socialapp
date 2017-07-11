@@ -1,6 +1,7 @@
 package com.ninja.socialapp.service;
 
 import com.ninja.socialapp.domain.*;
+import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.io.ByteArrayInputStream;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -32,14 +34,18 @@ public class TwitterApiService {
 
     private final CompetitorService competitorService;
 
+    private final TwitterKeywordService twitterKeywordService;
+
     private int currentMonth;
 
     private int currentYear;
 
-    public TwitterApiService(TwitterErrorService twitterErrorService, TwitterAccountService twitterAccountService, CompetitorService competitorService){
+    public TwitterApiService(TwitterErrorService twitterErrorService, TwitterAccountService twitterAccountService,
+                             CompetitorService competitorService, TwitterKeywordService twitterKeywordService){
         this.twitterErrorService = twitterErrorService;
         this.twitterAccountService = twitterAccountService;
         this.competitorService = competitorService;
+        this.twitterKeywordService = twitterKeywordService;
     }
 
     /**
@@ -126,6 +132,31 @@ public class TwitterApiService {
             }
         }
         competitorService.incrementLikes(likes, competitorId);
+        twitterAccount.setStatus(TwitterStatus.IDLE); // we reset the account
+        twitterAccountService.save(twitterAccount);
+    }
+
+    /**
+     * Here we add competitors based on keywords
+     */
+    private void addCompetitors(List<User> users, Twitter twitterClient, final TwitterAccount twitterAccount,
+                                final long twitterKeywordId, final Integer minCompetitorFollowers) {
+        log.debug("Call to add competitors via TwitterAPI: {}", twitterAccount.getEmail());
+        Integer competitors = 0;
+        for (User user : users){
+            if (user.getFavouritesCount() >= minCompetitorFollowers) {
+                Competitor competitor = new Competitor();
+                competitor.setUserid(String.valueOf(user.getId()));
+                competitor.setUsername(user.getScreenName());
+                competitor.setStatus(CompetitorStatus.IN_PROGRESS);
+                competitor.setLikes(0L);
+                competitor.setCursor(-1L);
+                competitor.setCreated(Instant.now());
+                competitorService.save(competitor);
+                competitors++;
+            }
+        }
+        twitterKeywordService.incrementCompetitors(competitors, twitterKeywordId);
         twitterAccount.setStatus(TwitterStatus.IDLE); // we reset the account
         twitterAccountService.save(twitterAccount);
     }
@@ -227,6 +258,7 @@ public class TwitterApiService {
         return false;
     }
 
+
     /**
      * Adds competitors by keyword
      */
@@ -234,9 +266,7 @@ public class TwitterApiService {
         Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             ResponseList<User> users = twitterClient.searchUsers(twitterKeyword.getKeyword(), page);
-            for (User user : users){
-                String a;
-            }
+            new Thread(() -> addCompetitors(users, twitterClient, twitterAccount, twitterKeyword.getId(), twitterSettings.getMinCompetitorFollowers())).start();
             return ++page;
         } catch (TwitterException ex) {
             saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.SEARCH);
