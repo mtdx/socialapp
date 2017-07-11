@@ -49,8 +49,9 @@ public class TwitterApiService {
         log.debug("Call to update a twitter accounts via TwitterAPI: {}", twitterAccount.getEmail());
         final Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
-            User user = twitterClient.updateProfile(twitterAccount.getName(), twitterAccount.getUrl(),
-                twitterAccount.getLocation(), twitterAccount.getDescription());
+            User user = twitterClient.updateProfile(twitterAccount.getMessage().getAccountName(),
+                twitterAccount.getMessage().getAccountUrl(), twitterAccount.getMessage().getAccountLocation(),
+                twitterAccount.getMessage().getAccountDescription());
 
             if(twitterAccount.getAvatar() != null)
                 twitterClient.updateProfileImage(new ByteArrayInputStream(twitterAccount.getAvatar().getImage()));

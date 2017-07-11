@@ -27,6 +27,15 @@
                 "required"
             ],
             "otherEntityField": "host"
+        },
+        {
+            "relationshipName": "message",
+            "otherEntityName": "twitterMessage",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "accountName"
         }
     ],
     "fields": [
@@ -96,45 +105,9 @@
             "fieldValidateRulesPattern": "(^[a-zA-Z0-9]*$)"
         },
         {
-            "fieldName": "name",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "minlength",
-                "maxlength"
-            ],
-            "fieldValidateRulesMinlength": "3",
-            "fieldValidateRulesMaxlength": 20
-        },
-        {
-            "fieldName": "description",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": "160"
-        },
-        {
-            "fieldName": "url",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "pattern"
-            ],
-            "fieldValidateRulesPattern": "(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)"
-        },
-        {
-            "fieldName": "location",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": "60"
-        },
-        {
             "fieldName": "username",
             "fieldType": "String",
             "fieldValidateRules": [
-                "required",
                 "minlength",
                 "maxlength",
                 "pattern"

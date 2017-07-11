@@ -12,6 +12,7 @@ import { TwitterAccountService } from './twitter-account.service';
 import { Avatar, AvatarService } from '../avatar';
 import { Header, HeaderService } from '../header';
 import { Proxy, ProxyService } from '../proxy';
+import { TwitterMessage, TwitterMessageService } from '../twitter-message';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -30,6 +31,8 @@ export class TwitterAccountDialogComponent implements OnInit {
 
     proxies: Proxy[];
 
+    twittermessages: TwitterMessage[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
@@ -37,6 +40,7 @@ export class TwitterAccountDialogComponent implements OnInit {
         private avatarService: AvatarService,
         private headerService: HeaderService,
         private proxyService: ProxyService,
+        private twitterMessageService: TwitterMessageService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -50,6 +54,8 @@ export class TwitterAccountDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => { this.headers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.proxyService.queryrestrict()
             .subscribe((res: ResponseWrapper) => { this.proxies = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.twitterMessageService.query()
+            .subscribe((res: ResponseWrapper) => { this.twittermessages = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -101,6 +107,10 @@ export class TwitterAccountDialogComponent implements OnInit {
     }
 
     trackProxyById(index: number, item: Proxy) {
+        return item.id;
+    }
+
+    trackTwitterMessageById(index: number, item: TwitterMessage) {
         return item.id;
     }
 }

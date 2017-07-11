@@ -57,27 +57,9 @@ public class TwitterAccount implements Serializable {
     @Column(name = "access_token_secret", length = 60, nullable = false)
     private String accessTokenSecret;
 
-    @NotNull
-    @Size(min = 3, max = 20)
-    @Column(name = "name", length = 20, nullable = false)
-    private String name;
-
-    @Size(max = 160)
-    @Column(name = "description", length = 160)
-    private String description;
-
-    @Pattern(regexp = "(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)")
-    @Column(name = "url")
-    private String url;
-
-    @Size(max = 60)
-    @Column(name = "location", length = 60)
-    private String location;
-
-    @NotNull
     @Size(min = 4, max = 15)
     @Pattern(regexp = "(^[a-zA-Z0-9_]*$)")
-    @Column(name = "username", length = 15, nullable = false)
+    @Column(name = "username", length = 15)
     private String username;
 
     @Enumerated(EnumType.STRING)
@@ -95,6 +77,10 @@ public class TwitterAccount implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     private Proxy proxy;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    private TwitterMessage message;
 
     public Long getId() {
         return id;
@@ -169,58 +155,6 @@ public class TwitterAccount implements Serializable {
         this.accessTokenSecret = accessTokenSecret;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public TwitterAccount name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public TwitterAccount description(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public TwitterAccount url(String url) {
-        this.url = url;
-        return this;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public TwitterAccount location(String location) {
-        this.location = location;
-        return this;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -286,6 +220,19 @@ public class TwitterAccount implements Serializable {
         this.proxy = proxy;
     }
 
+    public TwitterMessage getMessage() {
+        return message;
+    }
+
+    public TwitterAccount message(TwitterMessage twitterMessage) {
+        this.message = twitterMessage;
+        return this;
+    }
+
+    public void setMessage(TwitterMessage twitterMessage) {
+        this.message = twitterMessage;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -315,10 +262,6 @@ public class TwitterAccount implements Serializable {
             ", consumerSecret='" + getConsumerSecret() + "'" +
             ", accessToken='" + getAccessToken() + "'" +
             ", accessTokenSecret='" + getAccessTokenSecret() + "'" +
-            ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", url='" + getUrl() + "'" +
-            ", location='" + getLocation() + "'" +
             ", username='" + getUsername() + "'" +
             ", status='" + getStatus() + "'" +
             "}";

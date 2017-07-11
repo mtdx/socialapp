@@ -7,7 +7,7 @@
         Added the constraints for entity TwitterAccount.
     -->
     <changeSet id="20170531124019-2" author="jhipster">
-
+        
         <addForeignKeyConstraint baseColumnNames="avatar_id"
                                  baseTableName="twitter_account"
                                  constraintName="fk_twitter_account_avatar_id"
@@ -25,6 +25,12 @@
                                  constraintName="fk_twitter_account_proxy_id"
                                  referencedColumnNames="id"
                                  referencedTableName="proxy"/>
+
+        <addForeignKeyConstraint baseColumnNames="message_id"
+                                 baseTableName="twitter_account"
+                                 constraintName="fk_twitter_account_message_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="twitter_message"/>
 
     </changeSet>
 </databaseChangeLog>

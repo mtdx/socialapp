@@ -14,6 +14,21 @@
         </createIndex>
 
         <createIndex tableName="twitter_account"
+                     indexName="k_twitter_account_avatar_id">
+            <column name="avatar_id"/>
+        </createIndex>
+
+        <createIndex tableName="twitter_account"
+                     indexName="k_twitter_account_header_id">
+            <column name="header_id"/>
+        </createIndex>
+
+        <createIndex tableName="twitter_account"
+                     indexName="k_twitter_account_message_id">
+            <column name="message_id"/>
+        </createIndex>
+
+        <createIndex tableName="twitter_account"
                      indexName="k_twitter_account_status">
             <column name="status"/>
         </createIndex>

@@ -24,22 +24,6 @@
         <dd>
             <span>{{twitterAccount.accessTokenSecret}}</span>
         </dd>
-        <dt><span jhiTranslate="socialappApp.twitterAccount.name">Name</span></dt>
-        <dd>
-            <span>{{twitterAccount.name}}</span>
-        </dd>
-        <dt><span jhiTranslate="socialappApp.twitterAccount.description">Description</span></dt>
-        <dd>
-            <span>{{twitterAccount.description}}</span>
-        </dd>
-        <dt><span jhiTranslate="socialappApp.twitterAccount.url">Url</span></dt>
-        <dd>
-            <span>{{twitterAccount.url}}</span>
-        </dd>
-        <dt><span jhiTranslate="socialappApp.twitterAccount.location">Location</span></dt>
-        <dd>
-            <span>{{twitterAccount.location}}</span>
-        </dd>
         <dt><span jhiTranslate="socialappApp.twitterAccount.username">Username</span></dt>
         <dd>
             <span><a target="_blank" href="https://twitter.com/{{twitterAccount.username}}">{{twitterAccount.username}}</a></span>
@@ -64,6 +48,12 @@
         <dd>
             <div *ngIf="twitterAccount.proxy">
                 <a [routerLink]="['/proxy', twitterAccount.proxy?.id]">{{twitterAccount.proxy?.host}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.message">Message</span></dt>
+        <dd>
+            <div *ngIf="twitterAccount.message">
+                <a [routerLink]="['/twitter-message', twitterAccount.message?.id]">{{twitterAccount.message?.accountName}}</a>
             </div>
         </dd>
     </dl>

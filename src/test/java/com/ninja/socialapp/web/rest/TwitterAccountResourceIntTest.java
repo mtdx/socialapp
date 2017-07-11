@@ -6,6 +6,7 @@ import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.domain.Avatar;
 import com.ninja.socialapp.domain.Header;
 import com.ninja.socialapp.domain.Proxy;
+import com.ninja.socialapp.domain.TwitterMessage;
 import com.ninja.socialapp.repository.TwitterAccountRepository;
 import com.ninja.socialapp.service.TwitterAccountService;
 import com.ninja.socialapp.repository.search.TwitterAccountSearchRepository;
@@ -57,18 +58,6 @@ public class TwitterAccountResourceIntTest {
 
     private static final String DEFAULT_ACCESS_TOKEN_SECRET = "AAAAAAAAAA";
     private static final String UPDATED_ACCESS_TOKEN_SECRET = "BBBBBBBBBB";
-
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
-    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
-
-    private static final String DEFAULT_URL = "www.aaa.com";
-    private static final String UPDATED_URL = "www.aaabbbb.com";
-
-    private static final String DEFAULT_LOCATION = "AAAAAAAAAA";
-    private static final String UPDATED_LOCATION = "BBBBBBBBBB";
 
     private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";
@@ -124,10 +113,6 @@ public class TwitterAccountResourceIntTest {
             .consumerSecret(DEFAULT_CONSUMER_SECRET)
             .accessToken(DEFAULT_ACCESS_TOKEN)
             .accessTokenSecret(DEFAULT_ACCESS_TOKEN_SECRET)
-            .name(DEFAULT_NAME)
-            .description(DEFAULT_DESCRIPTION)
-            .url(DEFAULT_URL)
-            .location(DEFAULT_LOCATION)
             .username(DEFAULT_USERNAME)
             .status(DEFAULT_STATUS);
         // Add required entity
@@ -145,6 +130,11 @@ public class TwitterAccountResourceIntTest {
         em.persist(proxy);
         em.flush();
         twitterAccount.setProxy(proxy);
+        // Add required entity
+        TwitterMessage message = TwitterMessageResourceIntTest.createEntity(em);
+        em.persist(message);
+        em.flush();
+        twitterAccount.setMessage(message);
         return twitterAccount;
     }
 
@@ -174,10 +164,6 @@ public class TwitterAccountResourceIntTest {
         assertThat(testTwitterAccount.getConsumerSecret()).isEqualTo(DEFAULT_CONSUMER_SECRET);
         assertThat(testTwitterAccount.getAccessToken()).isEqualTo(DEFAULT_ACCESS_TOKEN);
         assertThat(testTwitterAccount.getAccessTokenSecret()).isEqualTo(DEFAULT_ACCESS_TOKEN_SECRET);
-        assertThat(testTwitterAccount.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testTwitterAccount.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testTwitterAccount.getUrl()).isEqualTo(DEFAULT_URL);
-        assertThat(testTwitterAccount.getLocation()).isEqualTo(DEFAULT_LOCATION);
         assertThat(testTwitterAccount.getUsername()).isEqualTo(DEFAULT_USERNAME);
         assertThat(testTwitterAccount.getStatus()).isEqualTo(DEFAULT_STATUS);
 
@@ -297,42 +283,6 @@ public class TwitterAccountResourceIntTest {
 
     @Test
     @Transactional
-    public void checkNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = twitterAccountRepository.findAll().size();
-        // set the field null
-        twitterAccount.setName(null);
-
-        // Create the TwitterAccount, which fails.
-
-        restTwitterAccountMockMvc.perform(post("/api/twitter-accounts")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(twitterAccount)))
-            .andExpect(status().isBadRequest());
-
-        List<TwitterAccount> twitterAccountList = twitterAccountRepository.findAll();
-        assertThat(twitterAccountList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkUsernameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = twitterAccountRepository.findAll().size();
-        // set the field null
-        twitterAccount.setUsername(null);
-
-        // Create the TwitterAccount, which fails.
-
-        restTwitterAccountMockMvc.perform(post("/api/twitter-accounts")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(twitterAccount)))
-            .andExpect(status().isBadRequest());
-
-        List<TwitterAccount> twitterAccountList = twitterAccountRepository.findAll();
-        assertThat(twitterAccountList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllTwitterAccounts() throws Exception {
         // Initialize the database
         twitterAccountRepository.saveAndFlush(twitterAccount);
@@ -347,10 +297,6 @@ public class TwitterAccountResourceIntTest {
             .andExpect(jsonPath("$.[*].consumerSecret").value(hasItem(DEFAULT_CONSUMER_SECRET.toString())))
             .andExpect(jsonPath("$.[*].accessToken").value(hasItem(DEFAULT_ACCESS_TOKEN.toString())))
             .andExpect(jsonPath("$.[*].accessTokenSecret").value(hasItem(DEFAULT_ACCESS_TOKEN_SECRET.toString())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())))
-            .andExpect(jsonPath("$.[*].location").value(hasItem(DEFAULT_LOCATION.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
@@ -371,10 +317,6 @@ public class TwitterAccountResourceIntTest {
             .andExpect(jsonPath("$.consumerSecret").value(DEFAULT_CONSUMER_SECRET.toString()))
             .andExpect(jsonPath("$.accessToken").value(DEFAULT_ACCESS_TOKEN.toString()))
             .andExpect(jsonPath("$.accessTokenSecret").value(DEFAULT_ACCESS_TOKEN_SECRET.toString()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.url").value(DEFAULT_URL.toString()))
-            .andExpect(jsonPath("$.location").value(DEFAULT_LOCATION.toString()))
             .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
@@ -403,10 +345,6 @@ public class TwitterAccountResourceIntTest {
             .consumerSecret(UPDATED_CONSUMER_SECRET)
             .accessToken(UPDATED_ACCESS_TOKEN)
             .accessTokenSecret(UPDATED_ACCESS_TOKEN_SECRET)
-            .name(UPDATED_NAME)
-            .description(UPDATED_DESCRIPTION)
-            .url(UPDATED_URL)
-            .location(UPDATED_LOCATION)
             .username(UPDATED_USERNAME)
             .status(UPDATED_STATUS);
 
@@ -424,10 +362,6 @@ public class TwitterAccountResourceIntTest {
         assertThat(testTwitterAccount.getConsumerSecret()).isEqualTo(UPDATED_CONSUMER_SECRET);
         assertThat(testTwitterAccount.getAccessToken()).isEqualTo(UPDATED_ACCESS_TOKEN);
         assertThat(testTwitterAccount.getAccessTokenSecret()).isEqualTo(UPDATED_ACCESS_TOKEN_SECRET);
-        assertThat(testTwitterAccount.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testTwitterAccount.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testTwitterAccount.getUrl()).isEqualTo(UPDATED_URL);
-        assertThat(testTwitterAccount.getLocation()).isEqualTo(UPDATED_LOCATION);
         assertThat(testTwitterAccount.getUsername()).isEqualTo(UPDATED_USERNAME);
         assertThat(testTwitterAccount.getStatus()).isEqualTo(UPDATED_STATUS);
 
@@ -492,10 +426,6 @@ public class TwitterAccountResourceIntTest {
             .andExpect(jsonPath("$.[*].consumerSecret").value(hasItem(DEFAULT_CONSUMER_SECRET.toString())))
             .andExpect(jsonPath("$.[*].accessToken").value(hasItem(DEFAULT_ACCESS_TOKEN.toString())))
             .andExpect(jsonPath("$.[*].accessTokenSecret").value(hasItem(DEFAULT_ACCESS_TOKEN_SECRET.toString())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())))
-            .andExpect(jsonPath("$.[*].location").value(hasItem(DEFAULT_LOCATION.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }

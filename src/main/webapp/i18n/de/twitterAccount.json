@@ -21,15 +21,12 @@
             "consumerSecret": "Consumer Secret",
             "accessToken": "Access Token",
             "accessTokenSecret": "Access Token Secret",
-            "name": "Name",
-            "description": "Description",
-            "url": "Url",
-            "location": "Location",
             "username": "Username",
             "status": "Status",
             "avatar": "Avatar",
             "header": "Header",
-            "proxy": "Proxy"
+            "proxy": "Proxy",
+            "message": "Message"
         }
     }
 }

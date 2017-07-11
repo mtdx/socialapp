@@ -127,67 +127,11 @@
                 </small>
             </div>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.name" for="field_name">Name</label>
-            <input type="text" class="form-control" name="name" id="field_name"
-                [(ngModel)]="twitterAccount.name" required minlength="3" maxlength="20" />
-            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.name?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 3 }">
-                   This field is required to be at least 3 characters.
-                </small>
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.name?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
-                   This field cannot be longer than 20 characters.
-                </small>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.description" for="field_description">Description</label>
-            <input type="text" class="form-control" name="description" id="field_description"
-                [(ngModel)]="twitterAccount.description" maxlength="160" />
-            <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.description?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 160 }">
-                   This field cannot be longer than 160 characters.
-                </small>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.url" for="field_url">Url</label>
-            <input type="text" class="form-control" name="url" id="field_url"
-                [(ngModel)]="twitterAccount.url" pattern="(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)" />
-            <div [hidden]="!(editForm.controls.url?.dirty && editForm.controls.url?.invalid)">
-                <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.url?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Url' }">
-                    This field should follow pattern for "Url".
-                </small>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.location" for="field_location">Location</label>
-            <input type="text" class="form-control" name="location" id="field_location"
-                [(ngModel)]="twitterAccount.location" maxlength="60" />
-            <div [hidden]="!(editForm.controls.location?.dirty && editForm.controls.location?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.location?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 60 }">
-                   This field cannot be longer than 60 characters.
-                </small>
-            </div>
-        </div>
-        <div class="form-group">
+        <div class="form-group" [hidden]="!twitterAccount.username">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.username" for="field_username">Username</label>
             <input type="text" class="form-control" name="username" id="field_username"
-                [(ngModel)]="twitterAccount.username" required minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" />
+                [(ngModel)]="twitterAccount.username" minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" readonly />
             <div [hidden]="!(editForm.controls.username?.dirty && editForm.controls.username?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.username?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.username?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 4 }">
                    This field is required to be at least 4 characters.
@@ -201,6 +145,14 @@
                     This field should follow pattern for "Username".
                 </small>
             </div>
+        </div>
+        <div class="form-group" hidden>
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.status" for="field_status">Status</label>
+            <select class="form-control" name="status" [(ngModel)]="twitterAccount.status" id="field_status" >
+                <option value="IDLE" jhiTranslate="socialappApp.TwitterStatus.IDLE">IDLE</option>
+                <option value="PENDING_UPDATE" jhiTranslate="socialappApp.TwitterStatus.PENDING_UPDATE">PENDING_UPDATE</option>
+                <option value="WORKING" jhiTranslate="socialappApp.TwitterStatus.WORKING">WORKING</option>
+            </select>
         </div>
 
         <div class="form-group">
@@ -236,6 +188,18 @@
         <div [hidden]="!(editForm.controls.proxy?.dirty && editForm.controls.proxy?.invalid)">
             <small class="form-text text-danger"
                 [hidden]="!editForm.controls.proxy?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="socialappApp.twitterAccount.message" for="field_message">Message</label>
+            <select class="form-control" id="field_message" name="message" [(ngModel)]="twitterAccount.message"  required>
+                <option [ngValue]="twitterMessageOption.id === twitterAccount.message?.id ? twitterAccount.message : twitterMessageOption" *ngFor="let twitterMessageOption of twittermessages; trackBy: trackTwitterMessageById">{{twitterMessageOption.accountName}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.message?.dirty && editForm.controls.message?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.message?.errors?.required" jhiTranslate="entity.validation.required">
                 This field is required.
             </small>
         </div>

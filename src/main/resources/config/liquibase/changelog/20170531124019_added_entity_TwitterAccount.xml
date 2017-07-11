@@ -41,24 +41,8 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="name" type="varchar(20)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="description" type="varchar(160)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="url" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="location" type="varchar(60)">
-                <constraints nullable="true" />
-            </column>
-
             <column name="username" type="varchar(15)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="status" type="varchar(20)">
@@ -74,6 +58,10 @@
             </column>
 
             <column name="proxy_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="message_id" type="bigint">
                 <constraints nullable="false" />
             </column>
 
