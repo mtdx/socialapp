@@ -3,6 +3,7 @@ package com.ninja.socialapp.service;
 import com.ninja.socialapp.domain.Avatar;
 import com.ninja.socialapp.domain.Header;
 import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.TwitterMessage;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import com.ninja.socialapp.repository.TwitterAccountRepository;
 import com.ninja.socialapp.repository.search.TwitterAccountSearchRepository;
@@ -133,5 +134,17 @@ public class TwitterAccountService {
     public List<TwitterAccount> findAllByAvatar(Avatar avatar) {
         log.debug("Request to get TwitterAccounts by avatar : {}", avatar);
         return twitterAccountRepository.findAllByAvatar(avatar);
+    }
+
+    /**
+     *  Get twitterAccounts by message.
+     *
+     *  @param twitterMessage the entity we search by
+     *  @return the entities
+     */
+    @Transactional(readOnly = true)
+    public List<TwitterAccount> findAllByMessage(TwitterMessage twitterMessage) {
+        log.debug("Request to get TwitterAccounts by twitter message : {}", twitterMessage);
+        return twitterAccountRepository.findAllByMessage(twitterMessage);
     }
 }

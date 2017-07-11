@@ -1,3 +1,2 @@
     todo
-       - add competitor reset (2 months and keywords reset 3 months)
-       - add separate messages (name location description, remove username)
+       - add competitor/keywords reset (2 months and keywords reset 3 months) 

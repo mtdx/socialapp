@@ -1,6 +1,8 @@
 package com.ninja.socialapp.service;
 
+import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.domain.TwitterMessage;
+import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import com.ninja.socialapp.repository.TwitterMessageRepository;
 import com.ninja.socialapp.repository.search.TwitterMessageSearchRepository;
 import org.slf4j.Logger;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -26,9 +30,13 @@ public class TwitterMessageService {
 
     private final TwitterMessageSearchRepository twitterMessageSearchRepository;
 
-    public TwitterMessageService(TwitterMessageRepository twitterMessageRepository, TwitterMessageSearchRepository twitterMessageSearchRepository) {
+    private final TwitterAccountService twitterAccountService;
+
+    public TwitterMessageService(TwitterMessageRepository twitterMessageRepository, TwitterMessageSearchRepository twitterMessageSearchRepository,
+                                 TwitterAccountService twitterAccountService) {
         this.twitterMessageRepository = twitterMessageRepository;
         this.twitterMessageSearchRepository = twitterMessageSearchRepository;
+        this.twitterAccountService = twitterAccountService;
     }
 
     /**
@@ -41,6 +49,11 @@ public class TwitterMessageService {
         log.debug("Request to save TwitterMessage : {}", twitterMessage);
         TwitterMessage result = twitterMessageRepository.save(twitterMessage);
         twitterMessageSearchRepository.save(result);
+        List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByMessage(twitterMessage);
+        for (TwitterAccount account : twitterAccounts) {
+            account.setStatus(TwitterStatus.PENDING_UPDATE);
+            twitterAccountService.save(account); // we update related accounts
+        }
         return result;
     }
 
