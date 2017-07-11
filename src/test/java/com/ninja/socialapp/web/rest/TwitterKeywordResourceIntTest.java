@@ -51,7 +51,7 @@ public class TwitterKeywordResourceIntTest {
     private static final Integer DEFAULT_COMPETITORS = 0;
     private static final Integer UPDATED_COMPETITORS = 0;
 
-    private static final Integer DEFAULT_PAGE = 0;
+    private static final Integer DEFAULT_PAGE = 1;
     private static final Integer UPDATED_PAGE = 0;
 
     private static final Boolean DEFAULT_STOP = false;

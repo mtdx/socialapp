@@ -50,6 +50,7 @@ public class HeaderService {
         headerSearchRepository.save(result);
         List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByHeader(header);
         for (TwitterAccount account : twitterAccounts) {
+            account.setPrevStatus(account.getStatus());
             account.setStatus(TwitterStatus.PENDING_UPDATE);
             twitterAccountService.save(account); // we update related accounts
         }

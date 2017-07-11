@@ -48,11 +48,11 @@ public class TwitterSchedulerService {
     /**
      * We check for newly added/updated twitter accounts and we modify them via the twitter API
      * <p>
-     * This is scheduled to get fired every 2 minutes.
+     * This is scheduled to get fired every 1 minutes.
      * </p>
      */
     @Async
-    @Scheduled(cron = "0 */2 * * * *")
+    @Scheduled(cron = "15 */2 * * * *")
     public void updateAccounts() {
         log.debug("Run scheduled update accounts {}");
         List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.PENDING_UPDATE);
@@ -68,7 +68,7 @@ public class TwitterSchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "30 */4 * * * *")
+    @Scheduled(cron = "0 */4 * * * *")
     public void processCompetitors() {
         log.debug("Run scheduled process competitors {}");
         competitorService.findFirstByStatusOrderByIdAsc(CompetitorStatus.IN_PROGRESS).ifPresent((Competitor competitor) -> {
@@ -127,7 +127,7 @@ public class TwitterSchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "30 */1 * * * *") // todo
+    @Scheduled(cron = "0 */15 * * * *")
     public void processKeywords() {
         log.debug("Run scheduled process keywords {}");
         if (competitorService.countAllByStatus(CompetitorStatus.IN_PROGRESS) != 0) {

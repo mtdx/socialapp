@@ -50,6 +50,7 @@ public class AvatarService {
         avatarSearchRepository.save(result);
         List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByAvatar(avatar);
         for (TwitterAccount account : twitterAccounts) {
+            account.setPrevStatus(account.getStatus());
             account.setStatus(TwitterStatus.PENDING_UPDATE);
             twitterAccountService.save(account); // we update related accounts
         }

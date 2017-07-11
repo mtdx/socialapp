@@ -154,6 +154,14 @@
                 <option value="WORKING" jhiTranslate="socialappApp.TwitterStatus.WORKING">WORKING</option>
             </select>
         </div>
+        <div class="form-group" hidden>
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.prevStatus" for="field_prevStatus">Prev Status</label>
+            <select class="form-control" name="prevStatus" [(ngModel)]="twitterAccount.prevStatus" id="field_prevStatus" >
+                <option value="IDLE" jhiTranslate="socialappApp.TwitterStatus.IDLE">IDLE</option>
+                <option value="PENDING_UPDATE" jhiTranslate="socialappApp.TwitterStatus.PENDING_UPDATE">PENDING_UPDATE</option>
+                <option value="WORKING" jhiTranslate="socialappApp.TwitterStatus.WORKING">WORKING</option>
+            </select>
+        </div>
 
         <div class="form-group">
             <label jhiTranslate="socialappApp.twitterAccount.avatar" for="field_avatar">Avatar</label>

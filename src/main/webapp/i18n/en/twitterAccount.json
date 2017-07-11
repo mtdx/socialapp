@@ -23,6 +23,7 @@
             "accessTokenSecret": "Access Token Secret",
             "username": "Username",
             "status": "Status",
+            "prevStatus": "Prev Status",
             "avatar": "Avatar",
             "header": "Header",
             "proxy": "Proxy",

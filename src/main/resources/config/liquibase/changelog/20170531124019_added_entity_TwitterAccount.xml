@@ -49,6 +49,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="prev_status" type="varchar(20)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="avatar_id" type="bigint">
                 <constraints nullable="false" />
             </column>

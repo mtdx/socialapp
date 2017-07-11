@@ -66,6 +66,10 @@ public class TwitterAccount implements Serializable {
     @Column(name = "status")
     private TwitterStatus status;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "prev_status")
+    private TwitterStatus prevStatus;
+
     @ManyToOne(optional = false)
     @NotNull
     private Avatar avatar;
@@ -181,6 +185,19 @@ public class TwitterAccount implements Serializable {
         this.status = status;
     }
 
+    public TwitterStatus getPrevStatus() {
+        return prevStatus;
+    }
+
+    public TwitterAccount prevStatus(TwitterStatus prevStatus) {
+        this.prevStatus = prevStatus;
+        return this;
+    }
+
+    public void setPrevStatus(TwitterStatus prevStatus) {
+        this.prevStatus = prevStatus;
+    }
+
     public Avatar getAvatar() {
         return avatar;
     }
@@ -264,6 +281,7 @@ public class TwitterAccount implements Serializable {
             ", accessTokenSecret='" + getAccessTokenSecret() + "'" +
             ", username='" + getUsername() + "'" +
             ", status='" + getStatus() + "'" +
+            ", prevStatus='" + getPrevStatus() + "'" +
             "}";
     }
 }

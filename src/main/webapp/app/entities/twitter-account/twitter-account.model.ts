@@ -16,6 +16,7 @@ export class TwitterAccount implements BaseEntity {
         public accessTokenSecret?: string,
         public username?: string,
         public status?: TwitterStatus,
+        public prevStatus?: TwitterStatus,
         public avatar?: BaseEntity,
         public header?: BaseEntity,
         public proxy?: BaseEntity,

@@ -51,6 +51,7 @@ public class TwitterMessageService {
         twitterMessageSearchRepository.save(result);
         List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByMessage(twitterMessage);
         for (TwitterAccount account : twitterAccounts) {
+            account.setPrevStatus(account.getStatus());
             account.setStatus(TwitterStatus.PENDING_UPDATE);
             twitterAccountService.save(account); // we update related accounts
         }

@@ -35,6 +35,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
+import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 /**
  * Test class for the TwitterAccountResource REST controller.
  *
@@ -64,6 +65,9 @@ public class TwitterAccountResourceIntTest {
 
     private static final TwitterStatus DEFAULT_STATUS = TwitterStatus.PENDING_UPDATE;
     private static final TwitterStatus UPDATED_STATUS = TwitterStatus.PENDING_UPDATE;
+
+    private static final TwitterStatus DEFAULT_PREV_STATUS = TwitterStatus.PENDING_UPDATE;
+    private static final TwitterStatus UPDATED_PREV_STATUS = TwitterStatus.PENDING_UPDATE;
 
     @Autowired
     private TwitterAccountRepository twitterAccountRepository;
@@ -114,7 +118,8 @@ public class TwitterAccountResourceIntTest {
             .accessToken(DEFAULT_ACCESS_TOKEN)
             .accessTokenSecret(DEFAULT_ACCESS_TOKEN_SECRET)
             .username(DEFAULT_USERNAME)
-            .status(DEFAULT_STATUS);
+            .status(DEFAULT_STATUS)
+            .prevStatus(DEFAULT_PREV_STATUS);
         // Add required entity
         Avatar avatar = AvatarResourceIntTest.createEntity(em);
         em.persist(avatar);
@@ -166,6 +171,7 @@ public class TwitterAccountResourceIntTest {
         assertThat(testTwitterAccount.getAccessTokenSecret()).isEqualTo(DEFAULT_ACCESS_TOKEN_SECRET);
         assertThat(testTwitterAccount.getUsername()).isEqualTo(DEFAULT_USERNAME);
         assertThat(testTwitterAccount.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testTwitterAccount.getPrevStatus()).isEqualTo(DEFAULT_PREV_STATUS);
 
         // Validate the TwitterAccount in Elasticsearch
         TwitterAccount twitterAccountEs = twitterAccountSearchRepository.findOne(testTwitterAccount.getId());
@@ -298,7 +304,8 @@ public class TwitterAccountResourceIntTest {
             .andExpect(jsonPath("$.[*].accessToken").value(hasItem(DEFAULT_ACCESS_TOKEN.toString())))
             .andExpect(jsonPath("$.[*].accessTokenSecret").value(hasItem(DEFAULT_ACCESS_TOKEN_SECRET.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].prevStatus").value(hasItem(DEFAULT_PREV_STATUS.toString())));
     }
 
     @Test
@@ -318,7 +325,8 @@ public class TwitterAccountResourceIntTest {
             .andExpect(jsonPath("$.accessToken").value(DEFAULT_ACCESS_TOKEN.toString()))
             .andExpect(jsonPath("$.accessTokenSecret").value(DEFAULT_ACCESS_TOKEN_SECRET.toString()))
             .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.prevStatus").value(DEFAULT_PREV_STATUS.toString()));
     }
 
     @Test
@@ -346,7 +354,8 @@ public class TwitterAccountResourceIntTest {
             .accessToken(UPDATED_ACCESS_TOKEN)
             .accessTokenSecret(UPDATED_ACCESS_TOKEN_SECRET)
             .username(UPDATED_USERNAME)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .prevStatus(UPDATED_PREV_STATUS);
 
         restTwitterAccountMockMvc.perform(put("/api/twitter-accounts")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -364,6 +373,7 @@ public class TwitterAccountResourceIntTest {
         assertThat(testTwitterAccount.getAccessTokenSecret()).isEqualTo(UPDATED_ACCESS_TOKEN_SECRET);
         assertThat(testTwitterAccount.getUsername()).isEqualTo(UPDATED_USERNAME);
         assertThat(testTwitterAccount.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testTwitterAccount.getPrevStatus()).isEqualTo(UPDATED_PREV_STATUS);
 
         // Validate the TwitterAccount in Elasticsearch
         TwitterAccount twitterAccountEs = twitterAccountSearchRepository.findOne(testTwitterAccount.getId());
@@ -427,7 +437,8 @@ public class TwitterAccountResourceIntTest {
             .andExpect(jsonPath("$.[*].accessToken").value(hasItem(DEFAULT_ACCESS_TOKEN.toString())))
             .andExpect(jsonPath("$.[*].accessTokenSecret").value(hasItem(DEFAULT_ACCESS_TOKEN_SECRET.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].prevStatus").value(hasItem(DEFAULT_PREV_STATUS.toString())));
     }
 
     @Test

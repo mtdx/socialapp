@@ -58,6 +58,7 @@ public class TwitterAccountResource {
         if (twitterAccount.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new twitterAccount cannot already have an ID")).body(null);
         }
+        twitterAccount.setPrevStatus(TwitterStatus.PENDING_UPDATE); // default status
         twitterAccount.setStatus(TwitterStatus.PENDING_UPDATE); // default status
         TwitterAccount result = twitterAccountService.save(twitterAccount);
         return ResponseEntity.created(new URI("/api/twitter-accounts/" + result.getId()))
@@ -81,7 +82,8 @@ public class TwitterAccountResource {
         if (twitterAccount.getId() == null) {
             return createTwitterAccount(twitterAccount);
         }
-        twitterAccount.setStatus(TwitterStatus.PENDING_UPDATE); // default status
+        twitterAccount.setPrevStatus(twitterAccount.getStatus());
+        twitterAccount.setStatus(TwitterStatus.PENDING_UPDATE);
         TwitterAccount result = twitterAccountService.save(twitterAccount);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, twitterAccount.getId().toString()))
