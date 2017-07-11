@@ -56,7 +56,7 @@ public class TwitterSettingsService {
     private TwitterSettings saveDefault() {
         log.debug("Request to save default TwitterSettings : {}");
         TwitterSettings defaultTwitterSettings = new TwitterSettings();
-        defaultTwitterSettings.setMaxLikes(5000); // likes until start doing unlikes
+        defaultTwitterSettings.setMaxLikes(4000); // likes until start doing unlikes
         defaultTwitterSettings.setHasDefaultProfileImage(true); // skip if
         defaultTwitterSettings.hasNoDescription(true);  // skip if
         defaultTwitterSettings.accountAgeLessThan(3); // skip if less, (months)
@@ -65,7 +65,7 @@ public class TwitterSettingsService {
         defaultTwitterSettings.likesToTweetsRatio(3);   // eg. 3 => 900 likes 300 tweets
         defaultTwitterSettings.notLikeTweetsOlderThan(2); // skip if less, (months)
         defaultTwitterSettings.setRetweetPercent(1); // skip if less
-        defaultTwitterSettings.setMinCompetitorFollowers(2500); // skip if less
+        defaultTwitterSettings.setMinCompetitorFollowers(2000); // skip if less
         defaultTwitterSettings.setAccountsPerProxy(20); // don't show if less
         TwitterSettings result = twitterSettingsRepository.save(defaultTwitterSettings);
         return result;
