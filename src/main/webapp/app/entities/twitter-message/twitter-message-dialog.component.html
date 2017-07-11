@@ -34,8 +34,12 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterMessage.accountDescription" for="field_accountDescription">Account Description</label>
             <input type="text" class="form-control" name="accountDescription" id="field_accountDescription"
-                [(ngModel)]="twitterMessage.accountDescription" maxlength="160" />
+                [(ngModel)]="twitterMessage.accountDescription" required maxlength="160" />
             <div [hidden]="!(editForm.controls.accountDescription?.dirty && editForm.controls.accountDescription?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.accountDescription?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.accountDescription?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 160 }">
                    This field cannot be longer than 160 characters.
@@ -45,8 +49,12 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterMessage.accountUrl" for="field_accountUrl">Account Url</label>
             <input type="text" class="form-control" name="accountUrl" id="field_accountUrl"
-                [(ngModel)]="twitterMessage.accountUrl" pattern="(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)" />
+                [(ngModel)]="twitterMessage.accountUrl" required pattern="(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)" />
             <div [hidden]="!(editForm.controls.accountUrl?.dirty && editForm.controls.accountUrl?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.accountUrl?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.accountUrl?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Account Url' }">
                     This field should follow pattern for "Account Url".
@@ -56,8 +64,12 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.twitterMessage.accountLocation" for="field_accountLocation">Account Location</label>
             <input type="text" class="form-control" name="accountLocation" id="field_accountLocation"
-                [(ngModel)]="twitterMessage.accountLocation" maxlength="60" />
+                [(ngModel)]="twitterMessage.accountLocation" required maxlength="60" />
             <div [hidden]="!(editForm.controls.accountLocation?.dirty && editForm.controls.accountLocation?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.accountLocation?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.accountLocation?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 60 }">
                    This field cannot be longer than 60 characters.

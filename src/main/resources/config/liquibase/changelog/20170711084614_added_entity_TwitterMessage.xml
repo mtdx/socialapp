@@ -26,15 +26,15 @@
             </column>
 
             <column name="account_description" type="varchar(160)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="account_url" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="account_location" type="varchar(60)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

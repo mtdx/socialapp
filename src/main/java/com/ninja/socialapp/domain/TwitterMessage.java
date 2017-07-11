@@ -30,16 +30,19 @@ public class TwitterMessage implements Serializable {
     @Column(name = "account_name", length = 20, nullable = false)
     private String accountName;
 
+    @NotNull
     @Size(max = 160)
-    @Column(name = "account_description", length = 160)
+    @Column(name = "account_description", length = 160, nullable = false)
     private String accountDescription;
 
+    @NotNull
     @Pattern(regexp = "(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)")
-    @Column(name = "account_url")
+    @Column(name = "account_url", nullable = false)
     private String accountUrl;
 
+    @NotNull
     @Size(max = 60)
-    @Column(name = "account_location", length = 60)
+    @Column(name = "account_location", length = 60, nullable = false)
     private String accountLocation;
 
     public Long getId() {

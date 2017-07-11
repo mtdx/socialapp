@@ -17,6 +17,7 @@
             "fieldName": "accountDescription",
             "fieldType": "String",
             "fieldValidateRules": [
+                "required",
                 "maxlength"
             ],
             "fieldValidateRulesMaxlength": "160"
@@ -25,6 +26,7 @@
             "fieldName": "accountUrl",
             "fieldType": "String",
             "fieldValidateRules": [
+                "required",
                 "pattern"
             ],
             "fieldValidateRulesPattern": "(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)"
@@ -33,6 +35,7 @@
             "fieldName": "accountLocation",
             "fieldType": "String",
             "fieldValidateRules": [
+                "required",
                 "maxlength"
             ],
             "fieldValidateRulesMaxlength": "60"

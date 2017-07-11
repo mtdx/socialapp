@@ -171,6 +171,60 @@ public class TwitterMessageResourceIntTest {
 
     @Test
     @Transactional
+    public void checkAccountDescriptionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = twitterMessageRepository.findAll().size();
+        // set the field null
+        twitterMessage.setAccountDescription(null);
+
+        // Create the TwitterMessage, which fails.
+
+        restTwitterMessageMockMvc.perform(post("/api/twitter-messages")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(twitterMessage)))
+            .andExpect(status().isBadRequest());
+
+        List<TwitterMessage> twitterMessageList = twitterMessageRepository.findAll();
+        assertThat(twitterMessageList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAccountUrlIsRequired() throws Exception {
+        int databaseSizeBeforeTest = twitterMessageRepository.findAll().size();
+        // set the field null
+        twitterMessage.setAccountUrl(null);
+
+        // Create the TwitterMessage, which fails.
+
+        restTwitterMessageMockMvc.perform(post("/api/twitter-messages")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(twitterMessage)))
+            .andExpect(status().isBadRequest());
+
+        List<TwitterMessage> twitterMessageList = twitterMessageRepository.findAll();
+        assertThat(twitterMessageList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAccountLocationIsRequired() throws Exception {
+        int databaseSizeBeforeTest = twitterMessageRepository.findAll().size();
+        // set the field null
+        twitterMessage.setAccountLocation(null);
+
+        // Create the TwitterMessage, which fails.
+
+        restTwitterMessageMockMvc.perform(post("/api/twitter-messages")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(twitterMessage)))
+            .andExpect(status().isBadRequest());
+
+        List<TwitterMessage> twitterMessageList = twitterMessageRepository.findAll();
+        assertThat(twitterMessageList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllTwitterMessages() throws Exception {
         // Initialize the database
         twitterMessageRepository.saveAndFlush(twitterMessage);
