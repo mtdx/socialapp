@@ -142,7 +142,7 @@ public class TwitterSchedulerService {
                     account.setStatus(TwitterStatus.WORKING);
                     twitterAccountService.save(account);
                 }
-                final int MAX_PAGE = 1000 / 20; // as per their documentation
+                final int MAX_PAGE = 51; // as per their documentation
                 int page = twitterKeyword.getPage() == null ? 1 : twitterKeyword.getPage(); // if cursor -1 update to done
                 for (TwitterAccount account : accounts) {
                     if (page > MAX_PAGE) {
