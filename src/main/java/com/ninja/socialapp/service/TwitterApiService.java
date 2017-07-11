@@ -139,7 +139,7 @@ public class TwitterApiService {
     /**
      * Here we add competitors based on keywords
      */
-    private void addCompetitors(List<User> users, Twitter twitterClient, final TwitterAccount twitterAccount,
+    private void addCompetitors(List<User> users, final TwitterAccount twitterAccount,
                                 final long twitterKeywordId, final Integer minCompetitorFollowers) {
         log.debug("Call to add competitors via TwitterAPI: {}", twitterAccount.getEmail());
         Integer competitors = 0;
@@ -266,7 +266,7 @@ public class TwitterApiService {
         Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             ResponseList<User> users = twitterClient.searchUsers(twitterKeyword.getKeyword(), page);
-            new Thread(() -> addCompetitors(users, twitterClient, twitterAccount, twitterKeyword.getId(), twitterSettings.getMinCompetitorFollowers())).start();
+            new Thread(() -> addCompetitors(users, twitterAccount, twitterKeyword.getId(), twitterSettings.getMinCompetitorFollowers())).start();
             return ++page;
         } catch (TwitterException ex) {
             saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.SEARCH);
