@@ -1,6 +1,7 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 import { Competitor } from './competitor.model';
 import { CompetitorService } from './competitor.service';
 
@@ -8,6 +9,7 @@ import { CompetitorService } from './competitor.service';
 export class CompetitorPopupService {
     private isOpen = false;
     constructor(
+        private datePipe: DatePipe,
         private modalService: NgbModal,
         private router: Router,
         private competitorService: CompetitorService
@@ -22,6 +24,8 @@ export class CompetitorPopupService {
 
         if (id) {
             this.competitorService.find(id).subscribe((competitor) => {
+                competitor.created = this.datePipe
+                    .transform(competitor.created, 'yyyy-MM-ddThh:mm');
                 this.competitorModalRef(component, competitor);
             });
         } else {
