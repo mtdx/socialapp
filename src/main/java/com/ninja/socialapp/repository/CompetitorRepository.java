@@ -26,5 +26,7 @@ public interface CompetitorRepository extends JpaRepository<Competitor,Long> {
 
     List<Competitor> findAllByStatus(CompetitorStatus status);
 
+    Optional<Competitor> findByUserid(String userId);
+
     Integer countAllByStatus(CompetitorStatus status);
 }

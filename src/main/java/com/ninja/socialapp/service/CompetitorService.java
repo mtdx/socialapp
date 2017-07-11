@@ -127,7 +127,7 @@ public class CompetitorService {
      */
     @Transactional(readOnly = true)
     public List<Competitor> findAllByStatus(CompetitorStatus status) {
-        log.debug("Request to get TwitterAccounts by status : {}", status);
+        log.debug("Request to get Competitors by status : {}", status);
         return competitorRepository.findAllByStatus(status);
     }
 
@@ -141,5 +141,17 @@ public class CompetitorService {
     public Integer countAllByStatus(CompetitorStatus status) {
         log.debug("Request to get TwitterAccounts by status : {}", status);
         return competitorRepository.countAllByStatus(status);
+    }
+
+    /**
+     *  Get competitors by userid.
+     *
+     *  @param userId the of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Optional<Competitor> findByUserid(String userId) {
+        log.debug("Call to get a Competitor by user id : {}", userId);
+        return competitorRepository.findByUserid(userId);
     }
 }

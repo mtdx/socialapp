@@ -65,7 +65,7 @@ public class TwitterApiService {
                 twitterClient.updateProfileBanner(new ByteArrayInputStream(twitterAccount.getHeader().getImage()));
 
             twitterAccount.setUsername(user.getScreenName());
-            twitterAccount.setStatus(TwitterStatus.IDLE);
+            twitterAccount.setStatus(twitterAccount.getStatus());
             twitterAccountService.save(twitterAccount);
         } catch (TwitterException ex) {
             saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
@@ -145,8 +145,12 @@ public class TwitterApiService {
         Integer competitors = 0;
         for (User user : users){
             if (user.getFavouritesCount() >= minCompetitorFollowers) {
+                String userId = String.valueOf(user.getId());
+                if (competitorService.findByUserid(userId).isPresent()){
+                    continue; // we already have it
+                }
                 Competitor competitor = new Competitor();
-                competitor.setUserid(String.valueOf(user.getId()));
+                competitor.setUserid(userId);
                 competitor.setUsername(user.getScreenName());
                 competitor.setStatus(CompetitorStatus.IN_PROGRESS);
                 competitor.setLikes(0L);
