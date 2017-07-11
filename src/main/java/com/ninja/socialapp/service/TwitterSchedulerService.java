@@ -2,8 +2,10 @@ package com.ninja.socialapp.service;
 
 import com.ninja.socialapp.domain.Competitor;
 import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.TwitterKeyword;
 import com.ninja.socialapp.domain.TwitterSettings;
 import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
+import com.ninja.socialapp.domain.enumeration.KeywordStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +32,17 @@ public class TwitterSchedulerService {
 
     private final TwitterSettingsService twitterSettingsService;
 
+    private final TwitterKeywordService twitterKeywordService;
+
     public TwitterSchedulerService(TwitterAccountService twitterAccountService, TwitterApiService twitterApiService,
                                    CompetitorService competitorService, TwitterErrorService twitterErrorService,
-                                   TwitterSettingsService twitterSettingsService) {
+                                   TwitterSettingsService twitterSettingsService, TwitterKeywordService twitterKeywordService) {
         this.twitterAccountService = twitterAccountService;
         this.twitterApiService = twitterApiService;
         this.competitorService = competitorService;
         this.twitterErrorService = twitterErrorService;
         this.twitterSettingsService = twitterSettingsService;
+        this.twitterKeywordService = twitterKeywordService;
     }
 
     /**
@@ -122,39 +127,39 @@ public class TwitterSchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "30 */1 * * * *")
+    @Scheduled(cron = "30 */45 * * * *")
     public void processKeywords() {
         log.debug("Run scheduled process keywords {}");
-        if (competitorService.countAllByStatus(CompetitorStatus.IN_PROGRESS) == 0){
-            competitorService.findFirstByStatusOrderByIdAsc(CompetitorStatus.IN_PROGRESS).ifPresent((Competitor competitor) -> {
+        if (competitorService.countAllByStatus(CompetitorStatus.IN_PROGRESS) == 0) {
+            twitterKeywordService.findFirstByStatusOrderByIdAsc(KeywordStatus.IN_PROGRESS).ifPresent((TwitterKeyword twitterKeyword) -> {
                 TwitterSettings twitterSettings = twitterSettingsService.findOne();
                 List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
                 twitterApiService.refreshDate();
 
-                competitor.setStatus(CompetitorStatus.LOCK); // next we update our statuses
-                competitorService.save(competitor);
+                twitterKeyword.setStatus(KeywordStatus.LOCK); // next we update our statuses
+                twitterKeywordService.save(twitterKeyword);
                 for (TwitterAccount account : accounts) {
                     account.setStatus(TwitterStatus.WORKING);
                     twitterAccountService.save(account);
                 }
-
-                long cursor = competitor.getCursor() == null ? -1L : competitor.getCursor(); // if cursor -1 update to done
+                final int MAX_PAGE = 1000 / 20; // as per their documentation
+                int page = twitterKeyword.getPage() == null ? 0 : twitterKeyword.getPage(); // if cursor -1 update to done
                 for (TwitterAccount account : accounts) {
-                    if (cursor == 0) {
-                        if (competitor.getStatus() != CompetitorStatus.DONE) {  // we don't want to save multiple times
-                            competitor.setStatus(CompetitorStatus.DONE);
-                            competitorService.save(competitor);
+                    if (page >= MAX_PAGE) {
+                        if (twitterKeyword.getStatus() != KeywordStatus.DONE) {  // we don't want to save multiple times
+                            twitterKeyword.setStatus(KeywordStatus.DONE);
+                            twitterKeywordService.save(twitterKeyword);
                         }
                         account.setStatus(TwitterStatus.IDLE);
                         twitterAccountService.save(account);
-                        continue;   // no point moving on as competitor followers are done
+                        continue;   // no point moving on as keywords competitors are done
                     }
-                    cursor = twitterApiService.setupFollowers(account, cursor, competitor, twitterSettings);
+                    page = twitterApiService.setupCompetitors(account, page, twitterKeyword, twitterSettings);
                 }
 
-                competitor.setCursor(cursor);  // we save our cursor to keep track and update back our status
-                competitor.setStatus(cursor == 0 ? CompetitorStatus.DONE : CompetitorStatus.IN_PROGRESS);
-                competitorService.save(competitor);
+                twitterKeyword.setPage(page);  // we save our page to keep track and update back our status
+                twitterKeyword.setStatus(page == MAX_PAGE ? KeywordStatus.DONE : KeywordStatus.IN_PROGRESS);
+                twitterKeywordService.save(twitterKeyword);
             });
         }
     }

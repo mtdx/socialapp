@@ -62,8 +62,8 @@ public class TwitterKeywordResource {
         twitterKeyword.setStatus(KeywordStatus.IN_PROGRESS);
         twitterKeyword.setCompetitors(0);
         twitterKeyword.setPage(0);
-        twitterKeyword.setCreated(Instant.now());
         twitterKeyword.setKeyword(twitterKeyword.getKeyword().toLowerCase().trim());
+        twitterKeyword.setCreated(Instant.now());
         TwitterKeyword result = twitterKeywordService.save(twitterKeyword);
         return ResponseEntity.created(new URI("/api/twitter-keywords/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

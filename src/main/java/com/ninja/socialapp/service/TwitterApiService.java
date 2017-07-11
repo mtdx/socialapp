@@ -1,15 +1,13 @@
 package com.ninja.socialapp.service;
 
-import com.ninja.socialapp.domain.Competitor;
-import com.ninja.socialapp.domain.TwitterAccount;
-import com.ninja.socialapp.domain.TwitterError;
-import com.ninja.socialapp.domain.TwitterSettings;
+import com.ninja.socialapp.domain.*;
 import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import twitter4j.*;
+import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.io.ByteArrayInputStream;
@@ -231,10 +229,10 @@ public class TwitterApiService {
     /**
      * Adds competitors by keyword
      */
-    public long addCompetitors(final TwitterAccount twitterAccount, Integer page, final Competitor competitor, final TwitterSettings twitterSettings){
+    public int setupCompetitors(final TwitterAccount twitterAccount, Integer page, final TwitterKeyword twitterKeyword, final TwitterSettings twitterSettings){
         Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
-            ResponseList<User> users = twitterClient.searchUsers("csgo", page);
+            ResponseList<User> users = twitterClient.searchUsers(twitterKeyword.getKeyword(), page);
             for (User user : users){
                 String a;
             }

@@ -1,6 +1,7 @@
 package com.ninja.socialapp.service;
 
 import com.ninja.socialapp.domain.TwitterKeyword;
+import com.ninja.socialapp.domain.enumeration.KeywordStatus;
 import com.ninja.socialapp.repository.TwitterKeywordRepository;
 import com.ninja.socialapp.repository.search.TwitterKeywordSearchRepository;
 import org.slf4j.Logger;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.Optional;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -91,5 +94,17 @@ public class TwitterKeywordService {
         log.debug("Request to search for a page of TwitterKeywords for query {}", query);
         Page<TwitterKeyword> result = twitterKeywordSearchRepository.search(queryStringQuery(query), pageable);
         return result;
+    }
+
+    /**
+     *  Get keyword by status.
+     *
+     *  @param status the of the entities
+     *  @return the entities
+     */
+    @Transactional(readOnly = true)
+    public Optional<TwitterKeyword> findFirstByStatusOrderByIdAsc(KeywordStatus status) {
+        log.debug("Request to get keyword by status : {}", status);
+        return twitterKeywordRepository.findFirstByStatusOrderByIdAsc(status);
     }
 }

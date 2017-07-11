@@ -256,7 +256,7 @@ Social Buttons
     background-color: #5bc0de;
 }
 
-.badge.SEARCH {
+.badge.SEARCH, .badge.STOPPED {
     background-color: #7b7353;
 }
 
