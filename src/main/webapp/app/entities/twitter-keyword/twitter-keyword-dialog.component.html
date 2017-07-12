@@ -14,11 +14,11 @@
         </div>
         <div class="form-group" hidden>
             <label class="form-control-label" jhiTranslate="socialappApp.twitterKeyword.status" for="field_status">Status</label>
-            <select class="form-control" name="status" [(ngModel)]="twitterKeyword.status" id="field_status" >
-                <option value="IN_PROGRESS" jhiTranslate="socialappApp.KeywordStatus.IN_PROGRESS">IN_PROGRESS</option>
-                <option value="DONE" jhiTranslate="socialappApp.KeywordStatus.DONE">DONE</option>
-                <option value="LOCK" jhiTranslate="socialappApp.KeywordStatus.LOCK">LOCK</option>
-                <option value="STOPPED" jhiTranslate="socialappApp.KeywordStatus.STOPPED">STOPPED</option>
+            <select class="form-control" name="status" [(ngModel)]="twitterKeyword.status" id="field_status" readonly>
+                <option value="IN_PROGRESS" jhiTranslate="socialappApp.KeywordStatus.IN_PROGRESS">In Progress</option>
+                <option value="DONE" jhiTranslate="socialappApp.KeywordStatus.DONE">Done</option>
+                <option value="LOCK" jhiTranslate="socialappApp.KeywordStatus.LOCK">Lock</option>
+                <option value="STOPPED" jhiTranslate="socialappApp.KeywordStatus.STOPPED">Stopped</option>
             </select>
         </div>
         <div class="form-group">

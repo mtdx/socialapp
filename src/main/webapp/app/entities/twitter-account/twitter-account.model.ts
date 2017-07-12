@@ -4,7 +4,9 @@ export const enum TwitterStatus {
     'IDLE',
     'PENDING_UPDATE',
     'WORKING',
-    'AUTH_ERROR'
+    'AUTH_ERROR',
+    'SUSPENDED',
+    'LOCKED'
 }
 
 export class TwitterAccount implements BaseEntity {

@@ -5,7 +5,9 @@
             "IDLE": "Idle",
             "PENDING_UPDATE": "Pending Update",
             "WORKING": "Working",
-            "AUTH_ERROR": "Auth Error"
+            "AUTH_ERROR": "Auth Error",
+            "SUSPENDED": "Suspended",
+            "LOCKED": "Locked"
         }
     }
 }
