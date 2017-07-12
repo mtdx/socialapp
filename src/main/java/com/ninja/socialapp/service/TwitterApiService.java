@@ -53,7 +53,7 @@ public class TwitterApiService {
     /**
      * Updates a twitter account via API
      */
-    public void updateAccount(final TwitterAccount twitterAccount, Twitter twitterClient) {
+    public void updateAccount(final TwitterAccount twitterAccount, final Twitter twitterClient) {
         log.debug("Call to update a twitter accounts via TwitterAPI: {}", twitterAccount.getEmail());
         try {
             User user = twitterClient.updateProfile(twitterAccount.getMessage().getAccountName(),
@@ -84,7 +84,7 @@ public class TwitterApiService {
      */
     public void setupUpdateAccounts(final List<TwitterAccount> twitterAccounts){
         for (TwitterAccount twitterAccount : twitterAccounts) {
-            Twitter twitterClient = getTwitterInstance(twitterAccount);
+            final Twitter twitterClient = getTwitterInstance(twitterAccount);
             new Thread(() -> updateAccount(twitterAccount, twitterClient)).start();
             threadWait(getRandInt(5, 15));
         }
