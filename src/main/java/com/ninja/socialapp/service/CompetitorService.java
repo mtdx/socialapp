@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -153,5 +154,44 @@ public class CompetitorService {
     public Optional<Competitor> findByUserid(String userId) {
         log.debug("Call to get a Competitor by user id : {}", userId);
         return competitorRepository.findByUserid(userId);
+    }
+
+    /**
+     *  Finds a list of entities older than a certain date and a status
+     *
+     *  @param instant the current time
+     *  @return a list of entities older than
+     */
+    @Transactional(readOnly = true)
+    public List<Competitor> findOlderThanByStatus(Instant instant, CompetitorStatus status) {
+        log.debug("Call to get older than : {}", instant);
+        return competitorRepository.findOlderThanByStatus(instant, status);
+    }
+
+    /**
+     *  Resets a competitor
+     *
+     *  @param competitor the competitor to be reset
+     */
+    public void reset(Competitor competitor) {
+        log.debug("Call to get reset a competitor : {}", competitor);
+        competitor.setCursor(-1L);
+        competitor.setLikes(0L);
+        competitor.setStatus(CompetitorStatus.IN_PROGRESS);
+        competitor.setCreated(Instant.now());
+        competitor.setReset(false);
+        competitor.setStop(false);
+    }
+
+    /**
+     *  Resets a competitor
+     *
+     *  @param competitor the competitor to be reset
+     */
+    public void stop(Competitor competitor) {
+        log.debug("Call to stop a competitor : {}", competitor);
+        competitor.setStatus(CompetitorStatus.STOPPED);
+        competitor.setReset(false);
+        competitor.setStop(false);
     }
 }

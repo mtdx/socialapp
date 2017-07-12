@@ -88,6 +88,7 @@ public class TwitterSchedulerService {
                 if (cursor == 0) {
                     if (competitor.getStatus() != CompetitorStatus.DONE) {  // we don't want to save multiple times
                         competitor.setStatus(CompetitorStatus.DONE);
+                        competitor.setCreated(Instant.now());
                         competitorService.save(competitor);
                     }
                     account.setStatus(TwitterStatus.IDLE);
@@ -99,6 +100,7 @@ public class TwitterSchedulerService {
 
             competitor.setCursor(cursor);  // we save our cursor to keep track and update back our status
             competitor.setStatus(cursor == 0 ? CompetitorStatus.DONE : CompetitorStatus.IN_PROGRESS);
+            if (competitor.getStatus() == CompetitorStatus.DONE) competitor.setCreated(Instant.now());
             competitorService.save(competitor);
         });
     }
@@ -148,6 +150,7 @@ public class TwitterSchedulerService {
                     if (page > MAX_PAGE) {
                         if (twitterKeyword.getStatus() != KeywordStatus.DONE) {  // we don't want to save multiple times
                             twitterKeyword.setStatus(KeywordStatus.DONE);
+                            twitterKeyword.setCreated(Instant.now());
                             twitterKeywordService.save(twitterKeyword);
                         }
                         account.setStatus(TwitterStatus.IDLE);
@@ -159,8 +162,28 @@ public class TwitterSchedulerService {
 
                 twitterKeyword.setPage(page);  // we save our page to keep track and update back our status
                 twitterKeyword.setStatus(page == MAX_PAGE ? KeywordStatus.DONE : KeywordStatus.IN_PROGRESS);
+                if (twitterKeyword.getStatus() == KeywordStatus.DONE) twitterKeyword.setCreated(Instant.now());
                 twitterKeywordService.save(twitterKeyword);
             });
+        }
+    }
+
+    /**
+     * We check for done competitors and we reset older than 3 months done
+     * <p>
+     * This is scheduled to get fired every week.
+     * </p>
+     */
+    @Async
+    @Scheduled(cron = "0 */1 * * * *") //0 0 * * 6
+    public void resetCompetitors() {
+        log.debug("Run scheduled reset twitter competitors {}");
+        final int DAYS = 90; // how much time we keep data
+        List<Competitor> competitors = competitorService.findOlderThanByStatus(
+            Instant.now().minus(Duration.ofDays(DAYS)), CompetitorStatus.DONE);
+        for (Competitor competitor : competitors) {
+            competitorService.reset(competitor);
+            competitorService.save(competitor);
         }
     }
 }

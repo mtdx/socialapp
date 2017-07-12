@@ -86,14 +86,10 @@ public class CompetitorResource {
             return createCompetitor(competitor);
         }
         if(competitor.isStop()) {
-            competitor.setStatus(CompetitorStatus.STOPPED);
-            competitor.setStop(false);
+            competitorService.stop(competitor);
         }
         if(competitor.isReset()) {
-            competitor.setCursor(-1L);
-            competitor.setLikes(0L);
-            competitor.setStatus(CompetitorStatus.IN_PROGRESS);
-            competitor.setReset(false);
+             competitorService.reset(competitor);
         }
         Competitor result = competitorService.save(competitor);
         return ResponseEntity.ok()

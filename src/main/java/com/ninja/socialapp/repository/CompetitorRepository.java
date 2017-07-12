@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,4 +30,7 @@ public interface CompetitorRepository extends JpaRepository<Competitor,Long> {
     Optional<Competitor> findByUserid(String userId);
 
     Integer countAllByStatus(CompetitorStatus status);
+
+    @Query("select competitor from Competitor competitor where competitor.created <= :instant and status = :status")
+    List<Competitor> findOlderThanByStatus(@Param("instant") final Instant instant, @Param("status") final CompetitorStatus status);
 }
