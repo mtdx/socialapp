@@ -146,6 +146,25 @@
                 </small>
             </div>
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.phone" for="field_phone">Phone</label>
+            <input type="text" class="form-control" name="phone" id="field_phone"
+                   [(ngModel)]="twitterAccount.phone" minlength="4" maxlength="15" pattern="(^\d+$)" />
+            <div [hidden]="!(editForm.controls.phone?.dirty && editForm.controls.phone?.invalid)">
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.phone?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 4 }">
+                    This field is required to be at least 4 characters.
+                </small>
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.phone?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 15 }">
+                    This field cannot be longer than 15 characters.
+                </small>
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.phone?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Phone' }">
+                    This field should follow pattern for "Phone".
+                </small>
+            </div>
+        </div>
         <div class="form-group" hidden>
             <label class="form-control-label" jhiTranslate="socialappApp.twitterAccount.status" for="field_status">Status</label>
             <select class="form-control" name="status" [(ngModel)]="twitterAccount.status" id="field_status" readonly>

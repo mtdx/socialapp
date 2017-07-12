@@ -22,6 +22,7 @@
             "accessToken": "Access Token",
             "accessTokenSecret": "Access Token Secret",
             "username": "Username",
+            "phone": "Phone",
             "status": "Status",
             "prevStatus": "Prev Status",
             "avatar": "Avatar",

@@ -117,6 +117,18 @@
             "fieldValidateRulesPattern": "(^[a-zA-Z0-9_]*$)"
         },
         {
+            "fieldName": "phone",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": "4",
+            "fieldValidateRulesMaxlength": "15",
+            "fieldValidateRulesPattern": "(^\\d+$)"
+        },
+        {
             "fieldName": "status",
             "fieldType": "TwitterStatus",
             "fieldValues": "IDLE,PENDING_UPDATE,WORKING,AUTH_ERROR,SUSPENDED,LOCKED"

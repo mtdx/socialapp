@@ -62,6 +62,11 @@ public class TwitterAccount implements Serializable {
     @Column(name = "username", length = 15)
     private String username;
 
+    @Size(min = 4, max = 15)
+    @Pattern(regexp = "(^\\d+$)")
+    @Column(name = "phone", length = 15)
+    private String phone;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private TwitterStatus status;
@@ -172,6 +177,19 @@ public class TwitterAccount implements Serializable {
         this.username = username;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public TwitterAccount phone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public TwitterStatus getStatus() {
         return status;
     }
@@ -280,6 +298,7 @@ public class TwitterAccount implements Serializable {
             ", accessToken='" + getAccessToken() + "'" +
             ", accessTokenSecret='" + getAccessTokenSecret() + "'" +
             ", username='" + getUsername() + "'" +
+            ", phone='" + getPhone() + "'" +
             ", status='" + getStatus() + "'" +
             ", prevStatus='" + getPrevStatus() + "'" +
             "}";
