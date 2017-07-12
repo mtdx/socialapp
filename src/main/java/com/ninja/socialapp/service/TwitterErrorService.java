@@ -136,6 +136,7 @@ public class TwitterErrorService {
                 ex.getRateLimitStatus().getRemaining(), ex.getRateLimitStatus().getLimit()));
         }
         twitterError.setStatusCode(ex.getStatusCode());
+
         save(twitterError);
         saveAccount(ex.getErrorCode(), twitterAccount);
     }

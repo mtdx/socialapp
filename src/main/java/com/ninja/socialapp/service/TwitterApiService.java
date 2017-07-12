@@ -1,6 +1,9 @@
 package com.ninja.socialapp.service;
 
-import com.ninja.socialapp.domain.*;
+import com.ninja.socialapp.domain.Competitor;
+import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.TwitterKeyword;
+import com.ninja.socialapp.domain.TwitterSettings;
 import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
@@ -8,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import twitter4j.*;
-import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.io.ByteArrayInputStream;
@@ -51,7 +53,7 @@ public class TwitterApiService {
     /**
      * Updates a twitter account via API
      */
-    public void updateAccount(final TwitterAccount twitterAccount){
+    public void updateAccount(final TwitterAccount twitterAccount) {
         log.debug("Call to update a twitter accounts via TwitterAPI: {}", twitterAccount.getEmail());
         final Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
@@ -59,14 +61,18 @@ public class TwitterApiService {
                 twitterAccount.getMessage().getAccountUrl(), twitterAccount.getMessage().getAccountLocation(),
                 twitterAccount.getMessage().getAccountDescription());
 
-            if(twitterAccount.getAvatar() != null)
+            if (twitterAccount.getAvatar() != null)
                 twitterClient.updateProfileImage(new ByteArrayInputStream(twitterAccount.getAvatar().getImage()));
-            if(twitterAccount.getHeader() != null)
+            if (twitterAccount.getHeader() != null)
                 twitterClient.updateProfileBanner(new ByteArrayInputStream(twitterAccount.getHeader().getImage()));
 
             twitterAccount.setUsername(user.getScreenName());
-            TwitterStatus status = twitterAccount.getPrevStatus() != TwitterStatus.PENDING_UPDATE
+            TwitterStatus status = (twitterAccount.getPrevStatus() != TwitterStatus.PENDING_UPDATE
+                && twitterAccount.getPrevStatus() != TwitterStatus.AUTH_ERROR
+                && twitterAccount.getPrevStatus() != TwitterStatus.SUSPENDED
+                && twitterAccount.getPrevStatus() != TwitterStatus.LOCKED)
                 ? twitterAccount.getPrevStatus() : TwitterStatus.IDLE;
+            twitterAccount.setPrevStatus(status);
             twitterAccount.setStatus(status);
             twitterAccountService.save(twitterAccount);
         } catch (TwitterException ex) {
