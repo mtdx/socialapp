@@ -1,14 +1,19 @@
 package com.ninja.socialapp.service;
 
+import com.ninja.socialapp.domain.TwitterAccount;
 import com.ninja.socialapp.domain.TwitterError;
+import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
+import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import com.ninja.socialapp.repository.TwitterErrorRepository;
 import com.ninja.socialapp.repository.search.TwitterErrorSearchRepository;
+import com.ninja.socialapp.service.util.TwitterErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import twitter4j.TwitterException;
 
 
 import java.time.Instant;
@@ -29,9 +34,13 @@ public class TwitterErrorService {
 
     private final TwitterErrorSearchRepository twitterErrorSearchRepository;
 
-    public TwitterErrorService(TwitterErrorRepository twitterErrorRepository, TwitterErrorSearchRepository twitterErrorSearchRepository) {
+    private final TwitterAccountService twitterAccountService;
+
+    public TwitterErrorService(TwitterErrorRepository twitterErrorRepository, TwitterErrorSearchRepository twitterErrorSearchRepository,
+                               TwitterAccountService twitterAccountService) {
         this.twitterErrorRepository = twitterErrorRepository;
         this.twitterErrorSearchRepository = twitterErrorSearchRepository;
+        this.twitterAccountService = twitterAccountService;
     }
 
     /**
@@ -112,5 +121,39 @@ public class TwitterErrorService {
     public List<Long> findOlderThan(Instant instant) {
         log.debug("Call to get older than : {}", instant);
         return twitterErrorRepository.findOlderThan(instant);
+    }
+
+
+    public void handleException(final TwitterException ex, final TwitterAccount twitterAccount, TwitterErrorType type) {
+        TwitterError twitterError = new TwitterError();
+        twitterError.setType(type);
+        twitterError.setErrorCode(ex.getErrorCode());
+        twitterError.setAccount(twitterAccount.getUsername());
+        twitterError.setErrorMessage(ex.getErrorMessage());
+        twitterError.setMessage(ex.getMessage());
+        if(ex.getRateLimitStatus() != null) {
+            twitterError.setRateLimitStatus(String.format("%d / %d",
+                ex.getRateLimitStatus().getRemaining(), ex.getRateLimitStatus().getLimit()));
+        }
+        twitterError.setStatusCode(ex.getStatusCode());
+        save(twitterError);
+        saveAccount(ex.getErrorCode(), twitterAccount);
+    }
+
+    private void saveAccount(Integer errorCode, final TwitterAccount twitterAccount) {
+        TwitterStatus status = twitterAccount.getStatus();
+        if (TwitterErrorCode.authError(errorCode)) {
+            twitterAccount.setStatus(TwitterStatus.AUTH_ERROR);
+        }
+        if (TwitterErrorCode.suspended(errorCode)) {
+            twitterAccount.setStatus(TwitterStatus.SUSPENDED);
+        }
+        if (TwitterErrorCode.locked(errorCode)) {
+            twitterAccount.setStatus(TwitterStatus.LOCKED);
+        }
+        if (twitterAccount.getStatus() != status) { // only save if we changed
+            twitterAccountService.save(twitterAccount);
+        }
+
     }
 }

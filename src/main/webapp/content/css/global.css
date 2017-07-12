@@ -260,7 +260,7 @@ Social Buttons
     background-color: #636c72;
 }
 
-.badge.AUTH_ERROR {
+.badge.AUTH_ERROR, .badge.SUSPENDED, .badge.LOCKED {
     background-color: #d9534f;
 }
 

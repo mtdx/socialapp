@@ -70,7 +70,7 @@ public class TwitterApiService {
             twitterAccount.setStatus(status);
             twitterAccountService.save(twitterAccount);
         } catch (TwitterException ex) {
-            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
+            twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.UPDATE);
         }
     }
 
@@ -84,7 +84,7 @@ public class TwitterApiService {
             new Thread(() -> likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount, competitor.getId(), twitterSettings)).start();
             return ids.getNextCursor();
         } catch (TwitterException ex) {
-            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
+            twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
         }
         return cursor;
     }
@@ -101,11 +101,11 @@ public class TwitterApiService {
                 destroyLikes(twitterAccount, twitterClient); // here we try to do some cleanup
             }
         } catch (TwitterException ex) {
-            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
+            twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
         }
         for (Long ID : followers) {
             threadWait(getRandInt(2, 9));  // 180 per 15 min request limit
-            if (isSpamAccount(ID, twitterClient, twitterAccount.getUsername(), twitterSettings))
+            if (isSpamAccount(ID, twitterClient, twitterAccount, twitterSettings))
                 continue;  // we try to target real accounts only
             try {
                 ResponseList<Status> statuses = twitterClient.getUserTimeline(ID);
@@ -129,7 +129,7 @@ public class TwitterApiService {
                     }
                 }
             } catch (TwitterException ex) {
-                saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
+                twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
                 twitterClient = getTwitterInstance(twitterAccount);
             }
         }
@@ -183,7 +183,7 @@ public class TwitterApiService {
                 paging.setPage(paging.getPage() + 1);
                 threadWait(getRandInt(15, 105));
             } catch (TwitterException ex) {
-                saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.LIKE);
+                twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
                 twitterClient = getTwitterInstance(twitterAccount);
             }
         } while (list.size() > 0);
@@ -204,21 +204,6 @@ public class TwitterApiService {
         return new TwitterFactory(cb.build()).getInstance();
     }
 
-    private void saveEx(TwitterException ex, String username, TwitterErrorType type) {
-        TwitterError twitterError = new TwitterError();
-        twitterError.setType(type);
-        twitterError.setErrorCode(ex.getErrorCode());
-        twitterError.setAccount(username);
-        twitterError.setErrorMessage(ex.getErrorMessage());
-        twitterError.setMessage(ex.getMessage());
-        if(ex.getRateLimitStatus() != null) {
-            twitterError.setRateLimitStatus(String.format("%d / %d",
-                ex.getRateLimitStatus().getRemaining(), ex.getRateLimitStatus().getLimit()));
-        }
-        twitterError.setStatusCode(ex.getStatusCode());
-        twitterErrorService.save(twitterError);
-    }
-
     private void threadWait(int seconds) {
         try {
             Thread.sleep(seconds * 1000);
@@ -228,7 +213,7 @@ public class TwitterApiService {
         }
     }
 
-    private boolean isSpamAccount(long ID, Twitter twitterClient, String username, final TwitterSettings twitterSettings) {
+    private boolean isSpamAccount(long ID, Twitter twitterClient, final TwitterAccount twitterAccount, final TwitterSettings twitterSettings) {
         try {
             User user = twitterClient.showUser(ID);
             if ((twitterSettings.isHasDefaultProfileImage() && user.isDefaultProfileImage())
@@ -258,12 +243,11 @@ public class TwitterApiService {
             }
 
         } catch (TwitterException ex) {
-            saveEx(ex, username, TwitterErrorType.LIKE);
+            twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
         }
 
         return false;
     }
-
 
     /**
      * Adds competitors by keyword
@@ -275,7 +259,7 @@ public class TwitterApiService {
             new Thread(() -> addCompetitors(users, twitterAccount, twitterKeyword.getId(), twitterSettings.getMinCompetitorFollowers())).start();
             return ++page;
         } catch (TwitterException ex) {
-            saveEx(ex, twitterAccount.getUsername(), TwitterErrorType.SEARCH);
+            twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.SEARCH);
         }
 
         return page;
