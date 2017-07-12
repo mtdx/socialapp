@@ -119,12 +119,12 @@
         {
             "fieldName": "status",
             "fieldType": "TwitterStatus",
-            "fieldValues": "IDLE,PENDING_UPDATE,WORKING"
+            "fieldValues": "IDLE,PENDING_UPDATE,WORKING,AUTH_ERROR"
         },
         {
             "fieldName": "prevStatus",
             "fieldType": "TwitterStatus",
-            "fieldValues": "IDLE,PENDING_UPDATE,WORKING"
+            "fieldValues": "IDLE,PENDING_UPDATE,WORKING,AUTH_ERROR"
         }
     ],
     "changelogDate": "20170531124019",

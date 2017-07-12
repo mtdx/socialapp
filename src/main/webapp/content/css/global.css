@@ -237,27 +237,31 @@ Social Buttons
 /* jhipster-needle-css-add-main JHipster will add new css style */
 
 .badge.PENDING_UPDATE, .badge.UPDATE, .badge.LOCK {
-    background-color: #636c72;
+    background-color: #f0ad4e;
 }
 
 .badge.IDLE{
     background-color: #5cb85c;
 }
 
-.badge.WORKING, .badge.LIKE, .badge.DONE {
-    background-color: #f0ad4e;
-}
-
-.badge.RETWEET, .badge.IN_PROGRESS {
+.badge.WORKING, .badge.LIKE {
     background-color: #0275d8;
 }
 
-.badge.TWEET {
+.badge.IN_PROGRESS {
+    background-color: #0275d8;
+}
+
+.badge.TWEET, .badge.DONE, .badge.RETWEET {
     background-color: #5bc0de;
 }
 
 .badge.SEARCH, .badge.STOPPED {
-    background-color: #7b7353;
+    background-color: #636c72;
+}
+
+.badge.AUTH_ERROR {
+    background-color: #d9534f;
 }
 
 .table-responsive .table.table-striped .text-right .flex-btn-group-container span.hidden-md-down{

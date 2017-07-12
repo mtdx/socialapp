@@ -4,7 +4,8 @@
             "null": "",
             "IDLE": "Idle",
             "PENDING_UPDATE": "Pending Update",
-            "WORKING": "Working"
+            "WORKING": "Working",
+            "AUTH_ERROR": "Auth Error"
         }
     }
 }

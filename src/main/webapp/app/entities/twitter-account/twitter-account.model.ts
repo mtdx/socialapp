@@ -3,7 +3,8 @@ import { BaseEntity } from './../../shared';
 export const enum TwitterStatus {
     'IDLE',
     'PENDING_UPDATE',
-    'WORKING'
+    'WORKING',
+    'AUTH_ERROR'
 }
 
 export class TwitterAccount implements BaseEntity {
