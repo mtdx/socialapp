@@ -37,6 +37,7 @@ public class StartupReset {
         List<Competitor> competitors = competitorService.findAllByStatus(CompetitorStatus.LOCK);
 
         for (TwitterAccount account : twitterAccounts) {
+            account.setPrevStatus(TwitterStatus.IDLE);
             account.setStatus(TwitterStatus.IDLE);
             twitterAccountService.save(account);
         }

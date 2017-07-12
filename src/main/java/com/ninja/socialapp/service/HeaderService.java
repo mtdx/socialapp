@@ -48,12 +48,7 @@ public class HeaderService {
         log.debug("Request to save Header : {}", header);
         Header result = headerRepository.save(header);
         headerSearchRepository.save(result);
-        List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByHeader(header);
-        for (TwitterAccount account : twitterAccounts) {
-            account.setPrevStatus(account.getStatus());
-            account.setStatus(TwitterStatus.PENDING_UPDATE);
-            twitterAccountService.save(account); // we update related accounts
-        }
+        twitterAccountService.switchToPendingUpdate(twitterAccountService.findAllByHeader(header));
         return result;
     }
 

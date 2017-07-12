@@ -49,12 +49,7 @@ public class TwitterMessageService {
         log.debug("Request to save TwitterMessage : {}", twitterMessage);
         TwitterMessage result = twitterMessageRepository.save(twitterMessage);
         twitterMessageSearchRepository.save(result);
-        List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByMessage(twitterMessage);
-        for (TwitterAccount account : twitterAccounts) {
-            account.setPrevStatus(account.getStatus());
-            account.setStatus(TwitterStatus.PENDING_UPDATE);
-            twitterAccountService.save(account); // we update related accounts
-        }
+        twitterAccountService.switchToPendingUpdate(twitterAccountService.findAllByMessage(twitterMessage));
         return result;
     }
 

@@ -53,9 +53,8 @@ public class TwitterApiService {
     /**
      * Updates a twitter account via API
      */
-    public void updateAccount(final TwitterAccount twitterAccount) {
+    public void updateAccount(final TwitterAccount twitterAccount, Twitter twitterClient) {
         log.debug("Call to update a twitter accounts via TwitterAPI: {}", twitterAccount.getEmail());
-        final Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             User user = twitterClient.updateProfile(twitterAccount.getMessage().getAccountName(),
                 twitterAccount.getMessage().getAccountUrl(), twitterAccount.getMessage().getAccountLocation(),
@@ -77,6 +76,17 @@ public class TwitterApiService {
             twitterAccountService.save(twitterAccount);
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.UPDATE);
+        }
+    }
+
+    /**
+     * Just get and pass the  followers from the competitor it receives
+     */
+    public void setupUpdateAccounts(final List<TwitterAccount> twitterAccounts){
+        for (TwitterAccount twitterAccount : twitterAccounts) {
+            Twitter twitterClient = getTwitterInstance(twitterAccount);
+            new Thread(() -> updateAccount(twitterAccount, twitterClient)).start();
+            threadWait(getRandInt(5, 15));
         }
     }
 
@@ -110,7 +120,7 @@ public class TwitterApiService {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
         }
         for (Long ID : followers) {
-            threadWait(getRandInt(2, 9));  // 180 per 15 min request limit
+            threadWait(getRandInt(5, 15));  // 180 per 15 min request limit
             if (isSpamAccount(ID, twitterClient, twitterAccount, twitterSettings))
                 continue;  // we try to target real accounts only
             try {

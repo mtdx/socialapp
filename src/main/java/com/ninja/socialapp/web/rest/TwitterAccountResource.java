@@ -82,8 +82,10 @@ public class TwitterAccountResource {
         if (twitterAccount.getId() == null) {
             return createTwitterAccount(twitterAccount);
         }
-        twitterAccount.setPrevStatus(twitterAccount.getStatus());
-        twitterAccount.setStatus(TwitterStatus.PENDING_UPDATE);
+        if (twitterAccount.getStatus() != TwitterStatus.PENDING_UPDATE){
+            twitterAccount.setPrevStatus(twitterAccount.getStatus());
+            twitterAccount.setStatus(TwitterStatus.PENDING_UPDATE);
+        }
         TwitterAccount result = twitterAccountService.save(twitterAccount);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, twitterAccount.getId().toString()))

@@ -147,4 +147,19 @@ public class TwitterAccountService {
         log.debug("Request to get TwitterAccounts by twitter message : {}", twitterMessage);
         return twitterAccountRepository.findAllByMessage(twitterMessage);
     }
+
+    /**
+     *  Update accounts to PENDING_UPDATE status.
+     *
+     *  @param twitterAccounts the entities we update
+     */
+    public void switchToPendingUpdate(List<TwitterAccount> twitterAccounts) {
+        for (TwitterAccount account : twitterAccounts) {
+            if (account.getStatus() == TwitterStatus.PENDING_UPDATE)
+                continue; // no point updating
+            account.setPrevStatus(account.getStatus());
+            account.setStatus(TwitterStatus.PENDING_UPDATE);
+            save(account); // we update related accounts
+        }
+    }
 }

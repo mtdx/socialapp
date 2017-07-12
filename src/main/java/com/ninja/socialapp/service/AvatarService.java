@@ -48,12 +48,7 @@ public class AvatarService {
         log.debug("Request to save Avatar : {}", avatar);
         Avatar result = avatarRepository.save(avatar);
         avatarSearchRepository.save(result);
-        List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByAvatar(avatar);
-        for (TwitterAccount account : twitterAccounts) {
-            account.setPrevStatus(account.getStatus());
-            account.setStatus(TwitterStatus.PENDING_UPDATE);
-            twitterAccountService.save(account); // we update related accounts
-        }
+        twitterAccountService.switchToPendingUpdate(twitterAccountService.findAllByAvatar(avatar));
         return result;
     }
 
