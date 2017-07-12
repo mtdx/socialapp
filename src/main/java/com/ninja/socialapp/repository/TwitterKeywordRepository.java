@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -22,4 +24,8 @@ public interface TwitterKeywordRepository extends JpaRepository<TwitterKeyword,L
     void incrementCompetitors(@Param("competitors") final Integer competitors, @Param("id") final Long id);
 
     Optional<TwitterKeyword> findFirstByStatusOrderByIdAsc(KeywordStatus status);
+
+    @Query("select twitterKeyword from TwitterKeyword twitterKeyword where twitterKeyword.created <= :instant and twitterKeyword.status = :status")
+    List<TwitterKeyword> findOlderThanByStatus(@Param("instant") final Instant instant, @Param("status") final KeywordStatus status);
+
 }

@@ -31,6 +31,6 @@ public interface CompetitorRepository extends JpaRepository<Competitor,Long> {
 
     Integer countAllByStatus(CompetitorStatus status);
 
-    @Query("select competitor from Competitor competitor where competitor.created <= :instant and status = :status")
+    @Query("select competitor from Competitor competitor where competitor.created <= :instant and competitor.status = :status")
     List<Competitor> findOlderThanByStatus(@Param("instant") final Instant instant, @Param("status") final CompetitorStatus status);
 }

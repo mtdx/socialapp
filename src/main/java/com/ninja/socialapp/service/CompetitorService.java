@@ -160,6 +160,7 @@ public class CompetitorService {
      *  Finds a list of entities older than a certain date and a status
      *
      *  @param instant the current time
+     *  @param status the competitor status
      *  @return a list of entities older than
      */
     @Transactional(readOnly = true)
@@ -184,7 +185,7 @@ public class CompetitorService {
     }
 
     /**
-     *  Resets a competitor
+     *  Stops a competitor
      *
      *  @param competitor the competitor to be reset
      */

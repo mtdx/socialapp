@@ -175,7 +175,7 @@ public class TwitterSchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "0 */1 * * * *") //0 0 * * 6
+    @Scheduled(cron = "0 0 0 * * 6") //
     public void resetCompetitors() {
         log.debug("Run scheduled reset twitter competitors {}");
         final int DAYS = 90; // how much time we keep data
@@ -184,6 +184,25 @@ public class TwitterSchedulerService {
         for (Competitor competitor : competitors) {
             competitorService.reset(competitor);
             competitorService.save(competitor);
+        }
+    }
+
+    /**
+     * We check for done competitors and we reset older than 3 months done
+     * <p>
+     * This is scheduled to get fired every week.
+     * </p>
+     */
+    @Async
+    @Scheduled(cron = "0 0 0 * * 6")
+    public void resetKeywords() {
+        log.debug("Run scheduled reset twitter keywords {}");
+        final int DAYS = 180; // how much time we keep data
+        List<TwitterKeyword> keywords = twitterKeywordService.findOlderThanByStatus(
+            Instant.now().minus(Duration.ofDays(DAYS)), KeywordStatus.DONE);
+        for (TwitterKeyword twitterKeyword : keywords) {
+            twitterKeywordService.reset(twitterKeyword);
+            twitterKeywordService.save(twitterKeyword);
         }
     }
 }

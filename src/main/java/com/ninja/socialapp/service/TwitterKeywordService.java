@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -116,5 +118,45 @@ public class TwitterKeywordService {
      */
     public void incrementCompetitors(Integer competitors, Long id) {
         twitterKeywordRepository.incrementCompetitors(competitors, id);
+    }
+
+    /**
+     *  Finds a list of entities older than a certain date and a status
+     *
+     *  @param instant the current time
+     *  @param status the keyword status
+     *  @return a list of entities older than
+     */
+    @Transactional(readOnly = true)
+    public List<TwitterKeyword> findOlderThanByStatus(Instant instant, KeywordStatus status) {
+        log.debug("Call to get older than : {}", instant);
+        return twitterKeywordRepository.findOlderThanByStatus(instant, status);
+    }
+
+    /**
+     *  Resets a keyword
+     *
+     *  @param twitterKeyword the competitor to be reset
+     */
+    public void reset(TwitterKeyword twitterKeyword) {
+        log.debug("Call to get reset a twitterKeyword : {}", twitterKeyword);
+        twitterKeyword.setPage(1);
+        twitterKeyword.setCompetitors(0);
+        twitterKeyword.setStatus(KeywordStatus.IN_PROGRESS);
+        twitterKeyword.setReset(false);
+        twitterKeyword.setStop(false);
+        twitterKeyword.setCreated(Instant.now());
+    }
+
+    /**
+     *  Stops a keyword
+     *
+     *  @param twitterKeyword the competitor to be reset
+     */
+    public void stop(TwitterKeyword twitterKeyword) {
+        log.debug("Call to stop a twitterKeyword : {}", twitterKeyword);
+        twitterKeyword.setStatus(KeywordStatus.STOPPED);
+        twitterKeyword.setStop(false);
+        twitterKeyword.setReset(false);
     }
 }

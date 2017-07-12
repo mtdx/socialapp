@@ -87,14 +87,10 @@ public class TwitterKeywordResource {
             return createTwitterKeyword(twitterKeyword);
         }
         if(twitterKeyword.isStop()) {
-            twitterKeyword.setStatus(KeywordStatus.STOPPED);
-            twitterKeyword.setStop(false);
+            twitterKeywordService.stop(twitterKeyword);
         }
         if(twitterKeyword.isReset()) {
-            twitterKeyword.setPage(1);
-            twitterKeyword.setCompetitors(0);
-            twitterKeyword.setStatus(KeywordStatus.IN_PROGRESS);
-            twitterKeyword.setReset(false);
+            twitterKeywordService.reset(twitterKeyword);
         }
         twitterKeyword.setKeyword(twitterKeyword.getKeyword().toLowerCase().trim());
         TwitterKeyword result = twitterKeywordService.save(twitterKeyword);
