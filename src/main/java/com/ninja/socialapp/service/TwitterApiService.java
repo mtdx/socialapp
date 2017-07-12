@@ -76,6 +76,8 @@ public class TwitterApiService {
             twitterAccountService.save(twitterAccount);
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.UPDATE);
+            twitterAccount.setStatus(TwitterStatus.AUTH_ERROR);
+            twitterAccountService.save(twitterAccount);
         }
     }
 
