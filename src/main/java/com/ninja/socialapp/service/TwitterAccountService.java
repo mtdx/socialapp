@@ -193,7 +193,6 @@ public class TwitterAccountService {
             twitterAccount.getAvatar().setImageContentType("");
             twitterAccount.getProxy().setUsername("");
             twitterAccount.getProxy().setPassword("");
-            twitterAccount.getProxy().setPort(0);
             twitterAccount.getMessage().setAccountDescription("");
             twitterAccount.getMessage().setAccountLocation("");
             twitterAccount.getMessage().setAccountUrl("");
