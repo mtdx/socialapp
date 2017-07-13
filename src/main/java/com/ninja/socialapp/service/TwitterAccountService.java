@@ -124,7 +124,6 @@ public class TwitterAccountService {
         return twitterAccountRepository.findAllByHeader(header);
     }
 
-
     /**
      *  Get twitterAccounts by avatar.
      *
@@ -177,22 +176,27 @@ public class TwitterAccountService {
         }
     }
 
+    /**
+     *  Filter some unused info to keep the main page slim.
+     *
+     *  @param page the entities we need to clean
+     */
     private Page<TwitterAccount> filterExtra(Page<TwitterAccount> page){
         for (TwitterAccount twitterAccount : page.getContent()) {
-            twitterAccount.getHeader().setId(null);
-            twitterAccount.getHeader().setImage(null);
-            twitterAccount.getHeader().setImageContentType(null);
-            twitterAccount.getAvatar().setId(null);
-            twitterAccount.getAvatar().setImage(null);
-            twitterAccount.getAvatar().setImageContentType(null);
-            twitterAccount.getProxy().setId(null);
-            twitterAccount.getProxy().setUsername(null);
-            twitterAccount.getProxy().setPassword(null);
-            twitterAccount.getProxy().setPort(null);
-            twitterAccount.getMessage().setId(null);
-            twitterAccount.getMessage().setAccountDescription(null);
-            twitterAccount.getMessage().setAccountLocation(null);
-            twitterAccount.getMessage().setAccountUrl(null);
+            twitterAccount.setConsumerKey("");
+            twitterAccount.consumerSecret("");
+            twitterAccount.accessToken("");
+            twitterAccount.accessTokenSecret("");
+            twitterAccount.getHeader().setImage(new byte[0]);
+            twitterAccount.getHeader().setImageContentType("");
+            twitterAccount.getAvatar().setImage(new byte[0]);
+            twitterAccount.getAvatar().setImageContentType("");
+            twitterAccount.getProxy().setUsername("");
+            twitterAccount.getProxy().setPassword("");
+            twitterAccount.getProxy().setPort(0);
+            twitterAccount.getMessage().setAccountDescription("");
+            twitterAccount.getMessage().setAccountLocation("");
+            twitterAccount.getMessage().setAccountUrl("");
         }
         return page;
     }
