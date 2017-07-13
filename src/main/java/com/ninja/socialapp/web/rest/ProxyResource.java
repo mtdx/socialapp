@@ -144,17 +144,4 @@ public class ProxyResource {
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/proxies");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
-
-    /**
-     * GET  /proxies-restrict : get all the proxies under a certain number of uses
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of proxies in body
-     */
-    @GetMapping("/proxies-restrict")
-    @Timed
-    public ResponseEntity<List<Proxy>> getAllProxiesRestricted() {
-        log.debug("REST request to get all the proxies restrict");
-        List<Proxy> proxies = proxyService.findAllRestrict();
-        return new ResponseEntity<>(proxies, HttpStatus.OK);
-    }
 }

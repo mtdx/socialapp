@@ -1,9 +1,6 @@
 package com.ninja.socialapp.service;
 
-import com.ninja.socialapp.domain.Avatar;
-import com.ninja.socialapp.domain.Header;
-import com.ninja.socialapp.domain.TwitterAccount;
-import com.ninja.socialapp.domain.TwitterMessage;
+import com.ninja.socialapp.domain.*;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import com.ninja.socialapp.repository.TwitterAccountRepository;
 import com.ninja.socialapp.repository.search.TwitterAccountSearchRepository;
@@ -32,9 +29,13 @@ public class TwitterAccountService {
 
     private final TwitterAccountSearchRepository twitterAccountSearchRepository;
 
-    public TwitterAccountService(TwitterAccountRepository twitterAccountRepository, TwitterAccountSearchRepository twitterAccountSearchRepository) {
+    private final TwitterSettingsService twitterSettingsService;
+
+    public TwitterAccountService(TwitterAccountRepository twitterAccountRepository, TwitterAccountSearchRepository twitterAccountSearchRepository,
+                                 TwitterSettingsService twitterSettingsService) {
         this.twitterAccountRepository = twitterAccountRepository;
         this.twitterAccountSearchRepository = twitterAccountSearchRepository;
+        this.twitterSettingsService = twitterSettingsService;
     }
 
     /**
@@ -134,6 +135,19 @@ public class TwitterAccountService {
     public List<TwitterAccount> findAllByAvatar(Avatar avatar) {
         log.debug("Request to get TwitterAccounts by avatar : {}", avatar);
         return twitterAccountRepository.findAllByAvatar(avatar);
+    }
+
+    /**
+     *  Get the number of proxies assigned.
+     *
+     *  @param proxy the entity we count by
+     *  @return false if exceds
+     */
+    @Transactional(readOnly = true)
+    public boolean countAllByProxy(Proxy proxy) {
+        log.debug("Request to count the number of proxies assigned : {}", proxy);
+        return twitterAccountRepository.countAllByProxy(proxy) >=
+            twitterSettingsService.findOne().getAccountsPerProxy();
     }
 
     /**

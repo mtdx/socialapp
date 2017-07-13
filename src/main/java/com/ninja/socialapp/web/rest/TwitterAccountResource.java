@@ -58,6 +58,9 @@ public class TwitterAccountResource {
         if (twitterAccount.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new twitterAccount cannot already have an ID")).body(null);
         }
+        if (twitterAccountService.countAllByProxy(twitterAccount.getProxy())){
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "proxyerror", "Proxies per account limit reached")).body(null);
+        }
         twitterAccount.setPrevStatus(TwitterStatus.PENDING_UPDATE); // default status
         twitterAccount.setStatus(TwitterStatus.PENDING_UPDATE); // default status
         TwitterAccount result = twitterAccountService.save(twitterAccount);
@@ -81,6 +84,9 @@ public class TwitterAccountResource {
         log.debug("REST request to update TwitterAccount : {}", twitterAccount);
         if (twitterAccount.getId() == null) {
             return createTwitterAccount(twitterAccount);
+        }
+        if (twitterAccountService.countAllByProxy(twitterAccount.getProxy())){
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "proxyerror", "Proxies per account limit reached")).body(null);
         }
         if (twitterAccount.getStatus() != TwitterStatus.PENDING_UPDATE){
             twitterAccount.setPrevStatus(twitterAccount.getStatus());

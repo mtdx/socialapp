@@ -28,12 +28,9 @@ public class ProxyService {
 
     private final ProxySearchRepository proxySearchRepository;
 
-    private final TwitterSettingsService twitterSettingsService;
-
-    public ProxyService(ProxyRepository proxyRepository, ProxySearchRepository proxySearchRepository, TwitterSettingsService twitterSettingsService) {
+    public ProxyService(ProxyRepository proxyRepository, ProxySearchRepository proxySearchRepository) {
         this.proxyRepository = proxyRepository;
         this.proxySearchRepository = proxySearchRepository;
-        this.twitterSettingsService = twitterSettingsService;
     }
 
     /**
@@ -96,16 +93,6 @@ public class ProxyService {
         log.debug("Request to search for a page of Proxies for query {}", query);
         Page<Proxy> result = proxySearchRepository.search(queryStringQuery(query), pageable);
         return result;
-    }
-
-    /**
-     *  Get all the proxies under a certain number of uses.
-     *
-     *  @return the list of entities
-     */
-    public List<Proxy> findAllRestrict() {
-        log.debug("Request to get all Proxies Restrict");
-        return proxyRepository.findAllRestrict(twitterSettingsService.findOne().getAccountsPerProxy().longValue());
     }
 
     /**
