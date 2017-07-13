@@ -7,7 +7,8 @@
             "WORKING": "Working",
             "AUTH_ERROR": "Auth Error",
             "SUSPENDED": "Suspended",
-            "LOCKED": "Locked"
+            "LOCKED": "Locked",
+            "LOCK": "Lock"
         }
     }
 }

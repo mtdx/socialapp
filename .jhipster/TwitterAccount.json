@@ -131,12 +131,12 @@
         {
             "fieldName": "status",
             "fieldType": "TwitterStatus",
-            "fieldValues": "IDLE,PENDING_UPDATE,WORKING,AUTH_ERROR,SUSPENDED,LOCKED"
+            "fieldValues": "IDLE,PENDING_UPDATE,WORKING,AUTH_ERROR,SUSPENDED,LOCKED,LOCK"
         },
         {
             "fieldName": "prevStatus",
             "fieldType": "TwitterStatus",
-            "fieldValues": "IDLE,PENDING_UPDATE,WORKING,AUTH_ERROR,SUSPENDED,LOCKED"
+            "fieldValues": "IDLE,PENDING_UPDATE,WORKING,AUTH_ERROR,SUSPENDED,LOCKED,LOCK"
         }
     ],
     "changelogDate": "20170531124019",

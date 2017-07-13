@@ -6,7 +6,8 @@ export const enum TwitterStatus {
     'WORKING',
     'AUTH_ERROR',
     'SUSPENDED',
-    'LOCKED'
+    'LOCKED',
+    'LOCK'
 }
 
 export class TwitterAccount implements BaseEntity {

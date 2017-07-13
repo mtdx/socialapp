@@ -52,11 +52,15 @@ public class TwitterSchedulerService {
      * </p>
      */
     @Async
-    @Scheduled(cron = "30 */2 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     public void updateAccounts() {
         log.debug("Run scheduled update accounts {}");
-        twitterApiService.setupUpdateAccounts(
-            twitterAccountService.findAllByStatus(TwitterStatus.PENDING_UPDATE));
+        List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByStatus(TwitterStatus.PENDING_UPDATE);
+        for (TwitterAccount twitterAccount : twitterAccounts){
+            twitterAccount.setStatus(TwitterStatus.LOCK);
+            twitterAccountService.save(twitterAccount);
+        }
+        twitterApiService.setupUpdateAccounts(twitterAccounts);
     }
 
     /**
