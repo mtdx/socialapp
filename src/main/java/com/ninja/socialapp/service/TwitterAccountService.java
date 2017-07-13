@@ -60,7 +60,7 @@ public class TwitterAccountService {
     @Transactional(readOnly = true)
     public Page<TwitterAccount> findAll(Pageable pageable) {
         log.debug("Request to get all TwitterAccounts");
-        return twitterAccountRepository.findAll(pageable);
+        return filterExtra(twitterAccountRepository.findAll(pageable));
     }
 
     /**
@@ -97,7 +97,7 @@ public class TwitterAccountService {
     public Page<TwitterAccount> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of TwitterAccounts for query {}", query);
         Page<TwitterAccount> result = twitterAccountSearchRepository.search(queryStringQuery(query), pageable);
-        return result;
+        return filterExtra(result);
     }
 
     /**
@@ -175,5 +175,25 @@ public class TwitterAccountService {
             account.setStatus(TwitterStatus.PENDING_UPDATE);
             save(account); // we update related accounts
         }
+    }
+
+    private Page<TwitterAccount> filterExtra(Page<TwitterAccount> page){
+        for (TwitterAccount twitterAccount : page.getContent()) {
+            twitterAccount.getHeader().setId(null);
+            twitterAccount.getHeader().setImage(null);
+            twitterAccount.getHeader().setImageContentType(null);
+            twitterAccount.getAvatar().setId(null);
+            twitterAccount.getAvatar().setImage(null);
+            twitterAccount.getAvatar().setImageContentType(null);
+            twitterAccount.getProxy().setId(null);
+            twitterAccount.getProxy().setUsername(null);
+            twitterAccount.getProxy().setPassword(null);
+            twitterAccount.getProxy().setPort(null);
+            twitterAccount.getMessage().setId(null);
+            twitterAccount.getMessage().setAccountDescription(null);
+            twitterAccount.getMessage().setAccountLocation(null);
+            twitterAccount.getMessage().setAccountUrl(null);
+        }
+        return page;
     }
 }
