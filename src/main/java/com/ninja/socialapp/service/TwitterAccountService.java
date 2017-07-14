@@ -72,7 +72,7 @@ public class TwitterAccountService {
     @Transactional(readOnly = true)
     public TwitterAccount findOne(Long id) {
         log.debug("Request to get TwitterAccount : {}", id);
-        return twitterAccountRepository.findOne(id);
+        return filterExtraSingle(twitterAccountRepository.findOne(id));
     }
 
     /**
@@ -198,5 +198,24 @@ public class TwitterAccountService {
             twitterAccount.getMessage().setAccountUrl("");
         }
         return page;
+    }
+
+    /**
+     *  Filter some unused info to keep the main page slim.
+     *
+     *  @param twitterAccount the entity we need to clean
+     */
+    private TwitterAccount filterExtraSingle(TwitterAccount twitterAccount){
+            twitterAccount.getHeader().setImage(new byte[0]);
+            twitterAccount.getHeader().setImageContentType("");
+            twitterAccount.getAvatar().setImage(new byte[0]);
+            twitterAccount.getAvatar().setImageContentType("");
+            twitterAccount.getProxy().setUsername("");
+            twitterAccount.getProxy().setPassword("");
+            twitterAccount.getMessage().setAccountDescription("");
+            twitterAccount.getMessage().setAccountLocation("");
+            twitterAccount.getMessage().setAccountUrl("");
+
+        return twitterAccount;
     }
 }
