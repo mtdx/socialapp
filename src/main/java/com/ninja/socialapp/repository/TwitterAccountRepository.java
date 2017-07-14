@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -24,6 +25,8 @@ public interface TwitterAccountRepository extends JpaRepository<TwitterAccount,L
     List<TwitterAccount> findAllByAvatar(Avatar avatar);
 
     List<TwitterAccount> findAllByMessage(TwitterMessage message);
+
+    Optional<TwitterAccount> findOneByConsumerKey(String consumerKey);
 
     Integer countAllByProxy(Proxy proxy);
 }

@@ -58,6 +58,9 @@ public class TwitterAccountResource {
         if (twitterAccount.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new twitterAccount cannot already have an ID")).body(null);
         }
+        if (twitterAccountService.findOneByConsumerKey(twitterAccount.getConsumerKey()).isPresent()){
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "consumerkeyexists", "Consumer Key already in use")).body(null);
+        }
         if (twitterAccountService.countAllByProxy(twitterAccount.getProxy())){
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "proxyerror", "Proxies per account limit reached")).body(null);
         }

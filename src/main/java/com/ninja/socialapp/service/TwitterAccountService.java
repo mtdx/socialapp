@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -217,5 +218,17 @@ public class TwitterAccountService {
             twitterAccount.getMessage().setAccountUrl("");
 
         return twitterAccount;
+    }
+
+    /**
+     *  Get one twitterAccount by consumer key.
+     *
+     *  @param consumerKey the consumer key of the account
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Optional<TwitterAccount> findOneByConsumerKey(String consumerKey) {
+        log.debug("Request to get TwitterAccount : {}", consumerKey);
+        return twitterAccountRepository.findOneByConsumerKey(consumerKey);
     }
 }

@@ -135,7 +135,8 @@
         "userexists": "Benutzername bereits vergeben!",
         "emailexists": "Email wird bereits verwendet!",
         "idexists": "Ein neuer {{entityName}} kann noch keine ID haben",
-        "proxyerror": "Proxies per account limit reached"
+        "proxyerror": "Proxies per account limit reached",
+        "consumerkeyexists": "Consumer Key already in use"
     },
     "footer": {
         "privacy": "Datenschutz-Bestimmungen",

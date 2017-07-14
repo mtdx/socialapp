@@ -135,7 +135,8 @@
         "userexists": "Login name already used!",
         "emailexists": "Email is already in use!",
         "idexists": "A new {{ entityName }} cannot already have an ID",
-        "proxyerror": "Proxies per account limit reached"
+        "proxyerror": "Proxies per account limit reached",
+        "consumerkeyexists": "Consumer Key already in use"
     },
     "footer": {
         "privacy": "Privacy Policy",
