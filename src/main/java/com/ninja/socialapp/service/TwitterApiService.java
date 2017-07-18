@@ -69,7 +69,8 @@ public class TwitterApiService {
             TwitterStatus status = (twitterAccount.getPrevStatus() != TwitterStatus.PENDING_UPDATE
                 && twitterAccount.getPrevStatus() != TwitterStatus.AUTH_ERROR
                 && twitterAccount.getPrevStatus() != TwitterStatus.SUSPENDED
-                && twitterAccount.getPrevStatus() != TwitterStatus.LOCKED)
+                && twitterAccount.getPrevStatus() != TwitterStatus.LOCKED
+                && twitterAccount.getPrevStatus() != TwitterStatus.LOCK)
                 ? twitterAccount.getPrevStatus() : TwitterStatus.IDLE;
             twitterAccount.setPrevStatus(status);
             twitterAccount.setStatus(status);
