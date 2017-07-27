@@ -1,0 +1,27 @@
+{
+    "socialappApp": {
+        "retweetAccount" : {
+            "home": {
+                "title": "Retweet Accounts",
+                "createLabel": "Retweet Account erstellen",
+                "createOrEditLabel": "Retweet Account erstellen oder bearbeiten",
+                "search": "Suche nach Retweet Account"
+            },
+            "created": "Retweet Account erstellt mit ID {{ param }}",
+            "updated": "Retweet Account aktualisiert mit ID {{ param }}",
+            "deleted": "Retweet Account gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Retweet Account {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Retweet Account"
+            },
+            "status": "Status",
+            "userid": "Userid",
+            "username": "Username",
+            "keywords": "Keywords",
+            "stop": "Stop",
+            "created": "Created"
+        }
+    }
+}

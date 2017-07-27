@@ -9,6 +9,7 @@ import { SocialappTwitterErrorModule } from './twitter-error/twitter-error.modul
 import { SocialappTwitterSettingsModule } from './twitter-settings/twitter-settings.module';
 import { SocialappTwitterKeywordModule } from './twitter-keyword/twitter-keyword.module';
 import { SocialappTwitterMessageModule } from './twitter-message/twitter-message.module';
+import { SocialappRetweetAccountModule } from './retweet-account/retweet-account.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -22,6 +23,7 @@ import { SocialappTwitterMessageModule } from './twitter-message/twitter-message
         SocialappTwitterSettingsModule,
         SocialappTwitterKeywordModule,
         SocialappTwitterMessageModule,
+        SocialappRetweetAccountModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

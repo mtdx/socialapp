@@ -1,0 +1,9 @@
+{
+    "socialappApp": {
+        "RetweetAccountStatus" : {
+            "null": "",
+            "IN_PROGRESS": "IN_PROGRESS",
+            "STOPPED": "STOPPED"
+        }
+    }
+}

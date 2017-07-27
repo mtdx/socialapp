@@ -1,0 +1,79 @@
+<div>
+    <h2>
+        <span jhiTranslate="socialappApp.retweetAccount.home.title">Retweet Accounts</span>
+        <button class="btn btn-primary float-right jh-create-entity create-retweet-account" [routerLink]="['/', { outlets: { popup: ['retweet-account-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="socialappApp.retweetAccount.home.createLabel">
+            Create new Retweet Account
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'socialappApp.retweetAccount.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="retweetAccounts">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="status"><span jhiTranslate="socialappApp.retweetAccount.status">Status</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="userid"><span jhiTranslate="socialappApp.retweetAccount.userid">Userid</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="username"><span jhiTranslate="socialappApp.retweetAccount.username">Username</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="keywords"><span jhiTranslate="socialappApp.retweetAccount.keywords">Keywords</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="stop"><span jhiTranslate="socialappApp.retweetAccount.stop">Stop</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="created"><span jhiTranslate="socialappApp.retweetAccount.created">Created</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let retweetAccount of retweetAccounts ;trackBy: trackId">
+                <td><a [routerLink]="['../retweet-account', retweetAccount.id ]">{{retweetAccount.id}}</a></td>
+                <td jhiTranslate="{{'socialappApp.RetweetAccountStatus.' + retweetAccount.status}}">{{retweetAccount.status}}</td>
+                <td>{{retweetAccount.userid}}</td>
+                <td>{{retweetAccount.username}}</td>
+                <td>{{retweetAccount.keywords}}</td>
+                <td>{{retweetAccount.stop}}</td>
+                <td>{{retweetAccount.created | date:'medium'}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../retweet-account', retweetAccount.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'retweet-account/'+ retweetAccount.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'retweet-account/'+ retweetAccount.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

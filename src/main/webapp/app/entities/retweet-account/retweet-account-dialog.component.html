@@ -1,0 +1,95 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myRetweetAccountLabel" jhiTranslate="socialappApp.retweetAccount.home.createOrEditLabel">Create or edit a Retweet Account</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!retweetAccount.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="retweetAccount.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.retweetAccount.status" for="field_status">Status</label>
+            <select class="form-control" name="status" [(ngModel)]="retweetAccount.status" id="field_status" >
+                <option value="IN_PROGRESS" jhiTranslate="socialappApp.RetweetAccountStatus.IN_PROGRESS">IN_PROGRESS</option>
+                <option value="STOPPED" jhiTranslate="socialappApp.RetweetAccountStatus.STOPPED">STOPPED</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.retweetAccount.userid" for="field_userid">Userid</label>
+            <input type="text" class="form-control" name="userid" id="field_userid"
+                [(ngModel)]="retweetAccount.userid" required minlength="2" maxlength="20" pattern="(^\d+$)" />
+            <div [hidden]="!(editForm.controls.userid?.dirty && editForm.controls.userid?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.userid?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.userid?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 2 }">
+                   This field is required to be at least 2 characters.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.userid?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
+                   This field cannot be longer than 20 characters.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.userid?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Userid' }">
+                    This field should follow pattern for "Userid".
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.retweetAccount.username" for="field_username">Username</label>
+            <input type="text" class="form-control" name="username" id="field_username"
+                [(ngModel)]="retweetAccount.username" required minlength="4" maxlength="15" pattern="(^[a-zA-Z0-9_]*$)" />
+            <div [hidden]="!(editForm.controls.username?.dirty && editForm.controls.username?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.username?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.username?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 4 }">
+                   This field is required to be at least 4 characters.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.username?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 15 }">
+                   This field cannot be longer than 15 characters.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.username?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Username' }">
+                    This field should follow pattern for "Username".
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.retweetAccount.keywords" for="field_keywords">Keywords</label>
+            <input type="text" class="form-control" name="keywords" id="field_keywords"
+                [(ngModel)]="retweetAccount.keywords"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.retweetAccount.stop" for="field_stop">Stop</label>
+            <input type="checkbox" class="form-control" name="stop" id="field_stop"
+                [(ngModel)]="retweetAccount.stop"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="socialappApp.retweetAccount.created" for="field_created">Created</label>
+            <div class="d-flex">
+                <input id="field_created" type="datetime-local" class="form-control" name="created" [(ngModel)]="retweetAccount.created"
+                  />
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

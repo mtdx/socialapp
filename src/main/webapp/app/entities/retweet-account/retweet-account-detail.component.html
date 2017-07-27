@@ -1,0 +1,45 @@
+
+<div *ngIf="retweetAccount">
+    <h2><span jhiTranslate="socialappApp.retweetAccount.detail.title">Retweet Account</span> {{retweetAccount.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="socialappApp.retweetAccount.status">Status</span></dt>
+        <dd>
+            <span jhiTranslate="{{'socialappApp.RetweetAccountStatus.' + retweetAccount.status}}">{{retweetAccount.status}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.retweetAccount.userid">Userid</span></dt>
+        <dd>
+            <span>{{retweetAccount.userid}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.retweetAccount.username">Username</span></dt>
+        <dd>
+            <span>{{retweetAccount.username}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.retweetAccount.keywords">Keywords</span></dt>
+        <dd>
+            <span>{{retweetAccount.keywords}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.retweetAccount.stop">Stop</span></dt>
+        <dd>
+            <span>{{retweetAccount.stop}}</span>
+        </dd>
+        <dt><span jhiTranslate="socialappApp.retweetAccount.created">Created</span></dt>
+        <dd>
+            <span>{{retweetAccount.created | date:'medium'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'retweet-account/'+ retweetAccount.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
