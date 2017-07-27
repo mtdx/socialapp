@@ -31,21 +31,21 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="status"><span jhiTranslate="socialappApp.retweetAccount.status">Status</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="userid"><span jhiTranslate="socialappApp.retweetAccount.userid">Userid</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="username"><span jhiTranslate="socialappApp.retweetAccount.username">Username</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="keywords"><span jhiTranslate="socialappApp.retweetAccount.keywords">Keywords</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="stop"><span jhiTranslate="socialappApp.retweetAccount.stop">Stop</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let retweetAccount of retweetAccounts ;trackBy: trackId">
                 <td><a [routerLink]="['../retweet-account', retweetAccount.id ]">{{retweetAccount.id}}</a></td>
-                <td jhiTranslate="{{'socialappApp.RetweetAccountStatus.' + retweetAccount.status}}">{{retweetAccount.status}}</td>
-                <td>{{retweetAccount.userid}}</td>
+                <td>
+                    <span class="badge {{retweetAccount.status}}" jhiTranslate="{{'socialappApp.TwitterStatus.' + retweetAccount.status}}">
+                        {{retweetAccount.status}}
+                    </span>
+                </td>
                 <td>{{retweetAccount.username}}</td>
                 <td>{{retweetAccount.keywords}}</td>
-                <td>{{retweetAccount.stop}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

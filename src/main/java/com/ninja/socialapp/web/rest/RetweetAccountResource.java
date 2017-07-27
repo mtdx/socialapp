@@ -2,6 +2,7 @@ package com.ninja.socialapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.ninja.socialapp.domain.RetweetAccount;
+import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 import com.ninja.socialapp.service.RetweetAccountService;
 import com.ninja.socialapp.web.rest.util.HeaderUtil;
 import com.ninja.socialapp.web.rest.util.PaginationUtil;
@@ -57,6 +58,7 @@ public class RetweetAccountResource {
         if (retweetAccount.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new retweetAccount cannot already have an ID")).body(null);
         }
+        retweetAccount.setStatus(RetweetAccountStatus.IN_PROGRESS);
         RetweetAccount result = retweetAccountService.save(retweetAccount);
         return ResponseEntity.created(new URI("/api/retweet-accounts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -78,6 +80,10 @@ public class RetweetAccountResource {
         log.debug("REST request to update RetweetAccount : {}", retweetAccount);
         if (retweetAccount.getId() == null) {
             return createRetweetAccount(retweetAccount);
+        }
+        if(retweetAccount.isStop()) {
+            retweetAccount.setStatus(RetweetAccountStatus.STOPPED);
+            retweetAccount.setStop(false);
         }
         RetweetAccount result = retweetAccountService.save(retweetAccount);
         return ResponseEntity.ok()
