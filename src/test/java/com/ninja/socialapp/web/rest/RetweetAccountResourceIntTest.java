@@ -41,10 +41,10 @@ import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 public class RetweetAccountResourceIntTest {
 
     private static final RetweetAccountStatus DEFAULT_STATUS = RetweetAccountStatus.IN_PROGRESS;
-    private static final RetweetAccountStatus UPDATED_STATUS = RetweetAccountStatus.LOCK;
+    private static final RetweetAccountStatus UPDATED_STATUS = RetweetAccountStatus.IN_PROGRESS;
 
     private static final String DEFAULT_USERID = "37";
-    private static final String UPDATED_USERID = "2";
+    private static final String UPDATED_USERID = "22";
 
     private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";
@@ -53,7 +53,7 @@ public class RetweetAccountResourceIntTest {
     private static final String UPDATED_KEYWORDS = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_STOP = false;
-    private static final Boolean UPDATED_STOP = true;
+    private static final Boolean UPDATED_STOP = false;
 
     @Autowired
     private RetweetAccountRepository retweetAccountRepository;
