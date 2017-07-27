@@ -3,6 +3,7 @@
         "RetweetAccountStatus" : {
             "null": "",
             "IN_PROGRESS": "IN_PROGRESS",
+            "LOCK": "LOCK",
             "STOPPED": "STOPPED"
         }
     }

@@ -2,6 +2,7 @@ import { BaseEntity } from './../../shared';
 
 const enum RetweetAccountStatus {
     'IN_PROGRESS',
+    'LOCK',
     'STOPPED'
 }
 

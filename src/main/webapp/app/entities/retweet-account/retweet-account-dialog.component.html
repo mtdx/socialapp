@@ -16,6 +16,7 @@
             <label class="form-control-label" jhiTranslate="socialappApp.retweetAccount.status" for="field_status">Status</label>
             <select class="form-control" name="status" [(ngModel)]="retweetAccount.status" id="field_status" >
                 <option value="IN_PROGRESS" jhiTranslate="socialappApp.RetweetAccountStatus.IN_PROGRESS">IN_PROGRESS</option>
+                <option value="LOCK" jhiTranslate="socialappApp.RetweetAccountStatus.LOCK">LOCK</option>
                 <option value="STOPPED" jhiTranslate="socialappApp.RetweetAccountStatus.STOPPED">STOPPED</option>
             </select>
         </div>

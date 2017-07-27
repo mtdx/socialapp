@@ -5,7 +5,7 @@
         {
             "fieldName": "status",
             "fieldType": "RetweetAccountStatus",
-            "fieldValues": "IN_PROGRESS,STOPPED"
+            "fieldValues": "IN_PROGRESS,LOCK,STOPPED"
         },
         {
             "fieldName": "userid",

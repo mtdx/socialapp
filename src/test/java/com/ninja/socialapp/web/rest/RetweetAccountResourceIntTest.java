@@ -43,7 +43,7 @@ import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 public class RetweetAccountResourceIntTest {
 
     private static final RetweetAccountStatus DEFAULT_STATUS = RetweetAccountStatus.IN_PROGRESS;
-    private static final RetweetAccountStatus UPDATED_STATUS = RetweetAccountStatus.STOPPED;
+    private static final RetweetAccountStatus UPDATED_STATUS = RetweetAccountStatus.LOCK;
 
     private static final String DEFAULT_USERID = "37";
     private static final String UPDATED_USERID = "2";
