@@ -36,6 +36,12 @@
                 "required"
             ],
             "otherEntityField": "accountName"
+        },
+        {
+            "relationshipName": "retweetAccount",
+            "otherEntityName": "retweetAccount",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "username"
         }
     ],
     "fields": [

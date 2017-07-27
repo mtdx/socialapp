@@ -26,6 +26,7 @@ export class TwitterAccount implements BaseEntity {
         public header?: BaseEntity,
         public proxy?: BaseEntity,
         public message?: BaseEntity,
+        public retweetAccount?: BaseEntity,
     ) {
     }
 }

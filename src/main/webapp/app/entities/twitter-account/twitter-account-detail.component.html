@@ -60,6 +60,12 @@
                 <a [routerLink]="['/twitter-message', twitterAccount.message?.id]">{{twitterAccount.message?.accountName}}</a>
             </div>
         </dd>
+        <dt><span jhiTranslate="socialappApp.twitterAccount.retweetAccount">Retweet Account</span></dt>
+        <dd>
+            <div *ngIf="twitterAccount.retweetAccount">
+                <a [routerLink]="['/retweet-account', twitterAccount.retweetAccount?.id]">{{twitterAccount.retweetAccount?.username}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"

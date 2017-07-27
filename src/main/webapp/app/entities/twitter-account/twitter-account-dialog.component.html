@@ -238,6 +238,13 @@
                 This field is required.
             </small>
         </div>
+        <div class="form-group">
+            <label jhiTranslate="socialappApp.twitterAccount.retweetAccount" for="field_retweetAccount">Retweet Account</label>
+            <select class="form-control" id="field_retweetAccount" name="retweetAccount" [(ngModel)]="twitterAccount.retweetAccount" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="retweetAccountOption.id === twitterAccount.retweetAccount?.id ? twitterAccount.retweetAccount : retweetAccountOption" *ngFor="let retweetAccountOption of retweetaccounts; trackBy: trackRetweetAccountById">{{retweetAccountOption.username}}</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">

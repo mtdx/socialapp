@@ -91,6 +91,9 @@ public class TwitterAccount implements Serializable {
     @NotNull
     private TwitterMessage message;
 
+    @ManyToOne
+    private RetweetAccount retweetAccount;
+
     public Long getId() {
         return id;
     }
@@ -266,6 +269,19 @@ public class TwitterAccount implements Serializable {
 
     public void setMessage(TwitterMessage twitterMessage) {
         this.message = twitterMessage;
+    }
+
+    public RetweetAccount getRetweetAccount() {
+        return retweetAccount;
+    }
+
+    public TwitterAccount retweetAccount(RetweetAccount retweetAccount) {
+        this.retweetAccount = retweetAccount;
+        return this;
+    }
+
+    public void setRetweetAccount(RetweetAccount retweetAccount) {
+        this.retweetAccount = retweetAccount;
     }
 
     @Override

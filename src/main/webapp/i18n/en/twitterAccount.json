@@ -28,7 +28,8 @@
             "avatar": "Avatar",
             "header": "Header",
             "proxy": "Proxy",
-            "message": "Message"
+            "message": "Message",
+            "retweetAccount": "Retweet Account"
         }
     }
 }
