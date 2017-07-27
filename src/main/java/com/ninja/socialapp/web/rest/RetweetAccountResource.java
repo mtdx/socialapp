@@ -81,6 +81,9 @@ public class RetweetAccountResource {
         if (retweetAccount.getId() == null) {
             return createRetweetAccount(retweetAccount);
         }
+        if (retweetAccount.getStatus() == RetweetAccountStatus.STOPPED) {
+            retweetAccount.setStatus(RetweetAccountStatus.IN_PROGRESS);
+        }
         if(retweetAccount.isStop()) {
             retweetAccount.setStatus(RetweetAccountStatus.STOPPED);
             retweetAccount.setStop(false);

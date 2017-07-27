@@ -40,7 +40,7 @@
             <tr *ngFor="let retweetAccount of retweetAccounts ;trackBy: trackId">
                 <td><a [routerLink]="['../retweet-account', retweetAccount.id ]">{{retweetAccount.id}}</a></td>
                 <td>
-                    <span class="badge {{retweetAccount.status}}" jhiTranslate="{{'socialappApp.TwitterStatus.' + retweetAccount.status}}">
+                    <span class="badge {{retweetAccount.status}}" jhiTranslate="{{'socialappApp.RetweetAccountStatus.' + retweetAccount.status}}">
                         {{retweetAccount.status}}
                     </span>
                 </td>
