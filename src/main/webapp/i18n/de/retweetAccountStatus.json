@@ -2,9 +2,9 @@
     "socialappApp": {
         "RetweetAccountStatus" : {
             "null": "",
-            "IN_PROGRESS": "In Progress",
-            "LOCK": "Lock",
-            "STOPPED": "Stopped"
+            "IN_PROGRESS": "IN_PROGRESS",
+            "LOCK": "LOCK",
+            "STOPPED": "STOPPED"
         }
     }
 }
