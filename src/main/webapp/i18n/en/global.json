@@ -16,7 +16,7 @@
                 "twitterSettings": "Settings",
                 "twitterKeyword": "Keywords",
                 "twitterMessage": "Messages",
-                "retweetAccount": "Retweet Account",
+                "retweetAccount": "Retweets",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
