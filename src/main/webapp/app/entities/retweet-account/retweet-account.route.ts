@@ -9,6 +9,8 @@ import { RetweetAccountDetailComponent } from './retweet-account-detail.componen
 import { RetweetAccountPopupComponent } from './retweet-account-dialog.component';
 import { RetweetAccountDeletePopupComponent } from './retweet-account-delete-dialog.component';
 
+import { Principal } from '../../shared';
+
 export const retweetAccountRoute: Routes = [
     {
         path: 'retweet-account',

@@ -15,6 +15,7 @@
     <include file="classpath:config/liquibase/changelog/20170710131018_added_entity_TwitterKeyword.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170711084614_added_entity_TwitterMessage.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170727115336_added_entity_RetweetAccount.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170727115336_added_entity_RetweetAccount.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20170531124019_added_entity_constraints_TwitterAccount.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/indexes/20170531124019_added_entity_indexes_TwitterAccount.xml" relativeToChangelogFile="false"/>

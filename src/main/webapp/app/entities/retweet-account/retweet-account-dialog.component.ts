@@ -17,6 +17,7 @@ import { RetweetAccountService } from './retweet-account.service';
 export class RetweetAccountDialogComponent implements OnInit {
 
     retweetAccount: RetweetAccount;
+    authorities: any[];
     isSaving: boolean;
 
     constructor(
@@ -29,6 +30,7 @@ export class RetweetAccountDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
+        this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
     }
 
     clear() {
@@ -78,6 +80,7 @@ export class RetweetAccountDialogComponent implements OnInit {
 })
 export class RetweetAccountPopupComponent implements OnInit, OnDestroy {
 
+    modalRef: NgbModalRef;
     routeSub: any;
 
     constructor(
@@ -88,11 +91,11 @@ export class RetweetAccountPopupComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
             if ( params['id'] ) {
-                this.retweetAccountPopupService
-                    .open(RetweetAccountDialogComponent as Component, params['id']);
+                this.modalRef = this.retweetAccountPopupService
+                    .open(RetweetAccountDialogComponent, params['id']);
             } else {
-                this.retweetAccountPopupService
-                    .open(RetweetAccountDialogComponent as Component);
+                this.modalRef = this.retweetAccountPopupService
+                    .open(RetweetAccountDialogComponent);
             }
         });
     }

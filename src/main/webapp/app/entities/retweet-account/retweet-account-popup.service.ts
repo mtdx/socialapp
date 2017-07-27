@@ -7,40 +7,30 @@ import { RetweetAccountService } from './retweet-account.service';
 
 @Injectable()
 export class RetweetAccountPopupService {
-    private ngbModalRef: NgbModalRef;
-
+    private isOpen = false;
     constructor(
         private datePipe: DatePipe,
         private modalService: NgbModal,
         private router: Router,
         private retweetAccountService: RetweetAccountService
 
-    ) {
-        this.ngbModalRef = null;
-    }
+    ) {}
 
-    open(component: Component, id?: number | any): Promise<NgbModalRef> {
-        return new Promise<NgbModalRef>((resolve, reject) => {
-            const isOpen = this.ngbModalRef !== null;
-            if (isOpen) {
-                resolve(this.ngbModalRef);
-            }
+    open(component: Component, id?: number | any): NgbModalRef {
+        if (this.isOpen) {
+            return;
+        }
+        this.isOpen = true;
 
-            if (id) {
-                this.retweetAccountService.find(id).subscribe((retweetAccount) => {
-                    retweetAccount.created = this.datePipe
-                        .transform(retweetAccount.created, 'yyyy-MM-ddThh:mm');
-                    this.ngbModalRef = this.retweetAccountModalRef(component, retweetAccount);
-                    resolve(this.ngbModalRef);
-                });
-            } else {
-                // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
-                setTimeout(() => {
-                    this.ngbModalRef = this.retweetAccountModalRef(component, new RetweetAccount());
-                    resolve(this.ngbModalRef);
-                }, 0);
-            }
-        });
+        if (id) {
+            this.retweetAccountService.find(id).subscribe((retweetAccount) => {
+                retweetAccount.created = this.datePipe
+                    .transform(retweetAccount.created, 'yyyy-MM-ddThh:mm');
+                this.retweetAccountModalRef(component, retweetAccount);
+            });
+        } else {
+            return this.retweetAccountModalRef(component, new RetweetAccount());
+        }
     }
 
     retweetAccountModalRef(component: Component, retweetAccount: RetweetAccount): NgbModalRef {
@@ -48,10 +38,10 @@ export class RetweetAccountPopupService {
         modalRef.componentInstance.retweetAccount = retweetAccount;
         modalRef.result.then((result) => {
             this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true });
-            this.ngbModalRef = null;
+            this.isOpen = false;
         }, (reason) => {
             this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true });
-            this.ngbModalRef = null;
+            this.isOpen = false;
         });
         return modalRef;
     }

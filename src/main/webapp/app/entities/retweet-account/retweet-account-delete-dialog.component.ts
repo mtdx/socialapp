@@ -44,6 +44,7 @@ export class RetweetAccountDeleteDialogComponent {
 })
 export class RetweetAccountDeletePopupComponent implements OnInit, OnDestroy {
 
+    modalRef: NgbModalRef;
     routeSub: any;
 
     constructor(
@@ -53,8 +54,8 @@ export class RetweetAccountDeletePopupComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            this.retweetAccountPopupService
-                .open(RetweetAccountDeleteDialogComponent as Component, params['id']);
+            this.modalRef = this.retweetAccountPopupService
+                .open(RetweetAccountDeleteDialogComponent, params['id']);
         });
     }
 
