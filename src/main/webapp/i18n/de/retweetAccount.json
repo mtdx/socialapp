@@ -20,8 +20,7 @@
             "userid": "Userid",
             "username": "Username",
             "keywords": "Keywords",
-            "stop": "Stop",
-            "created": "Created"
+            "stop": "Stop"
         }
     }
 }

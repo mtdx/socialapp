@@ -1,7 +1,6 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { DatePipe } from '@angular/common';
 import { RetweetAccount } from './retweet-account.model';
 import { RetweetAccountService } from './retweet-account.service';
 
@@ -9,7 +8,6 @@ import { RetweetAccountService } from './retweet-account.service';
 export class RetweetAccountPopupService {
     private isOpen = false;
     constructor(
-        private datePipe: DatePipe,
         private modalService: NgbModal,
         private router: Router,
         private retweetAccountService: RetweetAccountService
@@ -24,8 +22,6 @@ export class RetweetAccountPopupService {
 
         if (id) {
             this.retweetAccountService.find(id).subscribe((retweetAccount) => {
-                retweetAccount.created = this.datePipe
-                    .transform(retweetAccount.created, 'yyyy-MM-ddThh:mm');
                 this.retweetAccountModalRef(component, retweetAccount);
             });
         } else {

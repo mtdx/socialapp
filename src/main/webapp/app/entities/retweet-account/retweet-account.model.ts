@@ -14,7 +14,6 @@ export class RetweetAccount implements BaseEntity {
         public username?: string,
         public keywords?: string,
         public stop?: boolean,
-        public created?: any,
     ) {
         this.stop = false;
     }

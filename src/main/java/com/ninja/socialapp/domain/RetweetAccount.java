@@ -7,7 +7,6 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
@@ -49,9 +48,6 @@ public class RetweetAccount implements Serializable {
 
     @Column(name = "jhi_stop")
     private Boolean stop;
-
-    @Column(name = "created")
-    private Instant created;
 
     public Long getId() {
         return id;
@@ -126,19 +122,6 @@ public class RetweetAccount implements Serializable {
         this.stop = stop;
     }
 
-    public Instant getCreated() {
-        return created;
-    }
-
-    public RetweetAccount created(Instant created) {
-        this.created = created;
-        return this;
-    }
-
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -168,7 +151,6 @@ public class RetweetAccount implements Serializable {
             ", username='" + getUsername() + "'" +
             ", keywords='" + getKeywords() + "'" +
             ", stop='" + isStop() + "'" +
-            ", created='" + getCreated() + "'" +
             "}";
     }
 }

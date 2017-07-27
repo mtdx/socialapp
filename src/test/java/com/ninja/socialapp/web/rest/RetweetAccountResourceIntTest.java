@@ -23,8 +23,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,9 +54,6 @@ public class RetweetAccountResourceIntTest {
 
     private static final Boolean DEFAULT_STOP = false;
     private static final Boolean UPDATED_STOP = true;
-
-    private static final Instant DEFAULT_CREATED = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private RetweetAccountRepository retweetAccountRepository;
@@ -107,8 +102,7 @@ public class RetweetAccountResourceIntTest {
             .userid(DEFAULT_USERID)
             .username(DEFAULT_USERNAME)
             .keywords(DEFAULT_KEYWORDS)
-            .stop(DEFAULT_STOP)
-            .created(DEFAULT_CREATED);
+            .stop(DEFAULT_STOP);
         return retweetAccount;
     }
 
@@ -138,7 +132,6 @@ public class RetweetAccountResourceIntTest {
         assertThat(testRetweetAccount.getUsername()).isEqualTo(DEFAULT_USERNAME);
         assertThat(testRetweetAccount.getKeywords()).isEqualTo(DEFAULT_KEYWORDS);
         assertThat(testRetweetAccount.isStop()).isEqualTo(DEFAULT_STOP);
-        assertThat(testRetweetAccount.getCreated()).isEqualTo(DEFAULT_CREATED);
 
         // Validate the RetweetAccount in Elasticsearch
         RetweetAccount retweetAccountEs = retweetAccountSearchRepository.findOne(testRetweetAccount.getId());
@@ -215,8 +208,7 @@ public class RetweetAccountResourceIntTest {
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].keywords").value(hasItem(DEFAULT_KEYWORDS.toString())))
-            .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())))
-            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())));
+            .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())));
     }
 
     @Test
@@ -234,8 +226,7 @@ public class RetweetAccountResourceIntTest {
             .andExpect(jsonPath("$.userid").value(DEFAULT_USERID.toString()))
             .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()))
             .andExpect(jsonPath("$.keywords").value(DEFAULT_KEYWORDS.toString()))
-            .andExpect(jsonPath("$.stop").value(DEFAULT_STOP.booleanValue()))
-            .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()));
+            .andExpect(jsonPath("$.stop").value(DEFAULT_STOP.booleanValue()));
     }
 
     @Test
@@ -261,8 +252,7 @@ public class RetweetAccountResourceIntTest {
             .userid(UPDATED_USERID)
             .username(UPDATED_USERNAME)
             .keywords(UPDATED_KEYWORDS)
-            .stop(UPDATED_STOP)
-            .created(UPDATED_CREATED);
+            .stop(UPDATED_STOP);
 
         restRetweetAccountMockMvc.perform(put("/api/retweet-accounts")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -278,7 +268,6 @@ public class RetweetAccountResourceIntTest {
         assertThat(testRetweetAccount.getUsername()).isEqualTo(UPDATED_USERNAME);
         assertThat(testRetweetAccount.getKeywords()).isEqualTo(UPDATED_KEYWORDS);
         assertThat(testRetweetAccount.isStop()).isEqualTo(UPDATED_STOP);
-        assertThat(testRetweetAccount.getCreated()).isEqualTo(UPDATED_CREATED);
 
         // Validate the RetweetAccount in Elasticsearch
         RetweetAccount retweetAccountEs = retweetAccountSearchRepository.findOne(testRetweetAccount.getId());
@@ -340,8 +329,7 @@ public class RetweetAccountResourceIntTest {
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].keywords").value(hasItem(DEFAULT_KEYWORDS.toString())))
-            .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())))
-            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())));
+            .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())));
     }
 
     @Test

@@ -40,10 +40,6 @@
         {
             "fieldName": "stop",
             "fieldType": "Boolean"
-        },
-        {
-            "fieldName": "created",
-            "fieldType": "Instant"
         }
     ],
     "changelogDate": "20170727115336",
