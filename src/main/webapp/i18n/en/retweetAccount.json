@@ -19,7 +19,7 @@
             "status": "Status",
             "userid": "Userid",
             "username": "Username",
-            "keywords": "Keywords",
+            "keywords": "Keywords (separated by comma, empty retweets all)",
             "stop": "Stop"
         }
     }
