@@ -207,6 +207,7 @@ public class TwitterAccountService {
      *  @param twitterAccount the entity we need to clean
      */
     private TwitterAccount filterExtraSingle(TwitterAccount twitterAccount){
+            if (twitterAccount == null) return null;
             twitterAccount.getHeader().setImage(new byte[0]);
             twitterAccount.getHeader().setImageContentType("");
             twitterAccount.getAvatar().setImage(new byte[0]);
