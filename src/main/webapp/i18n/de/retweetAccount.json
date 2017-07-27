@@ -20,6 +20,7 @@
             "userid": "Userid",
             "username": "Username",
             "keywords": "Keywords (separated by comma, empty retweets all)",
+            "keywords2": "Keywords",
             "stop": "Stop"
         }
     }
