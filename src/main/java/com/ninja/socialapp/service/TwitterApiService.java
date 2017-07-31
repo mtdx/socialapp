@@ -120,6 +120,9 @@ public class TwitterApiService {
      */
     public void setupRetweetAccounts(final List<TwitterAccount> twitterAccounts) {
         for (TwitterAccount twitterAccount : twitterAccounts) {
+            if (twitterAccount.getRetweetAccount() == null) {
+                continue;
+            }
             final Twitter twitterClient = getTwitterInstance(twitterAccount);
             new Thread(() -> retweetAccount(twitterAccount, twitterClient)).start();
             threadWait(getRandInt(5, 15));
