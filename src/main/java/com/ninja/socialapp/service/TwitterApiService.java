@@ -1,9 +1,6 @@
 package com.ninja.socialapp.service;
 
-import com.ninja.socialapp.domain.Competitor;
-import com.ninja.socialapp.domain.TwitterAccount;
-import com.ninja.socialapp.domain.TwitterKeyword;
-import com.ninja.socialapp.domain.TwitterSettings;
+import com.ninja.socialapp.domain.*;
 import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
@@ -11,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import twitter4j.*;
+import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.io.ByteArrayInputStream;
@@ -43,7 +41,7 @@ public class TwitterApiService {
     private int currentYear;
 
     public TwitterApiService(TwitterErrorService twitterErrorService, TwitterAccountService twitterAccountService,
-                             CompetitorService competitorService, TwitterKeywordService twitterKeywordService){
+                             CompetitorService competitorService, TwitterKeywordService twitterKeywordService) {
         this.twitterErrorService = twitterErrorService;
         this.twitterAccountService = twitterAccountService;
         this.competitorService = competitorService;
@@ -80,7 +78,7 @@ public class TwitterApiService {
     /**
      * Just get and pass the idle accounts and start a thread
      */
-    public void setupUpdateAccounts(final List<TwitterAccount> twitterAccounts){
+    public void setupUpdateAccounts(final List<TwitterAccount> twitterAccounts) {
         for (TwitterAccount twitterAccount : twitterAccounts) {
             final Twitter twitterClient = getTwitterInstance(twitterAccount);
             new Thread(() -> updateAccount(twitterAccount, twitterClient)).start();
@@ -94,6 +92,14 @@ public class TwitterApiService {
     public void retweetAccount(final TwitterAccount twitterAccount, final Twitter twitterClient) {
         log.debug("Call to retweet a twitter account via TwitterAPI: {}", twitterAccount.getEmail());
         try {
+            if (twitterAccount.getRetweetAccount() != null) {
+                RetweetAccount retweetAccount = twitterAccount.getRetweetAccount();
+                Status tweet = twitterClient.getUserTimeline(Long.valueOf(retweetAccount.getUserid())).get(0);
+                if (!tweet.isRetweeted()
+                    && hasRetweetKeywords(tweet.getText().toLowerCase(), retweetAccount.getKeywords().toLowerCase())) {
+                    twitterClient.retweetStatus(tweet.getId());
+                }
+            }
 
             TwitterStatus status = getRightStatus(twitterAccount);
             twitterAccount.setPrevStatus(status);
@@ -101,15 +107,17 @@ public class TwitterApiService {
             twitterAccountService.save(twitterAccount);
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.UPDATE);
-            twitterAccount.setStatus(TwitterStatus.AUTH_ERROR);
+            TwitterStatus status = getRightStatus(twitterAccount);
+            twitterAccount.setPrevStatus(status);
+            twitterAccount.setStatus(status);
             twitterAccountService.save(twitterAccount);
         }
     }
-    }
-        /**
-         * Just get and pass the available accounts
-         */
-    public void setupRetweetAccounts(final List<TwitterAccount> twitterAccounts){
+
+    /**
+     * Just get and pass the available accounts
+     */
+    public void setupRetweetAccounts(final List<TwitterAccount> twitterAccounts) {
         for (TwitterAccount twitterAccount : twitterAccounts) {
             final Twitter twitterClient = getTwitterInstance(twitterAccount);
             new Thread(() -> retweetAccount(twitterAccount, twitterClient)).start();
@@ -120,7 +128,7 @@ public class TwitterApiService {
     /**
      * Just get and pass the  followers from the competitor it receives
      */
-    public long setupFollowers(final TwitterAccount twitterAccount, Long cursor, final Competitor competitor, final TwitterSettings twitterSettings){
+    public long setupFollowers(final TwitterAccount twitterAccount, Long cursor, final Competitor competitor, final TwitterSettings twitterSettings) {
         Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             IDs ids = twitterClient.getFollowersIDs(Long.parseLong(competitor.getUserid()), cursor);
@@ -136,7 +144,7 @@ public class TwitterApiService {
      * Here we do most of the work, we like the followers we get
      */
     private void likeFollowersTweetsOf(long[] followers, Twitter twitterClient, final TwitterAccount twitterAccount,
-                                       final long competitorId, final TwitterSettings twitterSettings){
+                                       final long competitorId, final TwitterSettings twitterSettings) {
         log.debug("Call to create twitter likes via TwitterAPI: {}", twitterAccount.getEmail());
         Long likes = 0L;
         try {
@@ -164,7 +172,8 @@ public class TwitterApiService {
                     String tweetText = tweet.getText();
                     threadWait(getRandInt(15, 105));
 
-                    if (tweetText.length() >= 70 && getRandInt(1, 100) <= twitterSettings.getRetweetPercent()) {
+                    if (twitterAccount.getRetweetAccount() == null && tweetText.length() >= 70
+                        && getRandInt(1, 100) <= twitterSettings.getRetweetPercent()) {
                         twitterClient.retweetStatus(tweetId); // also we retweet, a % & only long tweets
                     } else {
                         twitterClient.createFavorite(tweetId);
@@ -188,10 +197,10 @@ public class TwitterApiService {
                                 final long twitterKeywordId, final Integer minCompetitorFollowers) {
         log.debug("Call to add competitors via TwitterAPI: {}", twitterAccount.getEmail());
         Integer competitors = 0;
-        for (User user : users){
+        for (User user : users) {
             if (user.getFavouritesCount() >= minCompetitorFollowers) {
                 String userId = String.valueOf(user.getId());
-                if (competitorService.findByUserid(userId).isPresent()){
+                if (competitorService.findByUserid(userId).isPresent()) {
                     continue;
                 }
                 Competitor competitor = new Competitor();
@@ -213,7 +222,7 @@ public class TwitterApiService {
     /**
      * Destroy previous likes older than 2 days
      */
-    private void destroyLikes(final TwitterAccount twitterAccount, Twitter twitterClient){
+    private void destroyLikes(final TwitterAccount twitterAccount, Twitter twitterClient) {
         log.debug("Call to destroy twitter likes via TwitterAPI: {}", twitterAccount.getEmail());
         Paging paging = new Paging(1);
         List<Status> list = new ArrayList<>();
@@ -295,7 +304,7 @@ public class TwitterApiService {
     /**
      * Adds competitors by keyword
      */
-    public int setupCompetitors(final TwitterAccount twitterAccount, Integer page, final TwitterKeyword twitterKeyword, final TwitterSettings twitterSettings){
+    public int setupCompetitors(final TwitterAccount twitterAccount, Integer page, final TwitterKeyword twitterKeyword, final TwitterSettings twitterSettings) {
         Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             ResponseList<User> users = twitterClient.searchUsers(twitterKeyword.getKeyword(), page);
@@ -308,7 +317,7 @@ public class TwitterApiService {
         return page;
     }
 
-    public void refreshDate(){
+    public void refreshDate() {
         LocalDate localDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         currentMonth = localDate.getMonthValue();
         currentYear = localDate.getYear();
@@ -319,11 +328,21 @@ public class TwitterApiService {
     }
 
     private TwitterStatus getRightStatus(final TwitterAccount twitterAccount) {
-        return  (twitterAccount.getPrevStatus() != TwitterStatus.PENDING_UPDATE
+        return (twitterAccount.getPrevStatus() != TwitterStatus.PENDING_UPDATE
             && twitterAccount.getPrevStatus() != TwitterStatus.AUTH_ERROR
             && twitterAccount.getPrevStatus() != TwitterStatus.SUSPENDED
             && twitterAccount.getPrevStatus() != TwitterStatus.LOCKED
             && twitterAccount.getPrevStatus() != TwitterStatus.LOCK)
             ? twitterAccount.getPrevStatus() : TwitterStatus.IDLE;
+    }
+
+    private boolean hasRetweetKeywords(String tweet, String keywordsAll) {
+        String[] keywords = keywordsAll.split(",");
+        for (String keyword : keywords) {
+            if (tweet.contains(keyword.trim()))
+                return true;
+        }
+
+        return false;
     }
 }

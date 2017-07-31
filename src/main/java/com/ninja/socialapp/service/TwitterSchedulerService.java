@@ -211,15 +211,18 @@ public class TwitterSchedulerService {
     /**
      * We check for done competitors and we reset older than 3 months done
      * <p>
-     * This is scheduled to get fired every week.
+     * This is scheduled to get fired every 2 minutes.
      * </p>
      */
     @Async
-    @Scheduled(cron = "0 */5 * * * *")
+    @Scheduled(cron = "0 */2 * * * *")
     public void processRetweets() {
         log.debug("Run scheduled process retweets {}");
         List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
-        for (TwitterAccount twitterAccount : twitterAccounts){
+        for (TwitterAccount twitterAccount : twitterAccounts) {
+            if (twitterAccount.getRetweetAccount() == null) {
+                continue;
+            }
             twitterAccount.setStatus(TwitterStatus.LOCK);
             twitterAccountService.save(twitterAccount);
         }
