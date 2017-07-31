@@ -66,12 +66,7 @@ public class TwitterApiService {
                 twitterClient.updateProfileBanner(new ByteArrayInputStream(twitterAccount.getHeader().getImage()));
 
             twitterAccount.setUsername(user.getScreenName());
-            TwitterStatus status = (twitterAccount.getPrevStatus() != TwitterStatus.PENDING_UPDATE
-                && twitterAccount.getPrevStatus() != TwitterStatus.AUTH_ERROR
-                && twitterAccount.getPrevStatus() != TwitterStatus.SUSPENDED
-                && twitterAccount.getPrevStatus() != TwitterStatus.LOCKED
-                && twitterAccount.getPrevStatus() != TwitterStatus.LOCK)
-                ? twitterAccount.getPrevStatus() : TwitterStatus.IDLE;
+            TwitterStatus status = getRightStatus(twitterAccount);
             twitterAccount.setPrevStatus(status);
             twitterAccount.setStatus(status);
             twitterAccountService.save(twitterAccount);
@@ -83,12 +78,41 @@ public class TwitterApiService {
     }
 
     /**
-     * Just get and pass the  followers from the competitor it receives
+     * Just get and pass the idle accounts and start a thread
      */
     public void setupUpdateAccounts(final List<TwitterAccount> twitterAccounts){
         for (TwitterAccount twitterAccount : twitterAccounts) {
             final Twitter twitterClient = getTwitterInstance(twitterAccount);
             new Thread(() -> updateAccount(twitterAccount, twitterClient)).start();
+            threadWait(getRandInt(5, 15));
+        }
+    }
+
+    /**
+     * Updates a twitter account via API
+     */
+    public void retweetAccount(final TwitterAccount twitterAccount, final Twitter twitterClient) {
+        log.debug("Call to retweet a twitter account via TwitterAPI: {}", twitterAccount.getEmail());
+        try {
+
+            TwitterStatus status = getRightStatus(twitterAccount);
+            twitterAccount.setPrevStatus(status);
+            twitterAccount.setStatus(status);
+            twitterAccountService.save(twitterAccount);
+        } catch (TwitterException ex) {
+            twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.UPDATE);
+            twitterAccount.setStatus(TwitterStatus.AUTH_ERROR);
+            twitterAccountService.save(twitterAccount);
+        }
+    }
+    }
+        /**
+         * Just get and pass the available accounts
+         */
+    public void setupRetweetAccounts(final List<TwitterAccount> twitterAccounts){
+        for (TwitterAccount twitterAccount : twitterAccounts) {
+            final Twitter twitterClient = getTwitterInstance(twitterAccount);
+            new Thread(() -> retweetAccount(twitterAccount, twitterClient)).start();
             threadWait(getRandInt(5, 15));
         }
     }
@@ -292,5 +316,14 @@ public class TwitterApiService {
 
     private static int getRandInt(int min, int max) {
         return ThreadLocalRandom.current().nextInt(min, max + 1);
+    }
+
+    private TwitterStatus getRightStatus(final TwitterAccount twitterAccount) {
+        return  (twitterAccount.getPrevStatus() != TwitterStatus.PENDING_UPDATE
+            && twitterAccount.getPrevStatus() != TwitterStatus.AUTH_ERROR
+            && twitterAccount.getPrevStatus() != TwitterStatus.SUSPENDED
+            && twitterAccount.getPrevStatus() != TwitterStatus.LOCKED
+            && twitterAccount.getPrevStatus() != TwitterStatus.LOCK)
+            ? twitterAccount.getPrevStatus() : TwitterStatus.IDLE;
     }
 }
