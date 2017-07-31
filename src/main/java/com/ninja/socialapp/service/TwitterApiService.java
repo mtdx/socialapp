@@ -14,6 +14,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.io.ByteArrayInputStream;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -156,6 +157,8 @@ public class TwitterApiService {
         }
         for (Long ID : followers) {
             threadWait(getRandInt(5, 15));  // 180 per 15 min request limit
+            if (LocalTime.now().getMinute() % 2 == 0)
+                retweetAccount(twitterAccount, twitterClient); // check if new tweets to be retweeted
             if (isSpamAccount(ID, twitterClient, twitterAccount, twitterSettings))
                 continue;  // we try to target real accounts only
             try {
