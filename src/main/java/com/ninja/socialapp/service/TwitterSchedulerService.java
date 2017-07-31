@@ -6,6 +6,7 @@ import com.ninja.socialapp.domain.TwitterKeyword;
 import com.ninja.socialapp.domain.TwitterSettings;
 import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.domain.enumeration.KeywordStatus;
+import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -220,7 +221,8 @@ public class TwitterSchedulerService {
         log.debug("Run scheduled process retweets {}");
         List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
         for (TwitterAccount twitterAccount : twitterAccounts) {
-            if (twitterAccount.getRetweetAccount() == null) {
+            if (twitterAccount.getRetweetAccount() == null
+                || twitterAccount.getRetweetAccount().getStatus() == RetweetAccountStatus.STOPPED) {
                 continue;
             }
             twitterAccount.setStatus(TwitterStatus.LOCK);

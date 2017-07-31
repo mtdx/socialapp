@@ -2,6 +2,7 @@ package com.ninja.socialapp.service;
 
 import com.ninja.socialapp.domain.*;
 import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
+import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import org.slf4j.Logger;
@@ -93,7 +94,8 @@ public class TwitterApiService {
     public void retweetAccount(final TwitterAccount twitterAccount, final Twitter twitterClient) {
         log.debug("Call to retweet a twitter account via TwitterAPI: {}", twitterAccount.getEmail());
         try {
-            if (twitterAccount.getRetweetAccount() != null) {
+            if (twitterAccount.getRetweetAccount() != null
+                && twitterAccount.getRetweetAccount().getStatus() != RetweetAccountStatus.STOPPED) {
                 RetweetAccount retweetAccount = twitterAccount.getRetweetAccount();
                 Status tweet = twitterClient.getUserTimeline(Long.valueOf(retweetAccount.getUserid())).get(0);
                 if (!tweet.isRetweeted() && !tweet.isRetweetedByMe() && tweet.getInReplyToStatusId() <= 0
@@ -120,7 +122,8 @@ public class TwitterApiService {
      */
     public void setupRetweetAccounts(final List<TwitterAccount> twitterAccounts) {
         for (TwitterAccount twitterAccount : twitterAccounts) {
-            if (twitterAccount.getRetweetAccount() == null) {
+            if (twitterAccount.getRetweetAccount() == null
+                || twitterAccount.getRetweetAccount().getStatus() == RetweetAccountStatus.STOPPED) {
                 continue;
             }
             final Twitter twitterClient = getTwitterInstance(twitterAccount);
