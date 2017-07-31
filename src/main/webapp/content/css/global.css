@@ -276,3 +276,7 @@ Social Buttons
 .dropdown-menu.lang li a {
     text-transform: uppercase;
 }
+
+.table thead th {
+    white-space: nowrap;
+}
