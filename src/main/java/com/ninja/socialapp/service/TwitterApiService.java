@@ -96,8 +96,8 @@ public class TwitterApiService {
             if (twitterAccount.getRetweetAccount() != null) {
                 RetweetAccount retweetAccount = twitterAccount.getRetweetAccount();
                 Status tweet = twitterClient.getUserTimeline(Long.valueOf(retweetAccount.getUserid())).get(0);
-                if (!tweet.isRetweeted()
-                    && hasRetweetKeywords(tweet.getText().toLowerCase(), retweetAccount.getKeywords().toLowerCase())) {
+                if (!tweet.isRetweeted() && !tweet.isRetweetedByMe() && tweet.getInReplyToStatusId() <= 0
+                    && hasRetweetKeywords(tweet.getText().toLowerCase(), retweetAccount.getKeywords().trim().toLowerCase())) {
                     twitterClient.retweetStatus(tweet.getId());
                 }
             }
