@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -33,7 +34,11 @@ public class StartupReset {
      */
     @PostConstruct
     public void init(){
-        List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByStatus(TwitterStatus.WORKING);
+        List<TwitterAccount> twitterAccounts1 = twitterAccountService.findAllByStatus(TwitterStatus.WORKING);
+        List<TwitterAccount> twitterAccounts2 = twitterAccountService.findAllByStatus(TwitterStatus.LOCK);
+        List<TwitterAccount> twitterAccounts = new ArrayList<>(twitterAccounts1);
+        twitterAccounts.addAll(twitterAccounts2);
+
         List<Competitor> competitors = competitorService.findAllByStatus(CompetitorStatus.LOCK);
 
         for (TwitterAccount account : twitterAccounts) {
