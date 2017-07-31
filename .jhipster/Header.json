@@ -19,7 +19,7 @@
                 "required",
                 "maxbytes"
             ],
-            "fieldValidateRulesMaxbytes": "400000"
+            "fieldValidateRulesMaxbytes": "2000000"
         }
     ],
     "changelogDate": "20170530193513",

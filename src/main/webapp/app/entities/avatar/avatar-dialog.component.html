@@ -40,7 +40,7 @@
                 <input type="file" id="fileImage" (change)="setFileData($event, avatar, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
             </div>
             <input type="hidden" class="form-control" name="image" id="field_image"
-                [(ngModel)]="avatar.image" required maxbytes="80000" />
+                   [(ngModel)]="avatar.image" required maxbytes="200000"/>
             <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
                 [(ngModel)]="avatar.imageContentType" />
             <div [hidden]="!(editForm.controls.image?.dirty && editForm.controls.image?.invalid)">
@@ -49,8 +49,9 @@
                    This field is required.
                 </small>
                 <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.image?.errors?.maxbytes" jhiTranslate="entity.validation.maxbytes" translateValues="{ max: 80000 }">
-                    This field cannot be more than 80000.
+                       [hidden]="!editForm.controls.image?.errors?.maxbytes" jhiTranslate="entity.validation.maxbytes"
+                       translateValues="{ max: 200000 }">
+                    This field cannot be more than 200000.
                 </small>
             </div>
         </div>

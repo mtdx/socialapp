@@ -1,13 +1,11 @@
 package com.ninja.socialapp.web.rest;
 
 import com.ninja.socialapp.SocialappApp;
-
 import com.ninja.socialapp.domain.Avatar;
 import com.ninja.socialapp.repository.AvatarRepository;
-import com.ninja.socialapp.service.AvatarService;
 import com.ninja.socialapp.repository.search.AvatarSearchRepository;
+import com.ninja.socialapp.service.AvatarService;
 import com.ninja.socialapp.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +42,7 @@ public class AvatarResourceIntTest {
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final byte[] DEFAULT_IMAGE = TestUtil.createByteArray(1, "0");
-    private static final byte[] UPDATED_IMAGE = TestUtil.createByteArray(80000, "1");
+    private static final byte[] UPDATED_IMAGE = TestUtil.createByteArray(200000, "1");
     private static final String DEFAULT_IMAGE_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_IMAGE_CONTENT_TYPE = "image/png";
 
