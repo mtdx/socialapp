@@ -97,9 +97,8 @@ public class TwitterApiService {
             if (twitterAccount.getRetweetAccount() != null
                 && twitterAccount.getRetweetAccount().getStatus() != RetweetAccountStatus.STOPPED) {
                 RetweetAccount retweetAccount = twitterAccount.getRetweetAccount();
-                Status tweet = twitterClient.getUserTimeline(Long.valueOf(retweetAccount.getUserid())).get(0);
-                if (!tweet.isRetweeted() && !tweet.isRetweetedByMe() && tweet.getInReplyToStatusId() <= 0
-                    && hasRetweetKeywords(tweet.getText().toLowerCase(), retweetAccount.getKeywords().trim().toLowerCase())) {
+                Status tweet = twitterClient.showStatus(Long.valueOf(retweetAccount.getTweetId()));
+                if (!tweet.isRetweetedByMe() && tweet.getInReplyToStatusId() <= 0) {
                     twitterClient.retweetStatus(tweet.getId());
                 }
             }
@@ -343,15 +342,5 @@ public class TwitterApiService {
             && twitterAccount.getPrevStatus() != TwitterStatus.LOCKED
             && twitterAccount.getPrevStatus() != TwitterStatus.LOCK)
             ? twitterAccount.getPrevStatus() : TwitterStatus.IDLE;
-    }
-
-    private boolean hasRetweetKeywords(String tweet, String keywordsAll) {
-        String[] keywords = keywordsAll.split(",");
-        for (String keyword : keywords) {
-            if (tweet.contains(keyword.trim()))
-                return true;
-        }
-
-        return false;
     }
 }
