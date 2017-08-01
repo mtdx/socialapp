@@ -15,11 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import twitter4j.TwitterException;
 
-
 import java.time.Instant;
 import java.util.List;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * Service Implementation for managing TwitterError.
@@ -136,7 +135,7 @@ public class TwitterErrorService {
                 ex.getRateLimitStatus().getRemaining(), ex.getRateLimitStatus().getLimit()));
         }
         twitterError.setStatusCode(ex.getStatusCode());
-
+        twitterError.setCreated_at(Instant.now());
         save(twitterError);
         saveAccount(ex.getErrorCode(), twitterAccount);
     }
