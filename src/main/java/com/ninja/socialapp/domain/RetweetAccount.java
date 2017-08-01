@@ -33,12 +33,6 @@ public class RetweetAccount implements Serializable {
     private RetweetAccountStatus status;
 
     @NotNull
-    @Size(min = 2, max = 20)
-    @Pattern(regexp = "(^\\d+$)")
-    @Column(name = "userid", length = 20, nullable = false)
-    private String userid;
-
-    @NotNull
     @Size(min = 4, max = 15)
     @Pattern(regexp = "(^[a-zA-Z0-9_]*$)")
     @Column(name = "username", length = 15, nullable = false)
@@ -74,19 +68,6 @@ public class RetweetAccount implements Serializable {
         this.status = status;
     }
 
-    public String getUserid() {
-        return userid;
-    }
-
-    public RetweetAccount userid(String userid) {
-        this.userid = userid;
-        return this;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -104,13 +85,13 @@ public class RetweetAccount implements Serializable {
         return tweetId;
     }
 
-    public void setTweetId(String tweetId) {
-        this.tweetId = tweetId;
-    }
-
     public RetweetAccount tweetId(String tweetId) {
         this.tweetId = tweetId;
         return this;
+    }
+
+    public void setTweetId(String tweetId) {
+        this.tweetId = tweetId;
     }
 
     public Boolean isStop() {
@@ -151,7 +132,6 @@ public class RetweetAccount implements Serializable {
         return "RetweetAccount{" +
             "id=" + getId() +
             ", status='" + getStatus() + "'" +
-            ", userid='" + getUserid() + "'" +
             ", username='" + getUsername() + "'" +
             ", tweetId='" + getTweetId() + "'" +
             ", stop='" + isStop() + "'" +

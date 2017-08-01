@@ -8,19 +8,6 @@
             "fieldValues": "IN_PROGRESS,LOCK,STOPPED"
         },
         {
-            "fieldName": "userid",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "minlength",
-                "maxlength",
-                "pattern"
-            ],
-            "fieldValidateRulesMinlength": "2",
-            "fieldValidateRulesMaxlength": "20",
-            "fieldValidateRulesPattern": "(^\\d+$)"
-        },
-        {
             "fieldName": "username",
             "fieldType": "String",
             "fieldValidateRules": [

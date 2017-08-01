@@ -12,6 +12,10 @@
                     columnName="keywords">
         </dropColumn>
 
+        <dropColumn tableName="retweet_account"
+                    columnName="userid">
+        </dropColumn>
+
         <addColumn tableName="retweet_account">
             <column name="tweet_id" type="varchar(20)">
                 <constraints nullable="false" />

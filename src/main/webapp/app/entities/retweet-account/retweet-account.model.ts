@@ -10,7 +10,6 @@ export class RetweetAccount implements BaseEntity {
     constructor(
         public id?: number,
         public status?: RetweetAccountStatus,
-        public userid?: string,
         public username?: string,
         public tweetId?: string,
         public stop?: boolean,

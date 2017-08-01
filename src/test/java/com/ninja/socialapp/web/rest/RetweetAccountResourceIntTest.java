@@ -40,9 +40,6 @@ public class RetweetAccountResourceIntTest {
     private static final RetweetAccountStatus DEFAULT_STATUS = RetweetAccountStatus.IN_PROGRESS;
     private static final RetweetAccountStatus UPDATED_STATUS = RetweetAccountStatus.IN_PROGRESS;
 
-    private static final String DEFAULT_USERID = "37";
-    private static final String UPDATED_USERID = "22";
-
     private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";
 
@@ -96,7 +93,6 @@ public class RetweetAccountResourceIntTest {
     public static RetweetAccount createEntity(EntityManager em) {
         RetweetAccount retweetAccount = new RetweetAccount()
             .status(DEFAULT_STATUS)
-            .userid(DEFAULT_USERID)
             .username(DEFAULT_USERNAME)
             .tweetId(DEFAULT_TWEET_ID)
             .stop(DEFAULT_STOP);
@@ -125,7 +121,6 @@ public class RetweetAccountResourceIntTest {
         assertThat(retweetAccountList).hasSize(databaseSizeBeforeCreate + 1);
         RetweetAccount testRetweetAccount = retweetAccountList.get(retweetAccountList.size() - 1);
         assertThat(testRetweetAccount.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testRetweetAccount.getUserid()).isEqualTo(DEFAULT_USERID);
         assertThat(testRetweetAccount.getUsername()).isEqualTo(DEFAULT_USERNAME);
         assertThat(testRetweetAccount.getTweetId()).isEqualTo(DEFAULT_TWEET_ID);
         assertThat(testRetweetAccount.isStop()).isEqualTo(DEFAULT_STOP);
@@ -152,24 +147,6 @@ public class RetweetAccountResourceIntTest {
         // Validate the Alice in the database
         List<RetweetAccount> retweetAccountList = retweetAccountRepository.findAll();
         assertThat(retweetAccountList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    public void checkUseridIsRequired() throws Exception {
-        int databaseSizeBeforeTest = retweetAccountRepository.findAll().size();
-        // set the field null
-        retweetAccount.setUserid(null);
-
-        // Create the RetweetAccount, which fails.
-
-        restRetweetAccountMockMvc.perform(post("/api/retweet-accounts")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(retweetAccount)))
-            .andExpect(status().isBadRequest());
-
-        List<RetweetAccount> retweetAccountList = retweetAccountRepository.findAll();
-        assertThat(retweetAccountList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -220,7 +197,6 @@ public class RetweetAccountResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(retweetAccount.getId().intValue())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].tweetId").value(hasItem(DEFAULT_TWEET_ID.toString())))
             .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())));
@@ -238,7 +214,6 @@ public class RetweetAccountResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(retweetAccount.getId().intValue()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.userid").value(DEFAULT_USERID.toString()))
             .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()))
             .andExpect(jsonPath("$.tweetId").value(DEFAULT_TWEET_ID.toString()))
             .andExpect(jsonPath("$.stop").value(DEFAULT_STOP.booleanValue()));
@@ -264,7 +239,6 @@ public class RetweetAccountResourceIntTest {
         RetweetAccount updatedRetweetAccount = retweetAccountRepository.findOne(retweetAccount.getId());
         updatedRetweetAccount
             .status(UPDATED_STATUS)
-            .userid(UPDATED_USERID)
             .username(UPDATED_USERNAME)
             .tweetId(UPDATED_TWEET_ID)
             .stop(UPDATED_STOP);
@@ -279,7 +253,6 @@ public class RetweetAccountResourceIntTest {
         assertThat(retweetAccountList).hasSize(databaseSizeBeforeUpdate);
         RetweetAccount testRetweetAccount = retweetAccountList.get(retweetAccountList.size() - 1);
         assertThat(testRetweetAccount.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testRetweetAccount.getUserid()).isEqualTo(UPDATED_USERID);
         assertThat(testRetweetAccount.getUsername()).isEqualTo(UPDATED_USERNAME);
         assertThat(testRetweetAccount.getTweetId()).isEqualTo(UPDATED_TWEET_ID);
         assertThat(testRetweetAccount.isStop()).isEqualTo(UPDATED_STOP);
@@ -341,7 +314,6 @@ public class RetweetAccountResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(retweetAccount.getId().intValue())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].tweetId").value(hasItem(DEFAULT_TWEET_ID.toString())))
             .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())));

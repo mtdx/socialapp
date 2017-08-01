@@ -17,7 +17,6 @@
                 "title": "Retweet Account"
             },
             "status": "Status",
-            "userid": "Userid",
             "username": "Username",
             "tweetId": "Tweet Id",
             "stop": "Stop"
