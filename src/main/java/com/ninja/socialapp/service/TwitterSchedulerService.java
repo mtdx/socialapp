@@ -6,7 +6,6 @@ import com.ninja.socialapp.domain.TwitterKeyword;
 import com.ninja.socialapp.domain.TwitterSettings;
 import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.domain.enumeration.KeywordStatus;
-import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -207,28 +206,5 @@ public class TwitterSchedulerService {
             twitterKeywordService.reset(twitterKeyword);
             twitterKeywordService.save(twitterKeyword);
         }
-    }
-
-    /**
-     * We check for done competitors and we reset older than 3 months done
-     * <p>
-     * This is scheduled to get fired every 2 minutes.
-     * </p>
-     */
-    @Async
-    @Scheduled(cron = "0 */2 * * * *")
-    public void processRetweets() {
-        log.debug("Run scheduled process retweets {}");
-        List<TwitterAccount> twitterAccounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
-        for (TwitterAccount twitterAccount : twitterAccounts) {
-            if (twitterAccount.getRetweetAccount() == null
-                || twitterAccount.getRetweetAccount().getStatus() == RetweetAccountStatus.STOPPED) {
-                continue;
-            }
-            twitterAccount.setStatus(TwitterStatus.LOCK);
-            twitterAccountService.save(twitterAccount);
-        }
-        twitterApiService.setupRetweetAccounts(twitterAccounts);
-
     }
 }

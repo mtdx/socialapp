@@ -2,10 +2,8 @@ package com.ninja.socialapp.repository;
 
 import com.ninja.socialapp.domain.*;
 import com.ninja.socialapp.domain.enumeration.TwitterStatus;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +21,8 @@ public interface TwitterAccountRepository extends JpaRepository<TwitterAccount,L
     List<TwitterAccount> findAllByHeader(Header header);
 
     List<TwitterAccount> findAllByAvatar(Avatar avatar);
+
+    List<TwitterAccount> findAllByRetweetAccount(RetweetAccount retweetAccount);
 
     List<TwitterAccount> findAllByMessage(TwitterMessage message);
 

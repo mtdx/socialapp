@@ -1,6 +1,7 @@
 package com.ninja.socialapp.service;
 
 import com.ninja.socialapp.domain.RetweetAccount;
+import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 import com.ninja.socialapp.repository.RetweetAccountRepository;
 import com.ninja.socialapp.repository.search.RetweetAccountSearchRepository;
 import org.slf4j.Logger;
@@ -10,8 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * Service Implementation for managing RetweetAccount.
@@ -26,9 +26,13 @@ public class RetweetAccountService {
 
     private final RetweetAccountSearchRepository retweetAccountSearchRepository;
 
-    public RetweetAccountService(RetweetAccountRepository retweetAccountRepository, RetweetAccountSearchRepository retweetAccountSearchRepository) {
+    private final TwitterAccountService twitterAccountService;
+
+    public RetweetAccountService(RetweetAccountRepository retweetAccountRepository, RetweetAccountSearchRepository retweetAccountSearchRepository,
+                                 TwitterAccountService twitterAccountService) {
         this.retweetAccountRepository = retweetAccountRepository;
         this.retweetAccountSearchRepository = retweetAccountSearchRepository;
+        this.twitterAccountService = twitterAccountService;
     }
 
     /**
@@ -41,6 +45,8 @@ public class RetweetAccountService {
         log.debug("Request to save RetweetAccount : {}", retweetAccount);
         RetweetAccount result = retweetAccountRepository.save(retweetAccount);
         retweetAccountSearchRepository.save(result);
+        if (retweetAccount.getStatus() != RetweetAccountStatus.STOPPED)
+            twitterAccountService.switchToPendingUpdate(twitterAccountService.findAllByRetweetAccount(retweetAccount));
         return result;
     }
 

@@ -1,6 +1,9 @@
 package com.ninja.socialapp.service;
 
-import com.ninja.socialapp.domain.*;
+import com.ninja.socialapp.domain.Competitor;
+import com.ninja.socialapp.domain.TwitterAccount;
+import com.ninja.socialapp.domain.TwitterKeyword;
+import com.ninja.socialapp.domain.TwitterSettings;
 import com.ninja.socialapp.domain.enumeration.CompetitorStatus;
 import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 import com.ninja.socialapp.domain.enumeration.TwitterErrorType;
@@ -9,13 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import twitter4j.*;
-import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.io.ByteArrayInputStream;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,11 +60,12 @@ public class TwitterApiService {
             User user = twitterClient.updateProfile(twitterAccount.getMessage().getAccountName(),
                 twitterAccount.getMessage().getAccountUrl(), twitterAccount.getMessage().getAccountLocation(),
                 twitterAccount.getMessage().getAccountDescription());
-
             if (twitterAccount.getAvatar() != null)
                 twitterClient.updateProfileImage(new ByteArrayInputStream(twitterAccount.getAvatar().getImage()));
             if (twitterAccount.getHeader() != null)
                 twitterClient.updateProfileBanner(new ByteArrayInputStream(twitterAccount.getHeader().getImage()));
+            // we also check for retweet
+            retweetAccount(twitterAccount, twitterClient);
 
             twitterAccount.setUsername(user.getScreenName());
             TwitterStatus status = getRightStatus(twitterAccount);
@@ -91,44 +93,15 @@ public class TwitterApiService {
     /**
      * Updates a twitter account via API
      */
-    public void retweetAccount(final TwitterAccount twitterAccount, final Twitter twitterClient, final boolean save) {
+    public void retweetAccount(final TwitterAccount twitterAccount, final Twitter twitterClient) {
         log.debug("Call to retweet a twitter account via TwitterAPI: {}", twitterAccount.getEmail());
         try {
             if (twitterAccount.getRetweetAccount() != null
                 && twitterAccount.getRetweetAccount().getStatus() != RetweetAccountStatus.STOPPED) {
-                RetweetAccount retweetAccount = twitterAccount.getRetweetAccount();
-                Status tweet = twitterClient.showStatus(Long.valueOf(retweetAccount.getTweetId()));
-                if (!tweet.isRetweetedByMe() && tweet.getInReplyToStatusId() <= 0) {
-                    twitterClient.retweetStatus(tweet.getId());
-                }
+                twitterClient.retweetStatus(Long.valueOf(twitterAccount.getRetweetAccount().getTweetId()));
             }
-            if (!save) return;
-            TwitterStatus status = getRightStatus(twitterAccount);
-            twitterAccount.setPrevStatus(status);
-            twitterAccount.setStatus(status);
-            twitterAccountService.save(twitterAccount);
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.UPDATE);
-            if (!save) return;
-            TwitterStatus status = getRightStatus(twitterAccount);
-            twitterAccount.setPrevStatus(status);
-            twitterAccount.setStatus(status);
-            twitterAccountService.save(twitterAccount);
-        }
-    }
-
-    /**
-     * Just get and pass the available accounts
-     */
-    public void setupRetweetAccounts(final List<TwitterAccount> twitterAccounts) {
-        for (TwitterAccount twitterAccount : twitterAccounts) {
-            if (twitterAccount.getRetweetAccount() == null
-                || twitterAccount.getRetweetAccount().getStatus() == RetweetAccountStatus.STOPPED) {
-                continue;
-            }
-            final Twitter twitterClient = getTwitterInstance(twitterAccount);
-            new Thread(() -> retweetAccount(twitterAccount, twitterClient, true)).start();
-            threadWait(getRandInt(5, 15));
         }
     }
 
@@ -163,8 +136,6 @@ public class TwitterApiService {
         }
         for (Long ID : followers) {
             threadWait(getRandInt(5, 15));  // 180 per 15 min request limit
-            if (LocalTime.now().getMinute() % 2 == 0)
-                retweetAccount(twitterAccount, twitterClient, false); // check if new tweets to be retweeted
             if (isSpamAccount(ID, twitterClient, twitterAccount, twitterSettings))
                 continue;  // we try to target real accounts only
             try {

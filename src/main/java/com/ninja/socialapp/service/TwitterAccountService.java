@@ -11,11 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.List;
 import java.util.Optional;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * Service Implementation for managing TwitterAccount.
@@ -135,6 +134,18 @@ public class TwitterAccountService {
     public List<TwitterAccount> findAllByAvatar(Avatar avatar) {
         log.debug("Request to get TwitterAccounts by avatar : {}", avatar);
         return twitterAccountRepository.findAllByAvatar(avatar);
+    }
+
+    /**
+     *  Get twitterAccounts by retweet account.
+     *
+     *  @param retweetAccount the entity we search by
+     *  @return the entities
+     */
+    @Transactional(readOnly = true)
+    public List<TwitterAccount> findAllByRetweetAccount(RetweetAccount retweetAccount) {
+        log.debug("Request to get TwitterAccounts by findAllByRetweetAccount: {}", retweetAccount);
+        return twitterAccountRepository.findAllByRetweetAccount(retweetAccount);
     }
 
     /**
