@@ -91,7 +91,7 @@ public class TwitterApiService {
     /**
      * Updates a twitter account via API
      */
-    public void retweetAccount(final TwitterAccount twitterAccount, final Twitter twitterClient) {
+    public void retweetAccount(final TwitterAccount twitterAccount, final Twitter twitterClient, final boolean save) {
         log.debug("Call to retweet a twitter account via TwitterAPI: {}", twitterAccount.getEmail());
         try {
             if (twitterAccount.getRetweetAccount() != null
@@ -102,13 +102,14 @@ public class TwitterApiService {
                     twitterClient.retweetStatus(tweet.getId());
                 }
             }
-
+            if (!save) return;
             TwitterStatus status = getRightStatus(twitterAccount);
             twitterAccount.setPrevStatus(status);
             twitterAccount.setStatus(status);
             twitterAccountService.save(twitterAccount);
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.UPDATE);
+            if (!save) return;
             TwitterStatus status = getRightStatus(twitterAccount);
             twitterAccount.setPrevStatus(status);
             twitterAccount.setStatus(status);
@@ -126,7 +127,7 @@ public class TwitterApiService {
                 continue;
             }
             final Twitter twitterClient = getTwitterInstance(twitterAccount);
-            new Thread(() -> retweetAccount(twitterAccount, twitterClient)).start();
+            new Thread(() -> retweetAccount(twitterAccount, twitterClient, true)).start();
             threadWait(getRandInt(5, 15));
         }
     }
@@ -163,7 +164,7 @@ public class TwitterApiService {
         for (Long ID : followers) {
             threadWait(getRandInt(5, 15));  // 180 per 15 min request limit
             if (LocalTime.now().getMinute() % 2 == 0)
-                retweetAccount(twitterAccount, twitterClient); // check if new tweets to be retweeted
+                retweetAccount(twitterAccount, twitterClient, false); // check if new tweets to be retweeted
             if (isSpamAccount(ID, twitterClient, twitterAccount, twitterSettings))
                 continue;  // we try to target real accounts only
             try {
