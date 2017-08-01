@@ -189,6 +189,8 @@ public class TwitterApiService {
                 competitor.setStatus(CompetitorStatus.IN_PROGRESS);
                 competitor.setLikes(0L);
                 competitor.setCursor(-1L);
+                competitor.setStop(false);
+                competitor.setReset(false);
                 competitor.setCreated(Instant.now());
                 competitorService.save(competitor);
                 competitors++;
