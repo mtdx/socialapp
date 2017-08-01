@@ -1,4 +1,4 @@
-import { BaseEntity } from './../../shared';
+import {BaseEntity} from './../../shared';
 
 const enum RetweetAccountStatus {
     'IN_PROGRESS',
@@ -12,7 +12,7 @@ export class RetweetAccount implements BaseEntity {
         public status?: RetweetAccountStatus,
         public userid?: string,
         public username?: string,
-        public keywords?: string,
+        public tweetId?: string,
         public stop?: boolean,
     ) {
         this.stop = false;

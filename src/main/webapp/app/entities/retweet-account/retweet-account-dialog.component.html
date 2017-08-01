@@ -68,9 +68,27 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="socialappApp.retweetAccount.keywords" for="field_keywords">Keywords (separated by comma, empty retweets all)</label>
-            <textarea class="form-control" name="keywords" id="field_keywords"
-                      [(ngModel)]="retweetAccount.keywords"></textarea>
+            <label class="form-control-label" jhiTranslate="socialappApp.retweetAccount.tweetId" for="field_tweetId">Tweet Id</label>
+            <input type="text" class="form-control" name="tweetId" id="field_tweetId"
+                [(ngModel)]="retweetAccount.tweetId" required minlength="2" maxlength="20" pattern="(^\d+$)" />
+            <div [hidden]="!(editForm.controls.tweetId?.dirty && editForm.controls.tweetId?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.tweetId?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.tweetId?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 2 }">
+                   This field is required to be at least 2 characters.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.tweetId?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
+                   This field cannot be longer than 20 characters.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.tweetId?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Tweet Id' }">
+                    This field should follow pattern for "Tweet Id".
+                </small>
+            </div>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="socialappApp.retweetAccount.stop" for="field_stop">Stop</label>

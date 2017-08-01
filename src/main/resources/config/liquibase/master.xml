@@ -23,5 +23,6 @@
     <include file="classpath:config/liquibase/changelog/indexes/20170710131018_added_entity_indexes_TwitterKeyword.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/alters/20170531124019_alter_entity_TwitterAccount.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/alters/20170531124019_add_indexes_constraints_TwitterAccount.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/alters/20170727115336_alter_entity_RetweetAccount.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

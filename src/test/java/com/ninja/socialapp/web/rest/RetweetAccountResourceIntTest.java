@@ -1,13 +1,12 @@
 package com.ninja.socialapp.web.rest;
 
 import com.ninja.socialapp.SocialappApp;
-
 import com.ninja.socialapp.domain.RetweetAccount;
+import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 import com.ninja.socialapp.repository.RetweetAccountRepository;
-import com.ninja.socialapp.service.RetweetAccountService;
 import com.ninja.socialapp.repository.search.RetweetAccountSearchRepository;
+import com.ninja.socialapp.service.RetweetAccountService;
 import com.ninja.socialapp.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,8 +28,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 /**
  * Test class for the RetweetAccountResource REST controller.
  *
@@ -49,8 +46,8 @@ public class RetweetAccountResourceIntTest {
     private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
     private static final String UPDATED_USERNAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_KEYWORDS = "AAAAAAAAAA";
-    private static final String UPDATED_KEYWORDS = "BBBBBBBBBB";
+    private static final String DEFAULT_TWEET_ID = "88";
+    private static final String UPDATED_TWEET_ID = "22";
 
     private static final Boolean DEFAULT_STOP = false;
     private static final Boolean UPDATED_STOP = false;
@@ -101,7 +98,7 @@ public class RetweetAccountResourceIntTest {
             .status(DEFAULT_STATUS)
             .userid(DEFAULT_USERID)
             .username(DEFAULT_USERNAME)
-            .keywords(DEFAULT_KEYWORDS)
+            .tweetId(DEFAULT_TWEET_ID)
             .stop(DEFAULT_STOP);
         return retweetAccount;
     }
@@ -130,7 +127,7 @@ public class RetweetAccountResourceIntTest {
         assertThat(testRetweetAccount.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testRetweetAccount.getUserid()).isEqualTo(DEFAULT_USERID);
         assertThat(testRetweetAccount.getUsername()).isEqualTo(DEFAULT_USERNAME);
-        assertThat(testRetweetAccount.getKeywords()).isEqualTo(DEFAULT_KEYWORDS);
+        assertThat(testRetweetAccount.getTweetId()).isEqualTo(DEFAULT_TWEET_ID);
         assertThat(testRetweetAccount.isStop()).isEqualTo(DEFAULT_STOP);
 
         // Validate the RetweetAccount in Elasticsearch
@@ -195,6 +192,24 @@ public class RetweetAccountResourceIntTest {
 
     @Test
     @Transactional
+    public void checkTweetIdIsRequired() throws Exception {
+        int databaseSizeBeforeTest = retweetAccountRepository.findAll().size();
+        // set the field null
+        retweetAccount.setTweetId(null);
+
+        // Create the RetweetAccount, which fails.
+
+        restRetweetAccountMockMvc.perform(post("/api/retweet-accounts")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(retweetAccount)))
+            .andExpect(status().isBadRequest());
+
+        List<RetweetAccount> retweetAccountList = retweetAccountRepository.findAll();
+        assertThat(retweetAccountList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllRetweetAccounts() throws Exception {
         // Initialize the database
         retweetAccountRepository.saveAndFlush(retweetAccount);
@@ -207,7 +222,7 @@ public class RetweetAccountResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
-            .andExpect(jsonPath("$.[*].keywords").value(hasItem(DEFAULT_KEYWORDS.toString())))
+            .andExpect(jsonPath("$.[*].tweetId").value(hasItem(DEFAULT_TWEET_ID.toString())))
             .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())));
     }
 
@@ -225,7 +240,7 @@ public class RetweetAccountResourceIntTest {
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.userid").value(DEFAULT_USERID.toString()))
             .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()))
-            .andExpect(jsonPath("$.keywords").value(DEFAULT_KEYWORDS.toString()))
+            .andExpect(jsonPath("$.tweetId").value(DEFAULT_TWEET_ID.toString()))
             .andExpect(jsonPath("$.stop").value(DEFAULT_STOP.booleanValue()));
     }
 
@@ -251,7 +266,7 @@ public class RetweetAccountResourceIntTest {
             .status(UPDATED_STATUS)
             .userid(UPDATED_USERID)
             .username(UPDATED_USERNAME)
-            .keywords(UPDATED_KEYWORDS)
+            .tweetId(UPDATED_TWEET_ID)
             .stop(UPDATED_STOP);
 
         restRetweetAccountMockMvc.perform(put("/api/retweet-accounts")
@@ -266,7 +281,7 @@ public class RetweetAccountResourceIntTest {
         assertThat(testRetweetAccount.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testRetweetAccount.getUserid()).isEqualTo(UPDATED_USERID);
         assertThat(testRetweetAccount.getUsername()).isEqualTo(UPDATED_USERNAME);
-        assertThat(testRetweetAccount.getKeywords()).isEqualTo(UPDATED_KEYWORDS);
+        assertThat(testRetweetAccount.getTweetId()).isEqualTo(UPDATED_TWEET_ID);
         assertThat(testRetweetAccount.isStop()).isEqualTo(UPDATED_STOP);
 
         // Validate the RetweetAccount in Elasticsearch
@@ -328,7 +343,7 @@ public class RetweetAccountResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.toString())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
-            .andExpect(jsonPath("$.[*].keywords").value(hasItem(DEFAULT_KEYWORDS.toString())))
+            .andExpect(jsonPath("$.[*].tweetId").value(hasItem(DEFAULT_TWEET_ID.toString())))
             .andExpect(jsonPath("$.[*].stop").value(hasItem(DEFAULT_STOP.booleanValue())));
     }
 

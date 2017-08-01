@@ -1,15 +1,16 @@
 package com.ninja.socialapp.domain;
 
+import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.ninja.socialapp.domain.enumeration.RetweetAccountStatus;
 
 /**
  * A RetweetAccount.
@@ -43,8 +44,11 @@ public class RetweetAccount implements Serializable {
     @Column(name = "username", length = 15, nullable = false)
     private String username;
 
-    @Column(name = "keywords")
-    private String keywords;
+    @NotNull
+    @Size(min = 2, max = 20)
+    @Pattern(regexp = "(^\\d+$)")
+    @Column(name = "tweet_id", length = 20, nullable = false)
+    private String tweetId;
 
     @Column(name = "jhi_stop")
     private Boolean stop;
@@ -96,17 +100,17 @@ public class RetweetAccount implements Serializable {
         this.username = username;
     }
 
-    public String getKeywords() {
-        return keywords;
+    public String getTweetId() {
+        return tweetId;
     }
 
-    public RetweetAccount keywords(String keywords) {
-        this.keywords = keywords;
+    public void setTweetId(String tweetId) {
+        this.tweetId = tweetId;
+    }
+
+    public RetweetAccount tweetId(String tweetId) {
+        this.tweetId = tweetId;
         return this;
-    }
-
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
     }
 
     public Boolean isStop() {
@@ -149,7 +153,7 @@ public class RetweetAccount implements Serializable {
             ", status='" + getStatus() + "'" +
             ", userid='" + getUserid() + "'" +
             ", username='" + getUsername() + "'" +
-            ", keywords='" + getKeywords() + "'" +
+            ", tweetId='" + getTweetId() + "'" +
             ", stop='" + isStop() + "'" +
             "}";
     }

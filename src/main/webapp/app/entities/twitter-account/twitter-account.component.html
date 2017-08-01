@@ -70,7 +70,7 @@
                 </td>
                 <td>
                     <div *ngIf="twitterAccount.retweetAccount">
-                        <a [routerLink]="['../retweet-account', twitterAccount.retweetAccount?.id ]" >{{twitterAccount.retweetAccount?.username}}</a>
+                        <a target="_blank" href="https://twitter.com/{{twitterAccount.retweetAccount?.username}}">@{{twitterAccount.retweetAccount?.username}}</a>
                     </div>
                 </td>
                 <td>

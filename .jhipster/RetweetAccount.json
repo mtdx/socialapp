@@ -34,8 +34,17 @@
             "fieldValidateRulesPattern": "(^[a-zA-Z0-9_]*$)"
         },
         {
-            "fieldName": "keywords",
-            "fieldType": "String"
+            "fieldName": "tweetId",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": "2",
+            "fieldValidateRulesMaxlength": "20",
+            "fieldValidateRulesPattern": "(^\\d+$)"
         },
         {
             "fieldName": "stop",
