@@ -135,7 +135,7 @@ public class TwitterApiService {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
         }
         for (Long ID : followers) {
-            threadWait(getRandInt(2, 7));  // 180 per 15 min request limit
+            threadWait(getRandInt(5, 15));  // 180 per 15 min request limit
             if (isSpamAccount(ID, twitterClient, twitterAccount, twitterSettings))
                 continue;  // we try to target real accounts only
             try {
@@ -150,7 +150,7 @@ public class TwitterApiService {
                 if (twitterSettings.getNotLikeTweetsOlderThan() != 0 && difference <= twitterSettings.getNotLikeTweetsOlderThan()) {  // we only favorite tweets newer than x months
                     Long tweetId = tweet.getId();
                     String tweetText = tweet.getText();
-                    threadWait(getRandInt(15, 75));
+                    threadWait(getRandInt(15, 105));
 
                     if (twitterAccount.getRetweetAccount() == null && tweetText.length() >= 70
                         && getRandInt(1, 100) <= twitterSettings.getRetweetPercent()) {
