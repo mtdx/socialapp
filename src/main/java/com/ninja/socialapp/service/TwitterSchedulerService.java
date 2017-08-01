@@ -135,7 +135,7 @@ public class TwitterSchedulerService {
     @Scheduled(cron = "0 */15 * * * *")
     public void processKeywords() {
         log.debug("Run scheduled process keywords {}");
-        if (competitorService.countAllByStatus(CompetitorStatus.IN_PROGRESS) != 0) {
+        if (competitorService.countAllByStatus(CompetitorStatus.IN_PROGRESS) == 0) {
             twitterKeywordService.findFirstByStatusOrderByIdAsc(KeywordStatus.IN_PROGRESS).ifPresent((TwitterKeyword twitterKeyword) -> {
                 TwitterSettings twitterSettings = twitterSettingsService.findOne();
                 List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
