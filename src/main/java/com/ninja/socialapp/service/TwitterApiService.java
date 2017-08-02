@@ -206,7 +206,9 @@ public class TwitterApiService {
                 competitors++;
             }
         }
-        twitterKeywordService.incrementCompetitors(competitors, twitterKeywordId);
+        if (competitors > 0) {
+            twitterKeywordService.incrementCompetitors(competitors, twitterKeywordId);
+        }
         twitterAccount.setStatus(TwitterStatus.IDLE); // we reset the account
         twitterAccountService.save(twitterAccount);
     }
@@ -281,7 +283,7 @@ public class TwitterApiService {
             int followers = user.getFollowersCount(); // followers
             int following = user.getFriendsCount(); // following
             int statuses = user.getStatusesCount(); // tweets
-            if (likes <= activityRaw || followers <= activityRaw || following <= activityRaw || statuses <= activityRaw) {
+            if (likes < activityRaw || followers < activityRaw / 2 || following < activityRaw || statuses < activityRaw) {
                 return true;
             }
             if ((twitterSettings.getFollowingToFollowersRatio() != null && twitterSettings.getFollowingToFollowersRatio() > 0 && (following / followers) >= twitterSettings.getFollowingToFollowersRatio())

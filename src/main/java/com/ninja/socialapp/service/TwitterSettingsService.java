@@ -60,7 +60,7 @@ public class TwitterSettingsService {
         defaultTwitterSettings.setHasDefaultProfileImage(true); // skip if
         defaultTwitterSettings.hasNoDescription(true);  // skip if
         defaultTwitterSettings.accountAgeLessThan(2); // skip if less, (months)
-        defaultTwitterSettings.minActivity(15); // minimum likes, tweets, followers, following
+        defaultTwitterSettings.minActivity(10); // minimum likes, tweets, followers, following
         defaultTwitterSettings.followingToFollowersRatio(4); // eg. 3 => 900 following 300 followers
         defaultTwitterSettings.likesToTweetsRatio(4);   // eg. 3 => 900 likes 300 tweets
         defaultTwitterSettings.notLikeTweetsOlderThan(4); // skip if less, (months)
