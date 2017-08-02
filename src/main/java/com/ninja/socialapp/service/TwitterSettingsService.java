@@ -61,9 +61,9 @@ public class TwitterSettingsService {
         defaultTwitterSettings.hasNoDescription(true);  // skip if
         defaultTwitterSettings.accountAgeLessThan(2); // skip if less, (months)
         defaultTwitterSettings.minActivity(15); // minimum likes, tweets, followers, following
-        defaultTwitterSettings.followingToFollowersRatio(3); // eg. 3 => 900 following 300 followers
-        defaultTwitterSettings.likesToTweetsRatio(3);   // eg. 3 => 900 likes 300 tweets
-        defaultTwitterSettings.notLikeTweetsOlderThan(2); // skip if less, (months)
+        defaultTwitterSettings.followingToFollowersRatio(4); // eg. 3 => 900 following 300 followers
+        defaultTwitterSettings.likesToTweetsRatio(4);   // eg. 3 => 900 likes 300 tweets
+        defaultTwitterSettings.notLikeTweetsOlderThan(4); // skip if less, (months)
         defaultTwitterSettings.setRetweetPercent(1); // skip if less
         defaultTwitterSettings.setMinCompetitorFollowers(2000); // skip if less
         defaultTwitterSettings.setAccountsPerProxy(20); // don't show if less
