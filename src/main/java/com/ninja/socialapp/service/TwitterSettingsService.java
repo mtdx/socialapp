@@ -58,7 +58,7 @@ public class TwitterSettingsService {
         TwitterSettings defaultTwitterSettings = new TwitterSettings();
         defaultTwitterSettings.setMaxLikes(4000); // likes until start doing unlikes
         defaultTwitterSettings.setHasDefaultProfileImage(true); // skip if
-        defaultTwitterSettings.hasNoDescription(true);  // skip if
+        defaultTwitterSettings.hasNoDescription(false);  // skip if
         defaultTwitterSettings.accountAgeLessThan(2); // skip if less, (months)
         defaultTwitterSettings.minActivity(10); // minimum likes, tweets, followers, following
         defaultTwitterSettings.followingToFollowersRatio(4); // eg. 3 => 900 following 300 followers

@@ -190,20 +190,27 @@ public class TwitterApiService {
         log.debug("Call to add competitors via TwitterAPI: {}", twitterAccount.getEmail());
         Integer competitors = 0;
         for (User user : users) {
-            String userId = String.valueOf(user.getId());
-            if (!competitorService.findByUserid(userId).isPresent()
-                && user.getFollowersCount() >= minCompetitorFollowers) {
-                Competitor competitor = new Competitor();
-                competitor.setUserid(userId);
-                competitor.setUsername(user.getScreenName());
-                competitor.setStatus(CompetitorStatus.IN_PROGRESS);
-                competitor.setLikes(0L);
-                competitor.setCursor(-1L);
-                competitor.setStop(false);
-                competitor.setReset(false);
-                competitor.setCreated(Instant.now());
-                competitorService.save(competitor);
-                competitors++;
+            if (user.getScreenName().length() <= 3) {
+                continue;
+            }
+            try {
+                String userId = String.valueOf(user.getId());
+                if (!competitorService.findByUserid(userId).isPresent()
+                    && user.getFollowersCount() >= minCompetitorFollowers) {
+                    Competitor competitor = new Competitor();
+                    competitor.setUserid(userId);
+                    competitor.setUsername(user.getScreenName());
+                    competitor.setStatus(CompetitorStatus.IN_PROGRESS);
+                    competitor.setLikes(0L);
+                    competitor.setCursor(-1L);
+                    competitor.setStop(false);
+                    competitor.setReset(false);
+                    competitor.setCreated(Instant.now());
+                    competitorService.save(competitor);
+                    competitors++;
+                }
+            } catch (Exception ex) {
+                log.error(ex.getMessage());
             }
         }
         if (competitors > 0) {
