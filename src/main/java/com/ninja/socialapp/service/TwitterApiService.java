@@ -76,6 +76,8 @@ public class TwitterApiService {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.UPDATE);
             twitterAccount.setStatus(TwitterStatus.AUTH_ERROR);
             twitterAccountService.save(twitterAccount);
+        } catch (Exception ex){
+            log.error(ex.getMessage());
         }
     }
 
@@ -102,6 +104,8 @@ public class TwitterApiService {
             }
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.UPDATE);
+        } catch (Exception ex){
+            log.error(ex.getMessage());
         }
     }
 
@@ -116,6 +120,8 @@ public class TwitterApiService {
             return ids.getNextCursor();
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
+        } catch (Exception ex){
+            log.error(ex.getMessage());
         }
         return cursor;
     }
@@ -133,6 +139,8 @@ public class TwitterApiService {
             }
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
+        } catch (Exception ex){
+            log.error(ex.getMessage());
         }
         for (Long ID : followers) {
             threadWait(getRandInt(3, 7));  // 180 per 15 min request limit
@@ -140,6 +148,7 @@ public class TwitterApiService {
                 continue;  // we try to target real accounts only
             try {
                 ResponseList<Status> statuses = twitterClient.getUserTimeline(ID);
+                if (statuses.size() == 0) continue;
                 Status tweet = statuses.get(0);
                 if (tweet.isFavorited() || tweet.isRetweeted()) continue; // if we already did the tweet
 
@@ -164,6 +173,8 @@ public class TwitterApiService {
                 twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
                 twitterClient = getTwitterInstance(twitterAccount);
                 threadWait(30);
+            } catch (Exception ex){
+                log.error(ex.getMessage());
             }
         }
         competitorService.incrementLikes(likes, competitorId);
@@ -221,6 +232,8 @@ public class TwitterApiService {
                 twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
                 twitterClient = getTwitterInstance(twitterAccount);
                 threadWait(30);
+            } catch (Exception ex){
+                log.error(ex.getMessage());
             }
         } while (list.size() > 0);
     }
@@ -280,6 +293,8 @@ public class TwitterApiService {
 
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
+        } catch (Exception ex){
+            log.error(ex.getMessage());
         }
 
         return false;
@@ -296,6 +311,8 @@ public class TwitterApiService {
             return ++page;
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.SEARCH);
+        } catch (Exception ex){
+            log.error(ex.getMessage());
         }
 
         return page;
