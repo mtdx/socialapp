@@ -148,7 +148,7 @@ public class TwitterApiService {
                 continue;  // we try to target real accounts only
             try {
                 ResponseList<Status> statuses = twitterClient.getUserTimeline(ID);
-                if (statuses.size() == 0) continue;
+                if (statuses.isEmpty()) continue;
                 Status tweet = statuses.get(0);
                 if (tweet.isFavorited() || tweet.isRetweeted()) continue; // if we already did the tweet
 
@@ -190,11 +190,9 @@ public class TwitterApiService {
         log.debug("Call to add competitors via TwitterAPI: {}", twitterAccount.getEmail());
         Integer competitors = 0;
         for (User user : users) {
-            if (user.getFavouritesCount() >= minCompetitorFollowers) {
-                String userId = String.valueOf(user.getId());
-                if (competitorService.findByUserid(userId).isPresent()) {
-                    continue;
-                }
+            String userId = String.valueOf(user.getId());
+            if (!competitorService.findByUserid(userId).isPresent()
+                && user.getFollowersCount() >= minCompetitorFollowers) {
                 Competitor competitor = new Competitor();
                 competitor.setUserid(userId);
                 competitor.setUsername(user.getScreenName());

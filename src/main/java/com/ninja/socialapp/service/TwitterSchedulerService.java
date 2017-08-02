@@ -138,6 +138,7 @@ public class TwitterSchedulerService {
             twitterKeywordService.findFirstByStatusOrderByIdAsc(KeywordStatus.IN_PROGRESS).ifPresent((TwitterKeyword twitterKeyword) -> {
                 TwitterSettings twitterSettings = twitterSettingsService.findOne();
                 List<TwitterAccount> accounts = twitterAccountService.findAllByStatus(TwitterStatus.IDLE);
+                if (accounts.isEmpty()) return;
                 twitterApiService.refreshDate();
 
                 twitterKeyword.setStatus(KeywordStatus.LOCK); // next we update our statuses
