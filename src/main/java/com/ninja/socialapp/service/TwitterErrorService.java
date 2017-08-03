@@ -138,6 +138,9 @@ public class TwitterErrorService {
         twitterError.setCreated_at(Instant.now());
         save(twitterError);
         saveAccount(ex.getErrorCode(), twitterAccount);
+        if (ex.getMessage().contains("429") || ex.getErrorCode() == 429) {
+            threadWait(30 * 60);
+        }
     }
 
     private void saveAccount(Integer errorCode, final TwitterAccount twitterAccount) {
@@ -155,5 +158,14 @@ public class TwitterErrorService {
             twitterAccountService.save(twitterAccount);
         }
 
+    }
+
+    private void threadWait(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 }

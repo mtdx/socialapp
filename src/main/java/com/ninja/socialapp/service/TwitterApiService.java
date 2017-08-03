@@ -88,7 +88,7 @@ public class TwitterApiService {
         for (TwitterAccount twitterAccount : twitterAccounts) {
             final Twitter twitterClient = getTwitterInstance(twitterAccount);
             new Thread(() -> updateAccount(twitterAccount, twitterClient)).start();
-            threadWait(getRandInt(5, 10));
+            threadWait(getRandInt(6, 9));
         }
     }
 
@@ -143,7 +143,7 @@ public class TwitterApiService {
             log.error(ex.getMessage());
         }
         for (Long ID : followers) {
-            threadWait(getRandInt(5, 10));  // 180 per 15 min request limit
+            threadWait(getRandInt(6, 9));  // 180 per 15 min request limit
             if (isSpamAccount(ID, twitterClient, twitterAccount, twitterSettings))
                 continue;  // we try to target real accounts only
             try {
@@ -172,7 +172,6 @@ public class TwitterApiService {
             } catch (TwitterException ex) {
                 twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
                 twitterClient = getTwitterInstance(twitterAccount);
-                threadWait(30);
             } catch (Exception ex){
                 log.error(ex.getMessage());
             }
@@ -234,7 +233,7 @@ public class TwitterApiService {
                     twitterClient.destroyFavorite(s.getId());
                 }
                 paging.setPage(paging.getPage() + 1);
-                threadWait(getRandInt(5, 10));
+                threadWait(getRandInt(6, 9));
             } catch (TwitterException ex) {
                 twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
                 twitterClient = getTwitterInstance(twitterAccount);
