@@ -159,7 +159,7 @@ public class TwitterApiService {
                 if (twitterSettings.getNotLikeTweetsOlderThan() != 0 && difference <= twitterSettings.getNotLikeTweetsOlderThan()) {  // we only favorite tweets newer than x months
                     Long tweetId = tweet.getId();
                     String tweetText = tweet.getText();
-                    threadWait(getRandInt(3, 7));
+                    threadWait(getRandInt(6, 14));
 
                     if (twitterAccount.getRetweetAccount() == null && tweetText.length() >= 70
                         && getRandInt(1, 100) <= twitterSettings.getRetweetPercent()) {
