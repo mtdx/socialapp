@@ -171,6 +171,9 @@ public class TwitterApiService {
                 }
             } catch (TwitterException ex) {
                 twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
+                if (ex.getErrorMessage().contains("To protect our users from spam and other malicious activity")) {
+                    break; // account locked, no point moving on.
+                }
                 twitterClient = getTwitterInstance(twitterAccount);
             } catch (Exception ex){
                 log.error(ex.getMessage());
@@ -227,17 +230,19 @@ public class TwitterApiService {
         Paging paging = new Paging(1);
         List<Status> list = new ArrayList<>();
         do {
+            threadWait(getRandInt(3, 7));
             try {
                 list = twitterClient.getFavorites(paging);
                 for (Status s : list) {
                     twitterClient.destroyFavorite(s.getId());
                 }
                 paging.setPage(paging.getPage() + 1);
-                threadWait(getRandInt(3, 7));
             } catch (TwitterException ex) {
                 twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
                 twitterClient = getTwitterInstance(twitterAccount);
-                threadWait(30);
+                if (ex.getErrorMessage().contains("To protect our users from spam and other malicious activity")) {
+                    break; // account locked, no point moving on.
+                }
             } catch (Exception ex){
                 log.error(ex.getMessage());
             }
