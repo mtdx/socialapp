@@ -56,7 +56,7 @@ public class TwitterSettingsService {
     private TwitterSettings saveDefault() {
         log.debug("Request to save default TwitterSettings : {}");
         TwitterSettings defaultTwitterSettings = new TwitterSettings();
-        defaultTwitterSettings.setMaxLikes(4000); // likes until start doing unlikes
+        defaultTwitterSettings.setMaxLikes(2000); // likes until start doing unlikes
         defaultTwitterSettings.setHasDefaultProfileImage(true); // skip if
         defaultTwitterSettings.hasNoDescription(false);  // skip if
         defaultTwitterSettings.accountAgeLessThan(2); // skip if less, (months)
