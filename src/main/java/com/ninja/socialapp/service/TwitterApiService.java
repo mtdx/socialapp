@@ -230,7 +230,7 @@ public class TwitterApiService {
         Paging paging = new Paging(1);
         List<Status> list = new ArrayList<>();
         do {
-            threadWait(getRandInt(5, 7));
+            threadWait(getRandInt(60, 90));
             try {
                 list = twitterClient.getFavorites(paging);
                 for (Status s : list) {

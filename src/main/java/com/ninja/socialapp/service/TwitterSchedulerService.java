@@ -182,7 +182,7 @@ public class TwitterSchedulerService {
     @Scheduled(cron = "0 0 0 * * 6") //
     public void resetCompetitors() {
         log.debug("Run scheduled reset twitter competitors {}");
-        final int DAYS = 90; // how much time we keep data
+        final int DAYS = 61; // how much time
         List<Competitor> competitors = competitorService.findOlderThanByStatus(
             Instant.now().minus(Duration.ofDays(DAYS)), CompetitorStatus.DONE);
         for (Competitor competitor : competitors) {
@@ -201,7 +201,7 @@ public class TwitterSchedulerService {
     @Scheduled(cron = "0 0 0 * * 6")
     public void resetKeywords() {
         log.debug("Run scheduled reset twitter keywords {}");
-        final int DAYS = 180; // how much time we keep data
+        final int DAYS = 122; // how much time we keep data
         List<TwitterKeyword> keywords = twitterKeywordService.findOlderThanByStatus(
             Instant.now().minus(Duration.ofDays(DAYS)), KeywordStatus.DONE);
         for (TwitterKeyword twitterKeyword : keywords) {
