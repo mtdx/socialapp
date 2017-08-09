@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -206,6 +207,28 @@ public class TwitterSchedulerService {
         for (TwitterKeyword twitterKeyword : keywords) {
             twitterKeywordService.reset(twitterKeyword);
             twitterKeywordService.save(twitterKeyword);
+        }
+    }
+
+
+    /**
+     * We check for locked twitter accounts
+     * <p>
+     * This is scheduled to get fired every 2 day.
+     * </p>
+     */
+    @Async
+    @Scheduled(cron = "0 0 0 * * *")
+    public void resetLocked() {
+        log.debug("Run scheduled reset twitter locked accounts {}");
+        List<TwitterAccount> twitterAccounts1 = twitterAccountService.findAllByStatus(TwitterStatus.LOCKED);
+        List<TwitterAccount> twitterAccounts2 = twitterAccountService.findAllByStatus(TwitterStatus.AUTH_ERROR);
+        List<TwitterAccount> twitterAccounts = new ArrayList<>(twitterAccounts1);
+        twitterAccounts.addAll(twitterAccounts2);
+
+        for (TwitterAccount account : twitterAccounts) {
+            account.setStatus(TwitterStatus.PENDING_UPDATE);
+            twitterAccountService.save(account);
         }
     }
 }
