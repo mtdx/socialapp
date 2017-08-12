@@ -116,7 +116,13 @@ public class TwitterApiService {
         Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             IDs ids = twitterClient.getFollowersIDs(Long.parseLong(competitor.getUserid()), cursor);
-            new Thread(() -> likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount, competitor.getId(), twitterSettings)).start();
+            try {
+                new Thread(() -> likeFollowersTweetsOf(ids.getIDs(), twitterClient, twitterAccount, competitor.getId(), twitterSettings)).start();
+            }catch (Exception ex) {
+                twitterAccount.setStatus(TwitterStatus.IDLE); // we reset the account
+                twitterAccountService.save(twitterAccount);
+                log.error(ex.getMessage());
+            }
             return ids.getNextCursor();
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
@@ -318,7 +324,13 @@ public class TwitterApiService {
         Twitter twitterClient = getTwitterInstance(twitterAccount);
         try {
             ResponseList<User> users = twitterClient.searchUsers(twitterKeyword.getKeyword(), page);
-            new Thread(() -> addCompetitors(users, twitterAccount, twitterKeyword.getId(), twitterSettings.getMinCompetitorFollowers())).start();
+            try {
+                new Thread(() -> addCompetitors(users, twitterAccount, twitterKeyword.getId(), twitterSettings.getMinCompetitorFollowers())).start();
+            }catch (Exception ex) {
+                twitterAccount.setStatus(TwitterStatus.IDLE); // we reset the account
+                twitterAccountService.save(twitterAccount);
+                log.error(ex.getMessage());
+            }
             return ++page;
         } catch (TwitterException ex) {
             twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.SEARCH);
