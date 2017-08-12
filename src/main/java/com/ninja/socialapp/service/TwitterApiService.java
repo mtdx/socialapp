@@ -171,7 +171,7 @@ public class TwitterApiService {
                 }
             } catch (TwitterException ex) {
                 twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
-                if (ex.getErrorMessage().contains("To protect our users from spam and other malicious activity")) {
+                if (ex.getErrorMessage() != null && ex.getErrorMessage().contains("To protect our users from spam and other malicious activity")) {
                     break; // account locked, no point moving on.
                 }
                 twitterClient = getTwitterInstance(twitterAccount);
@@ -240,7 +240,7 @@ public class TwitterApiService {
             } catch (TwitterException ex) {
                 twitterErrorService.handleException(ex, twitterAccount, TwitterErrorType.LIKE);
                 twitterClient = getTwitterInstance(twitterAccount);
-                if (ex.getErrorMessage().contains("To protect our users from spam and other malicious activity")) {
+                if (ex.getErrorMessage() != null && ex.getErrorMessage().contains("To protect our users from spam and other malicious activity")) {
                     break; // account locked, no point moving on.
                 }
             } catch (Exception ex){
