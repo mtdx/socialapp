@@ -239,7 +239,7 @@ public class TwitterApiService {
             try {
                 list = twitterClient.getFavorites(paging);
                 for (Status s : list) {
-                    threadWait(getRandInt(90, 120));
+                    threadWait(getRandInt(90, 180));
                     twitterClient.destroyFavorite(s.getId());
                 }
                 paging.setPage(paging.getPage() + 1);
